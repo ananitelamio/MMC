@@ -48,12 +48,13 @@ export default () => {
           <CompanyColumn>
             <LogoContainer>
               <LogoImg src={LogoImage} />
-              <LogoText>Treact Inc.</LogoText>
+              <LogoText>My Mobile Cash</LogoText>
             </LogoContainer>
             <CompanyAddress>
-              123 Road, New Startup Building
-              Carter Road, San Francisco
-              California 40234
+              Immeuble 2MP 2e étage bureau D, 
+              Avenue Marien Ngouabi, 
+              Centre-Ville, Pointe-Noire, 
+              Congo
             </CompanyAddress>
             <SocialLinksContainer>
               <SocialLink href="https://facebook.com">
@@ -68,16 +69,12 @@ export default () => {
             </SocialLinksContainer>
           </CompanyColumn>
           <Column>
+          </Column>
+          <Column>
             <ColumnHeading>Quick Links</ColumnHeading>
             <LinkList>
               <LinkListItem>
                 <Link href="#">Blog</Link>
-              </LinkListItem>
-              <LinkListItem>
-                <Link href="#">FAQs</Link>
-              </LinkListItem>
-              <LinkListItem>
-                <Link href="#">Support</Link>
               </LinkListItem>
               <LinkListItem>
                 <Link href="#">About Us</Link>
@@ -85,36 +82,13 @@ export default () => {
             </LinkList>
           </Column>
           <Column>
-            <ColumnHeading>Product</ColumnHeading>
-            <LinkList>
-              <LinkListItem>
-                <Link href="#">Log In</Link>
-              </LinkListItem>
-              <LinkListItem>
-                <Link href="#">Personal</Link>
-              </LinkListItem>
-              <LinkListItem>
-                <Link href="#">Business</Link>
-              </LinkListItem>
-              <LinkListItem>
-                <Link href="#">Team</Link>
-              </LinkListItem>
-            </LinkList>
-          </Column>
-          <Column>
             <ColumnHeading>Legal</ColumnHeading>
             <LinkList>
               <LinkListItem>
-                <Link href="#">GDPR</Link>
+                <Link href="/privacy">Privacy Policy</Link>
               </LinkListItem>
               <LinkListItem>
-                <Link href="#">Privacy Policy</Link>
-              </LinkListItem>
-              <LinkListItem>
-                <Link href="#">Terms of Service</Link>
-              </LinkListItem>
-              <LinkListItem>
-                <Link href="#">Disclaimer</Link>
+                <Link href="/terms">Terms of Service</Link>
               </LinkListItem>
             </LinkList>
           </Column>
@@ -122,24 +96,21 @@ export default () => {
             <ColumnHeading>Contact</ColumnHeading>
             <LinkList>
               <LinkListItem>
-                +1 (234) (567)-8901
+                +242 06 571 94 21 / +221 77 205 33 57
               </LinkListItem>
               <LinkListItem>
-                <Link href="mailto:support@servana.com">support@servana.com</Link>
+                <Link href="mailto:support@mymobilecash.net">support@mymobilecash.net</Link> 
               </LinkListItem>
               <LinkListItem>
-                <Link href="#">Sales</Link>
-              </LinkListItem>
-              <LinkListItem>
-                <Link href="#">Report Abuse</Link>
+                <Link href="mailto:infos@mymobilecash.net">infos@mymobilecash.net</Link>
               </LinkListItem>
             </LinkList>
           </Column>
         </FiveColumns>
         <Divider/>
         <CopyrightAndCompanyInfoRow>
-          <CopyrightNotice>&copy; Copyright 2020, Treact Inc.</CopyrightNotice>
-          <CompanyInfo>An Internet Company.</CompanyInfo>
+          <CopyrightNotice>&copy; Copyright 2020, My Mobile Cash.</CopyrightNotice>
+          <CompanyInfo>Your New Partner.</CompanyInfo>
         </CopyrightAndCompanyInfoRow>
       </Content>
     </Container>
