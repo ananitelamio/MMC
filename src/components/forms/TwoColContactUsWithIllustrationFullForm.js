@@ -1,4 +1,6 @@
 import React from "react";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
@@ -26,16 +28,53 @@ const Heading = tw(SectionHeading)`mt-4 font-black text-left text-3xl sm:text-4x
 const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`
 
 const Form = tw.form`mt-8 md:mt-10 text-sm flex flex-col max-w-sm mx-auto md:mx-0`
-const Input = tw.input`mt-6 first:mt-0 border-b-2 py-3 focus:outline-none font-medium transition duration-300 hocus:border-primary-500`
+const InputWrapper = tw.div`px-3 mt-6`;
+const Input = tw.input`w-full first:mt-0 border-b-2 py-3 focus:outline-none font-medium transition duration-300 hocus:border-primary-500`
 const Textarea = styled(Input).attrs({as: "textarea"})`
   ${tw`h-24`}
 `
+const Error = tw.div`text-red-400 text-sm`;
 
 const SubmitButton = tw(PrimaryButtonBase)`inline-block mt-8`
 
+const validationSchema = Yup.object().shape({
+  name: Yup
+    .string()
+    .required("Your full name is required")
+    .min(2, "Firstame must be at least 2 characters"),
+  email: Yup
+    .string()
+    .email()
+    .required("Email is a required field"),
+  phone: Yup
+    .number()
+    .required("Phone number is required"),
+  subject: Yup
+    .string()
+    .required("A subject is required")
+    .min(8, "The subject should be at least 8 characters long"),
+  message: Yup
+    .string()
+    .required("A message is required")
+    .min(8, "The message should be at least 8 characters long"),
+    
+});
+
+const initialValues = {
+  name: "",
+  email: "",
+  phone: "",
+  subject: "",
+  message: ""
+};
+
+const onSubmit = (data) => {
+    console.log(data);
+};
+
 export default ({
   subheading = "Contact Us",
-  heading = <>Feel free to <span tw="text-primary-500">get in touch</span><wbr/> with us.</>,
+  heading = <>Our team is at your disposal <wbr/> <span tw="text-primary-500">to answer your questions.</span></>,
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   submitButtonText = "Send",
   formAction = "#",
@@ -43,6 +82,18 @@ export default ({
   textOnLeft = true,
 }) => {
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
+    const formik = useFormik({
+        initialValues,
+        validationSchema,
+        onSubmit
+    });
+
+    
+    const nameProps = formik.getFieldProps("name");
+    const emailProps = formik.getFieldProps("email");
+    const phoneProps = formik.getFieldProps("phone");
+    const subjectProps = formik.getFieldProps("subject");
+    const messageProps = formik.getFieldProps("message");
 
   return (
     <Container>
@@ -55,11 +106,27 @@ export default ({
             {subheading && <Subheading>{subheading}</Subheading>}
             <Heading>{heading}</Heading>
             {description && <Description>{description}</Description>}
-            <Form action={formAction} method={formMethod}>
-              <Input type="email" name="email" placeholder="Your Email Address" />
-              <Input type="text" name="name" placeholder="Full Name" />
-              <Input type="text" name="subject" placeholder="Subject" />
-              <Textarea name="message" placeholder="Your Message Here" />
+            <Form onSubmit={formik.handleSubmit}>
+              <InputWrapper>
+                <Input type="text" name="name" placeholder="Full Name" {...nameProps}/>
+                {formik.touched.name && formik.errors.name ? (<Error>{formik.errors.name}</Error>): null}
+              </InputWrapper>
+              <InputWrapper>
+                <Input type="email" name="email" placeholder="Your Email Address" {...emailProps}/>
+                {formik.touched.email && formik.errors.email ? (<Error>{formik.errors.email}</Error>): null}
+              </InputWrapper>
+              <InputWrapper>
+                <Input type="number" name="numero" placeholder="Phone Number" {...phoneProps}/>
+                {formik.touched.number && formik.errors.number ? (<Error>{formik.errors.number}</Error>): null}
+              </InputWrapper>
+              <InputWrapper>
+                <Input type="text" name="subject" placeholder="Subject" {...subjectProps}/>
+                {formik.touched.subject && formik.errors.subject ? (<Error>{formik.errors.subject}</Error>): null}
+              </InputWrapper>
+              <InputWrapper>
+                <Textarea name="message" placeholder="Your Message Here" {...messageProps}/>
+                {formik.touched.message && formik.errors.message ? (<Error>{formik.errors.message}</Error>): null}
+              </InputWrapper>
               <SubmitButton type="submit">{submitButtonText}</SubmitButton>
             </Form>
           </TextContent>
