@@ -9,11 +9,11 @@ import defaultCardImage from "../../images/shield-icon.svg";
 
 import { ReactComponent as SvgDecoratorBlob3 } from "../../images/svg-decorator-blob-3.svg";
 
-import CreditRechargeIconImage from "../../images/credit-recharge.png";
-import ShieldIconImage from "../../images/shield-icon.svg";
-import billsPaymentIconImage from "../../images/bills-payment.png";
+import CreditRechargeIconImage from "../../images/credit-recharge.svg";
+import MoneydIconImage from "../../images/money-transfer.svg";
+import billsPaymentIconImage from "../../images/bills-payment.svg";
 import FastIconImage from "../../images/fast-icon.svg";
-import ElectronicWalletIconImage from "../../images/electronic-wallet.png";
+import ElectronicWalletIconImage from "../../images/electronic-wallet.svg";
 import SimpleIconImage from "../../images/simple-icon.svg";
 
 const Container = tw.div`relative`;
@@ -61,7 +61,7 @@ export default () => {
 
   const cards = [
     {
-      imageSrc: ShieldIconImage,
+      imageSrc: MoneydIconImage,
       title: "Money transfer",
       description: "Transfer money from your home with one click. Mymobile Cash offers you a quick and cheaper solution to get closer to your family and business. With My Mobile Cash nothing is out of your reach. You can also have money delivered to your home."
     },

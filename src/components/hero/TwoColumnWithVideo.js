@@ -13,7 +13,6 @@ import ResponsiveVideoEmbed from "../../helpers/ResponsiveVideoEmbed.js";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "../../images/svg-decorator-blob-1.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "../../images/dot-pattern.svg";
-import DesignIllustration from "../../images/undraw_youtube_tutorial_2gn3.svg";
 
 
 const Container = styled.div`
@@ -83,12 +82,7 @@ export default ({
   heading = "My Mobile Cash Your closest partner",
   description="We provide fast, cheap and secure national and international transfers. Your money travels in the blink of an eye and automatically the beneficiary is paid.",
   primaryButtonText="Get Started",
-  primaryButtonUrl="#",
-  watchVideoButtonText="Watch Video",
-  watchVideoYoutubeUrl="https://www.youtube.com/embed/BL22vTGteQU",
-  imageSrc=DesignIllustration,
-  imageCss=null,
-  imageDecoratorBlob = false,
+  primaryButtonUrl="#"
 }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
