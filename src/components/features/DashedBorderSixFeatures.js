@@ -9,11 +9,11 @@ import defaultCardImage from "../../images/shield-icon.svg";
 
 import { ReactComponent as SvgDecoratorBlob3 } from "../../images/svg-decorator-blob-3.svg";
 
-import SupportIconImage from "../../images/support-icon.svg";
+import CreditRechargeIconImage from "../../images/credit-recharge.png";
 import ShieldIconImage from "../../images/shield-icon.svg";
-import CustomizeIconImage from "../../images/customize-icon.svg";
+import billsPaymentIconImage from "../../images/bills-payment.png";
 import FastIconImage from "../../images/fast-icon.svg";
-import ReliableIconImage from "../../images/reliable-icon.svg";
+import ElectronicWalletIconImage from "../../images/electronic-wallet.png";
 import SimpleIconImage from "../../images/simple-icon.svg";
 
 const Container = tw.div`relative`;
@@ -28,22 +28,19 @@ const Column = styled.div`
 `;
 
 const Card = styled.div`
-  ${tw`flex flex-col mx-auto max-w-xs items-center px-6 py-10 border-2 border-dashed border-primary-500 rounded-lg mt-12`}
+  ${tw`flex flex-col mx-auto max-w-xs items-center px-6 py-10 border-2 border-dashed border-blue-500 rounded-lg mt-12`}
   .imageContainer {
-    ${tw`border-2 border-primary-500 text-center rounded-full p-6 flex-shrink-0 relative`}
+    ${tw`border-2 border-yellow-500 text-center rounded-full p-6 flex-shrink-0 relative`}
     img {
       ${tw`w-8 h-8`}
     }
   }
-
   .textContainer {
     ${tw`mt-6 text-center`}
   }
-
   .title {
-    ${tw`mt-2 font-bold text-xl leading-none text-primary-500`}
+    ${tw`mt-2 font-bold text-xl leading-none text-blue-500`}
   }
-
   .description {
     ${tw`mt-3 font-semibold text-secondary-100 text-sm leading-loose`}
   }
@@ -65,20 +62,27 @@ export default () => {
   const cards = [
     {
       imageSrc: ShieldIconImage,
-      title: "Ads Management",
-      description: "We create and manage ads that you need, from creation to deployment. Lorem ipsum donor sit amet consicou."
+      title: "Money transfer",
+      description: "Transfer money from your home with one click. Mymobile Cash offers you a quick and cheaper solution to get closer to your family and business. With My Mobile Cash nothing is out of your reach. You can also have money delivered to your home."
     },
-    { imageSrc: SupportIconImage, title: "Video Marketing" },
-    { imageSrc: CustomizeIconImage, title: "Customer Relation" },
-    { imageSrc: ReliableIconImage, title: "Product Outreach" },
-    { imageSrc: FastIconImage, title: "PR Campaign" },
-    { imageSrc: SimpleIconImage, title: "Product Expansion" }
+    { imageSrc: CreditRechargeIconImage, 
+      title: "Recharge of credit",
+      description: "Reload your My Mobile Cash account in one minute, top up credit at any time depending on your phone network and send phone credit from one country to another."  
+    },
+    { imageSrc: billsPaymentIconImage, 
+      title: "Payment of bills",
+      description: "Pay your bills from home directly on My Mobile Cash and save time at any time. You can also ask a close My Mobile Cash subscriber to pay your bill."
+    },
+    { imageSrc: ElectronicWalletIconImage, 
+      title: "Electronic wallet",
+      description: "Send and receive payments faster with your My Mobile Cash e-wallet. It's simple, convenient and efficient. Shop safely and reliably."
+    }
   ];
 
   return (
     <Container>
       <ThreeColumnContainer>
-        <Heading>Our Professional <span tw="text-primary-500">Services</span></Heading>
+        <Heading>Our Professional <span tw="text-yellow-500">Services</span></Heading>
         {cards.map((card, i) => (
           <Column key={i}>
             <Card>
