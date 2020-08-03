@@ -23,7 +23,7 @@ const Image = styled.div(props => [
 ]);
 const TextContent = tw.div`lg:py-8 text-center md:text-left`;
 
-const Subheading = tw(SubheadingBase)`text-center md:text-left`;
+const Subheading = tw(SubheadingBase)`text-center md:text-left text-yellow-500`;
 const Heading = tw(
   SectionHeading
 )`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
@@ -40,20 +40,20 @@ const FeatureIconContainer = styled.div`
 `;
 
 const FeatureText = tw.div`mt-4 md:mt-0 md:ml-4 text-center md:text-left`;
-const FeatureHeading = tw.div`font-bold text-lg text-primary-500`;
+const FeatureHeading = tw.div`font-bold text-lg text-blue-500`;
 const FeatureDescription = tw.div`mt-1 text-sm`;
 
-const PrimaryButton = tw(PrimaryButtonBase)`mt-8 md:mt-10 text-sm inline-block mx-auto md:mx-0`;
+const PrimaryButton = tw(PrimaryButtonBase)`mt-8 md:mt-10 text-sm inline-block mx-auto md:mx-0 bg-blue-600`;
 
 export default ({
-  subheading = "Our Expertise",
+  subheading = "Who are we?",
   heading = (
     <>
-      We have the most <span tw="text-primary-500">professional</span> marketing team.
+      About us<span tw="text-primary-500"></span>
     </>
   ),
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  primaryButtonText = "See Our Portfolio",
+  description = "We are My Mobile Cash, the online money transfer service that allows you to quickly send money and make payments from your mobile phone, computer or tablet. Transfer money to your loved ones at any time.",
+  primaryButtonText = "To know more about it",
   primaryButtonUrl = "https://timerse.com",
   features = null,
   textOnLeft = true
@@ -66,14 +66,12 @@ export default ({
    */
   const defaultFeatures = [
     {
-      Icon: BriefcaseIcon,
-      title: "Professionalism",
-      description: "We have the best professional marketing people across the globe just to work with you."
+      title: "Secure Service"
     },
     {
-      Icon: MoneyIcon,
-      title: "Affordable",
-      description: "We promise to offer you the best rate we can - at par with the industry standard."
+      title: "Cheaper"
+    },{
+      title: "Reliable and fast service"
     }
   ];
 
@@ -93,7 +91,6 @@ export default ({
             <Features>
               {features.map((feature, index) => (
                 <Feature key={index}>
-                  <FeatureIconContainer>{<feature.Icon />}</FeatureIconContainer>
                   <FeatureText>
                     <FeatureHeading>{feature.title}</FeatureHeading>
                     <FeatureDescription>{feature.description}</FeatureDescription>
