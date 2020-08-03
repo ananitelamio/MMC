@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
-import StatsIllustrationSrc from "images/stats-illustration.svg";
+import TransferMoneySrc from "images/transfer_money.svg";
 import { ReactComponent as SvgDotPattern } from "images/dot-pattern.svg";
 
 const Container = tw.div`relative`;
@@ -31,9 +31,9 @@ const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:t
 const Statistics = tw.div`flex flex-col items-center sm:block text-center md:text-left mt-4`;
 const Statistic = tw.div`text-left sm:inline-block sm:mr-12 last:mr-0 mt-4`;
 const Value = tw.div`font-bold text-lg sm:text-xl lg:text-2xl text-secondary-500 tracking-wide`;
-const Key = tw.div`font-medium text-primary-700`;
+const Key = tw.div`font-medium text-blue-600`;
 
-const PrimaryButton = tw(PrimaryButtonBase)`mt-8 md:mt-10 text-sm inline-block mx-auto md:mx-0`;
+const PrimaryButton = tw(PrimaryButtonBase)`mt-8 md:mt-10 text-sm inline-block mx-auto md:mx-0 bg-blue-500 hocus:bg-blue-600`;
 
 const DecoratorBlob = styled(SvgDotPattern)(props => [
   tw`w-20 h-20 absolute right-0 bottom-0 transform translate-x-1/2 translate-y-1/2 fill-current text-primary-500 -z-10`
@@ -43,13 +43,13 @@ export default ({
   subheading = "Our Track Record",
   heading = (
     <>
-      We have been doing this <wbr /> since <span tw="text-primary-500">1999.</span>
+      Transfer Money <wbr /> from your <span tw="text-yellow-500">Smartphone.</span>
     </>
   ),
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  description = "With My Mobile Cash send and receive money without moving, create your e-wallet to easily pay and receive your payments online. Pay your bills from home. Top up the phone credit of a relative or employee in your country and quickly fund your My Mobile Cash account.",
   primaryButtonText = "Learn More",
   primaryButtonUrl = "https://timerse.com",
-  imageSrc = StatsIllustrationSrc,
+  imageSrc = TransferMoneySrc,
   imageCss = null,
   imageContainerCss = null,
   imageDecoratorBlob = false,
@@ -62,16 +62,16 @@ export default ({
   //Change the statistics variable as you like, add or delete objects
   const defaultStatistics = [
     {
-      key: "Clients",
-      value: "2282+"
+      key: "Country",
+      value: "18+"
     },
     {
-      key: "Projects",
-      value: "3891+"
+      key: "Satisfied Customers",
+      value: "10000+"
     },
     {
-      key: "Awards",
-      value: "1000+"
+      key: "Partners Around the world",
+      value: "50+"
     }
   ];
 
@@ -86,7 +86,6 @@ export default ({
         </ImageColumn>
         <TextColumn textOnLeft={textOnLeft}>
           <TextContent>
-            {subheading && <Subheading>{subheading}</Subheading>}
             <Heading>{heading}</Heading>
             <Description>{description}</Description>
             <Statistics>
