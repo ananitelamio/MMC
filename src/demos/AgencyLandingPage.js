@@ -3,16 +3,15 @@ import tw from "twin.macro"; //eslint-disable-line
 import { css } from "styled-components/macro"; //eslint-disable-line
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 
-import Hero from "components/hero/BackgroundAsImage.js";
+import Hero from "components/hero/TwoColumnWithVideo.js";
 import Features from "components/features/DashedBorderSixFeatures";
 import MainFeature from "components/features/TwoColSingleFeatureWithStats2.js";
 import MainFeature2 from "components/features/TwoColWithTwoFeaturesAndButtons.js";
-import Portfolio from "components/cards/PortfolioTwoCardsWithImage.js";
-import Blog from "components/blogs/ThreeColSimpleWithImageAndDashedBorder.js";
 import Testimonial from "components/testimonials/TwoColumnWithImageAndProfilePictureReview.js";
 import FAQ from "components/faqs/SimpleWithSideImage.js";
 import ContactUsForm from "components/forms/TwoColContactUsWithIllustration.js";
-import Footer from "components/footers/MiniCenteredFooter.js";
+import Footer from "components/footers/FiveColumnDark.js";
+import Quote from "components/forms/Quote.js";
 import customerSupportIllustrationSrc from "images/customer-support-illustration.svg";
 
 export default () => (
@@ -21,15 +20,14 @@ export default () => (
     <MainFeature />
     <Features />
     <MainFeature2 />
-    <Portfolio />
     <Testimonial
       subheading="Testimonials"
       heading={
         <>
-          Our Clients <span tw="text-primary-500">Love Us.</span>
+          Our Clients<span tw="text-yellow-400">Love Us.</span>
         </>
       }
-      description="Here are what some of our amazing customers are saying about our marketing professionals. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      description="Here are what some of our amazing customers are saying about our services."
       testimonials={[
         {
           imageSrc:
@@ -37,7 +35,7 @@ export default () => (
           profileImageSrc:
             "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3.25&w=512&h=512&q=80",
           quote:
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.",
+            "Whoo! I got my money in seconds. Thank you, My Mobile Cash, you guys are the best...",
           customerName: "Charlotte Hale",
           customerTitle: "CEO, Tesla Inc."
         },
@@ -47,9 +45,19 @@ export default () => (
           profileImageSrc:
             "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=512&h=512&q=80",
           quote:
-            "Sinor Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.",
+            "No sooner had I completed my transaction than my son called me to show his joy. I especially appreciate your professional and always available team.",
           customerName: "Adam Cuppy",
           customerTitle: "Founder, Nestle"
+        },
+        {
+          imageSrc:
+            "https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1024&q=80",
+          profileImageSrc:
+            "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=512&h=512&q=80",
+          quote:
+            "With My Mobile Cash, I don't have to wait in line at the agency anymore and the transfer fees are much cheaper ...",
+          customerName: "Leslie Okana",
+          customerTitle: "Founder, OKADA"
         }
       ]}
       textOnLeft={true}
@@ -61,11 +69,10 @@ export default () => (
       subheading="FAQs"
       heading={
         <>
-          Do you have <span tw="text-primary-500">Questions ?</span>
+          Do you have <span tw="text-yellow-400">Questions ?</span>
         </>
       }
     />
-    <Blog />
     <ContactUsForm />
     <Footer />
   </AnimationRevealPage>
