@@ -4,13 +4,9 @@ import tw from "twin.macro";
 import styled from "styled-components"; //eslint-disable-line
 import { css } from "styled-components/macro"; //eslint-disable-line
 import Header from "components/headers/light.js";
-import Footer from "components/footers/FiveColumnWithInputForm.js";
-import MainFeature1 from "components/features/TwoColWithButton.js";
-// import MainFeature2 from "components/features/TwoColSingleFeatureWithStats.js";
-// import MainFeature3 from "components/features/TwoColSingleFeatureWithStats2.js";
-import Features from "components/features/ThreeColSimple.js";
-// import Features from "components/features/ThreeColWithSideImage.js";
-import TeamCardGrid from "components/cards/ProfileThreeColGrid.js";
+import Footer from "components/footers/FiveColumnDark.js";
+import MainFeature1 from "components/features/TwoColWith3P.js";
+import GetStarted from "components/cta/GetStarted.js";
 
 import SupportIconImage from "images/support-icon.svg";
 import ShieldIconImage from "images/shield-icon.svg";
@@ -22,45 +18,24 @@ export default () => {
     <AnimationRevealPage>
       <Header />
       <MainFeature1
-        subheading={<Subheading>About Treact</Subheading>}
-        heading="We are a modern desgin agency."
-        buttonRounded={false}
-        primaryButtonText="See Portfolio"
+        heading="Who are we and what do we do?"
+        descriptionP1="We are My Mobile Cash, 
+        the online money transfer service that allows you to quickly send money and make payments from your mobile phone, 
+        computer or tablet. 
+        Transfer money to your loved ones at any time."
+        descriptionP2="We build open relationships with partners by offering several business solutions to help us expand. 
+        We advocate easy access to brainstorming to gather the best offers and create opportunities and innovative solutions around My Mobile Cash."
+        descriptionP3="We are building a strong and reliable friendly network across several countries around the world."
         imageSrc="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
       />
       <MainFeature1
-        subheading={<Subheading>Our Vision</Subheading>}
-        heading="We aim to disrupt the desgin space."
-        buttonRounded={false}
-        primaryButtonText="Contact Us"
+        heading="Our Mission and Vision"
+        descriptionP1="Mymobile Cash's vision is to facilitate money transfers and payments to millions of people around the world, continuing to meet their needs and involve an active community to study and if possible adapt their suggestions. Mymobile Cash aims to be more helpful than ever, simpler and even cheaper over time."
+        descriptionP2="In addition to covering 18 countries, we work hard to be present in the least accessible areas and especially those affected by political situations."
         imageSrc="https://images.unsplash.com/3/doctype-hi-res.jpg?ixlib=rb-1.2.1&auto=format&fit=crop&w=768&q=80"
         textOnLeft={false}
       />
-      <Features
-        subheading={<Subheading>Our Values</Subheading>}
-        heading="We follow these."
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        cards={[
-          {
-            imageSrc: SupportIconImage,
-            title: "24/7 Support",
-            description: "Lorem ipsum donor amet siti ceali placeholder text alipiscing elit sed do eiusmod temport"
-          },
-          {
-            imageSrc: ShieldIconImage,
-            title: "Strong Teams",
-            description: "Lorem ipsum donor amet siti ceali placeholder text alipiscing elit sed do eiusmod temport"
-          },
-          {
-            imageSrc: CustomerLoveIconImage,
-            title: "Customer Satisfaction",
-            description: "Lorem ipsum donor amet siti ceali placeholder text alipiscing elit sed do eiusmod temport"
-          },
-        ]}
-        linkText=""
-      />
-      <TeamCardGrid 
-        subheading={<Subheading>Our Team</Subheading>}
+      <GetStarted
       />
       <Footer />
     </AnimationRevealPage>
