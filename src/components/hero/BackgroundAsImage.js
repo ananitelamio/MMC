@@ -30,9 +30,10 @@ const RightColumn = tw.div`w-full sm:w-5/6 lg:w-1/2 mt-16 lg:mt-0 lg:pl-8`;
 const Heading = styled.h1`
   ${tw`text-3xl text-center lg:text-left sm:text-4xl lg:text-5xl xl:text-6xl font-black text-gray-100 leading-none`}
   span {
-    ${tw`inline-block mt-2`}
+    ${tw`inline-block mt-1`}
   }
 `;
+const Paragraph = tw.p`max-w-md my-8 lg:my-5 lg:my-8 sm:text-lg lg:text-base xl:text-lg text-gray-100 leading-loose`;
 
 const SlantedBackground = styled.span`
   ${tw`relative text-primary-500 px-4 -mx-4 py-2`}
@@ -42,7 +43,7 @@ const SlantedBackground = styled.span`
   }
 `;
 
-const Notification = tw.span`inline-block my-4 pl-3 py-1 text-gray-100 border-l-4 border-blue-500 font-medium text-sm`;
+const Notification = tw.span`inline-block my-4 pl-3 py-1 border-l-4 border-blue-500 font-medium text-sm`;
 
 const PrimaryAction = tw.button`px-8 py-3 mt-10 text-sm sm:text-base sm:mt-16 sm:px-8 sm:py-4 bg-gray-100 text-primary-500 font-bold rounded shadow transition duration-300 hocus:bg-primary-500 hocus:text-gray-100 focus:shadow-outline`;
 
@@ -58,24 +59,30 @@ const StyledResponsiveVideoEmbed = styled(ResponsiveVideoEmbed)`
 export default () => {
   const navLinks = [
     <NavLinks key={1}>
-      <NavLink href="#">
-        About
+        <NavLink href="#">
+        Home
       </NavLink>
       <NavLink href="#">
-        Blog
+        About Us
       </NavLink>
       <NavLink href="#">
-        Locations
+        Services
       </NavLink>
       <NavLink href="#">
-        Pricing
+        Contact
       </NavLink>
+      
     </NavLinks>,
-    <NavLinks key={2}>
-      <PrimaryLink href="/#">
-        Hire Us
-      </PrimaryLink>
+    
+    <NavLinks key={3}>
+        <NavLink key={2} href="/pages/LoginPage">
+        Login
+    </NavLink>
+        <PrimaryLink href="/pages/SignupPage">
+            Register
+        </PrimaryLink>
     </NavLinks>
+        
   ];
 
   return (
@@ -85,17 +92,17 @@ export default () => {
         <StyledHeader links={navLinks} />
         <TwoColumn>
           <LeftColumn>
-            <Notification>We have now launched operations in Europe.</Notification>
+            <Notification>A dedicated and dynamic team at your service</Notification>
             <Heading>
-              <span>Hire the best</span>
+              <span>My Mobile Cash</span>
               <br />
-              <SlantedBackground>Marketing Team.</SlantedBackground>
+              <SlantedBackground>Your partner.</SlantedBackground>
             </Heading>
-            <PrimaryAction>Read Customer Stories</PrimaryAction>
+            <Paragraph>We provide fast, cheap and secure national and international transfers. Your money travels in the blink of an eye and automatically the beneficiary is paid.</Paragraph>
           </LeftColumn>
           <RightColumn>
             <StyledResponsiveVideoEmbed
-              url="//player.vimeo.com/video/374265101?title=0&portrait=0&byline=0&autoplay=0&responsive=1"
+              url="https://www.youtube.com/embed/BL22vTGteQU"
               background="transparent"
             />
           </RightColumn>
