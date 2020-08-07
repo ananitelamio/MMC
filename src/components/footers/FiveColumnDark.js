@@ -3,7 +3,7 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 
-import LogoImage from "images/logo-light.svg";
+import LogoImage from "images/logo.svg";
 import { ReactComponent as FacebookIcon } from "images/facebook-icon.svg";
 import { ReactComponent as TwitterIcon } from "images/twitter-icon.svg";
 import { ReactComponent as YoutubeIcon } from "images/youtube-icon.svg";
@@ -12,8 +12,8 @@ const Container = tw.div`relative bg-gray-900 text-gray-100 -mx-8 -mb-8 px-8`;
 const Content = tw.div`max-w-screen-xl mx-auto pt-16 pb-8`
 const FiveColumns = tw.div`flex flex-wrap justify-between`;
 
-const Column = tw.div`w-1/2 md:w-1/5 mb-8 md:mb-0 text-sm sm:text-base text-center md:text-left`;
-const CompanyColumn = tw.div`text-center md:text-left mb-16 lg:mb-0 w-full lg:w-1/5`;
+const Column = tw.div`md:w-1/4 w-full mb-8 md:mb-0 text-sm sm:text-base text-center md:text-left`;
+const CompanyColumn = tw.div`text-center md:text-left mb-16 lg:mb-0 w-full lg:w-1/4`;
 
 const ColumnHeading = tw.h5`font-bold uppercase`;
 
@@ -22,7 +22,7 @@ const LinkListItem = tw.li`mt-3`;
 const Link = tw.a`border-b-2 border-transparent hocus:text-gray-300 hocus:border-gray-100 pb-1 transition duration-300`;
 
 const LogoContainer = tw.div`flex items-center justify-center lg:justify-start`;
-const LogoImg = tw.img`w-8`;
+const LogoImg = tw.img`h-16`;
 const LogoText = tw.h5`ml-2 text-xl font-black`;
 
 const CompanyAddress = tw.p`mt-4 max-w-xs font-medium text-sm mx-auto lg:mx-0 lg:mr-4 leading-loose text-center lg:text-left`;
@@ -69,8 +69,6 @@ export default () => {
             </SocialLinksContainer>
           </CompanyColumn>
           <Column>
-          </Column>
-          <Column>
             <ColumnHeading>Quick Links</ColumnHeading>
             <LinkList>
               <LinkListItem>
@@ -96,7 +94,10 @@ export default () => {
             <ColumnHeading>Contact</ColumnHeading>
             <LinkList>
               <LinkListItem>
-                +242 06 571 94 21 / +221 77 205 33 57
+                +242 06 571 94 21
+              </LinkListItem>
+              <LinkListItem>
+                +221 77 205 33 57
               </LinkListItem>
               <LinkListItem>
                 <Link href="mailto:support@mymobilecash.net">support@mymobilecash.net</Link> 

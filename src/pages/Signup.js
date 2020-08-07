@@ -12,7 +12,7 @@ import googleIconImageSrc from "images/google-icon.png";
 import twitterIconImageSrc from "images/twitter-icon.png";
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
 
-const Container = tw(ContainerBase)`min-h-screen bg-blue-600 text-white font-medium flex justify-center -m-8`;
+const Container = tw(ContainerBase)`min-h-screen bg-secondaryBlue-600 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
 const MainContainer = tw.div`lg:w-2/3 xl:w-2/3 p-6 sm:p-12`;
 const LogoLink = tw.a``;
@@ -24,11 +24,11 @@ const FormContainer = tw.div`w-full flex-1 mt-8`;
 const Form = tw.form`mx-auto flex flex-col`;
 const InputsRow = tw.div`-mx-3 md:flex mb-6`;
 const InputWrapper = tw.div`md:w-1/2 px-3 mb-6 md:mb-0`;
-const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5 `;
-const Select = tw.select`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5`;
+const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm hocus:shadow-md focus:outline-none focus:border-gray-400 focus:bg-white mt-5 `;
+const Select = tw.select`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm hocus:shadow-md focus:outline-none focus:border-gray-400 focus:bg-white mt-5`;
 const Error = tw.div`text-red-400 text-sm`;
 const SubmitButton = styled.button`
-  ${tw`mt-5 tracking-wide font-semibold bg-blue-600 text-gray-100 w-full py-4 rounded-lg hover:bg-blue-800 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}
+  ${tw`mt-5 tracking-wide font-semibold bg-secondaryBlue-600 text-gray-100 w-full py-4 rounded-lg hover:bg-bg-secondaryBlue-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}
   .icon {
     ${tw`w-6 h-6 -ml-2`}
   }
@@ -283,7 +283,7 @@ const initialValues = {
   firstName: "",
   lastName: "",
   dob: "",
-  gender: "",
+  customerGender: "",
   address: "",
   city: "",
   postcode: "",
@@ -294,6 +294,25 @@ const initialValues = {
 };
 
 const onSubmit = (data) => {
+    const temp = data.address;
+
+    delete data.address;
+
+    data.address = {
+        "address1": temp,
+        "city": data.city,
+        "countryCommonName": "CONGO",
+        "postcode": data.postcode,
+        "countryIso3": "COG"
+    };
+
+    data.customerType = "INDIVIDUAL";
+
+    delete data.city;
+    delete data.country;
+    delete data.postcode;
+
+    console.log(data);
 
     moneyTransfer.registerCustomer(data)
       .then(response => {
@@ -339,7 +358,7 @@ export default ({
     const firstNameProps = formik.getFieldProps("firstName");
     const lastNameProps = formik.getFieldProps("lastName");
     const dobProps = formik.getFieldProps("dob");
-    const genderProps = formik.getFieldProps("gender");
+    const customerGenderProps = formik.getFieldProps("customerGender");
     const addressProps = formik.getFieldProps("address");
     const cityProps = formik.getFieldProps("city");
     const postcodeProps = formik.getFieldProps("postcode");
@@ -443,12 +462,12 @@ export default ({
 
                 <InputsRow>
                     <InputWrapper>
-                        <Select name="gender" {...genderProps}>
-                            <option>Gender</option>
-                            <option>Male</option>
-                            <option>Female</option>
+                        <Select name="customerGender" {...customerGenderProps}>
+                            <option>customerGender</option>
+                            <option>MALE</option>
+                            <option>FEMALE</option>
                         </Select>
-                        {formik.touched.gender && formik.errors.gender ? (<Error>{formik.errors.gender}</Error>): null}
+                        {formik.touched.customerGender && formik.errors.customerGender ? (<Error>{formik.errors.customerGender}</Error>): null}
                     </InputWrapper>
                 </InputsRow>
                 

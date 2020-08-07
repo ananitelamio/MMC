@@ -23,13 +23,13 @@ export const NavLinks = tw.div`inline-block`;
 export const NavLink = tw.a`
   text-lg my-2 lg:text-sm lg:mx-6 lg:my-0
   font-semibold tracking-wide transition duration-300
-  pb-1 border-b-2 text-yellow-500 border-transparent hover:border-blue-500 hocus:text-blue-500
+  pb-1 border-b-2 text-primaryOrange-500 border-transparent hover:border-secondaryBlue-600 hocus:text-secondaryBlue-600
 `;
 
 export const PrimaryLink = tw(NavLink)`
   lg:mx-0
-  px-8 py-3 rounded bg-blue-500 text-gray-100
-  hocus:bg-blue-700 hocus:text-gray-200 focus:shadow-outline
+  px-8 py-3 rounded bg-secondaryBlue-600 text-gray-100
+  hocus:bg-secondaryBlue-700 hocus:text-gray-200 focus:shadow-outline
   border-b-0
 `;
 

@@ -1,30 +1,29 @@
 import React, { useState } from "react";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import moneyTransfer from "../../services/moneyTransfer";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
-import { Container as ContainerBase } from "components/misc/Layouts";
 import tw from "twin.macro";
 import styled from "styled-components";
 import {css} from "styled-components/macro"; //eslint-disable-line
-import logo from "images/logo.svg";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg";
 
-const Container = tw(ContainerBase)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
-const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
-const MainContainer = tw.div`lg:w-1/2 xl:w-5/12 p-6 sm:p-12`;
-const LogoLink = tw.a``;
-const LogoImage = tw.img`h-12 mx-auto`;
 const MainContent = tw.div`mt-12 flex flex-col items-center`;
 const Heading = tw.h1`text-2xl xl:text-3xl font-extrabold`;
 const FormContainer = tw.div`w-full flex-1 mt-8`;
 
-const DividerTextContainer = tw.div`my-12 border-b text-center relative`;
-const DividerText = tw.div`leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform -translate-y-1/2 absolute inset-x-0 top-1/2 bg-transparent`;
-
-const Form = tw.form`mx-auto max-w-xs`;
-const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5 first:mt-0`;
+const Form = tw.form`mx-auto max-w-sm flex flex-col`;
+const InputsRow = tw.div`flex justify-between`;
+const InputCurrrency = tw.div`w-3/4`;
+const InputAmount = tw.div`w-2/6`;
+const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm hocus:shadow-md focus:outline-none focus:border-gray-400 focus:bg-white mt-5 `;
+const Select = tw.select`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm hocus:shadow-md focus:outline-none focus:border-gray-400 focus:bg-white mt-5`;
+const StatsRow = tw.div`flex justify-between mt-5`;
+const Stats = tw.div`w-5/12`;
+const StatTitle = tw.p`text-xs text-center`;
+const StatInfo = tw.p`text-sm text-center`;
 const SubmitButton = styled.button`
-  ${tw`mt-5 tracking-wide font-semibold bg-primary-500 text-gray-100 w-full py-4 rounded-lg hover:bg-primary-900 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}
+  ${tw`mt-5 tracking-wide font-semibold bg-secondaryBlue-600 text-gray-100 w-full py-4 rounded-lg hover:bg-secondaryBlue-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}
   .icon {
     ${tw`w-6 h-6 -ml-2`}
   }
@@ -33,1266 +32,149 @@ const SubmitButton = styled.button`
   }
 `;
 
-const validationSchema = Yup.object().shape({
-  email: Yup
-    .string()
-    .email()
-    .required("Email is a required field"),
-  currentPassword: Yup
-    .string()
-    .required("Please enter your password")
-});
 
-const initialValues = {
-  email: "",
-  currentPassword: ""
-};
-
-const OC = [
+const originCountries = [
         {
             "iso3Code": "COG",
-            "iso2Code": null,
-            "common_name": "Congo",
-            "flag": "https://mta-assets.themoneytransferapplication.com/flags/COG.png",
-            "telephoneCode": null,
-            "capital": null,
-            "currencyCode": null,
-            "currencySymbol": null,
-            "delivery_methods": null,
-            "destinationCountries": [
-                {
-                    "iso3Code": "BEN",
-                    "iso2Code": null,
-                    "common_name": "Benin",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Benin.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": [
-                        {
-                            "name": "ACCOUNTPAYMENT",
-                            "label": "Bank Transfer",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "CASHPICKUP",
-                            "label": "Cash Pickup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "MOBILE_MONEY",
-                            "label": "Mobile Money",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "AIRTIME_TOPUP",
-                            "label": "Airtime Topup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        }
-                    ]
-                },
-                {
-                    "iso3Code": "CMR",
-                    "iso2Code": null,
-                    "common_name": "Cameroon",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Cameroon.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": [
-                        {
-                            "name": "ACCOUNTPAYMENT",
-                            "label": "Bank Transfer",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "CASHPICKUP",
-                            "label": "Cash Pickup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "MOBILE_MONEY",
-                            "label": "Mobile Money",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "AIRTIME_TOPUP",
-                            "label": "Airtime Topup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        }
-                    ]
-                },
-                {
-                    "iso3Code": "CAF",
-                    "iso2Code": null,
-                    "common_name": "Central African Republic",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Central African Republic.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": [
-                        {
-                            "name": "ACCOUNTPAYMENT",
-                            "label": "Bank Transfer",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "CASHPICKUP",
-                            "label": "Cash Pickup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "MOBILE_MONEY",
-                            "label": "Mobile Money",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "AIRTIME_TOPUP",
-                            "label": "Airtime Topup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        }
-                    ]
-                },
-                {
-                    "iso3Code": "COG",
-                    "iso2Code": null,
-                    "common_name": "Congo",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Congo.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": [
-                        {
-                            "name": "ACCOUNTPAYMENT",
-                            "label": "Bank Transfer",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "CASHPICKUP",
-                            "label": "Cash Pickup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "MOBILE_MONEY",
-                            "label": "Mobile Money",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "AIRTIME_TOPUP",
-                            "label": "Airtime Topup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        }
-                    ]
-                },
-                {
-                    "iso3Code": "CIV",
-                    "iso2Code": null,
-                    "common_name": "Ivory Coast",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Ivory Coast.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": [
-                        {
-                            "name": "CASHPICKUP",
-                            "label": "Cash Pickup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "MOBILE_MONEY",
-                            "label": "Mobile Money",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "AIRTIME_TOPUP",
-                            "label": "Airtime Topup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        }
-                    ]
-                },
-                {
-                    "iso3Code": "KEN",
-                    "iso2Code": null,
-                    "common_name": "Kenya",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Kenya.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": [
-                        {
-                            "name": "ACCOUNTPAYMENT",
-                            "label": "Bank Transfer",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "CASHPICKUP",
-                            "label": "Cash Pickup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "MOBILE_MONEY",
-                            "label": "Mobile Money",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "AIRTIME_TOPUP",
-                            "label": "Airtime Topup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        }
-                    ]
-                },
-                {
-                    "iso3Code": "MLI",
-                    "iso2Code": null,
-                    "common_name": "Mali",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Mali.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": [
-                        {
-                            "name": "ACCOUNTPAYMENT",
-                            "label": "Bank Transfer",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "CASHPICKUP",
-                            "label": "Cash Pickup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "MOBILE_MONEY",
-                            "label": "Mobile Money",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "AIRTIME_TOPUP",
-                            "label": "Airtime Topup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        }
-                    ]
-                },
-                {
-                    "iso3Code": "MAR",
-                    "iso2Code": null,
-                    "common_name": "Morocco",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Morocco.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": [
-                        {
-                            "name": "ACCOUNTPAYMENT",
-                            "label": "Bank Transfer",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "CASHPICKUP",
-                            "label": "Cash Pickup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "MOBILE_MONEY",
-                            "label": "Mobile Money",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "AIRTIME_TOPUP",
-                            "label": "Airtime Topup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        }
-                    ]
-                },
-                {
-                    "iso3Code": "NGA",
-                    "iso2Code": null,
-                    "common_name": "Nigeria",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Nigeria.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": [
-                        {
-                            "name": "ACCOUNTPAYMENT",
-                            "label": "Bank Transfer",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null,
-                            "senderCurrencies": [
-                                "XAF"
-                            ],
-                            "receiverCurrencies": [
-                                "NGN"
-                            ]
-                        },
-                        {
-                            "name": "CASHPICKUP",
-                            "label": "Cash Pickup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null,
-                            "currencies": [
-                                "XAF"
-                            ],
-                            "receiverCurrencies": [
-                                "NGN"
-                            ]
-                        },
-                        {
-                            "name": "MOBILE_MONEY",
-                            "label": "Mobile Money",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null,
-                            "currencies": [
-                                "XAF"
-                            ],
-                            "receiverCurrencies": [
-                                "NGN"
-                            ]
-                        },
-                        {
-                            "name": "AIRTIME_TOPUP",
-                            "label": "Airtime Topup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "BILL_PAYMENT",
-                            "label": "BILL PAYMENT",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        }
-                    ]
-                },
-                {
-                    "iso3Code": "RWA",
-                    "iso2Code": null,
-                    "common_name": "Rwanda",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Rwanda.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": [
-                        {
-                            "name": "ACCOUNTPAYMENT",
-                            "label": "Bank Transfer",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "CASHPICKUP",
-                            "label": "Cash Pickup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "MOBILE_MONEY",
-                            "label": "Mobile Money",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "AIRTIME_TOPUP",
-                            "label": "Airtime Topup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        }
-                    ]
-                },
-                {
-                    "iso3Code": "SEN",
-                    "iso2Code": null,
-                    "common_name": "Senegal",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Senegal.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": [
-                        {
-                            "name": "ACCOUNTPAYMENT",
-                            "label": "Bank Transfer",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "CASHPICKUP",
-                            "label": "Cash Pickup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "MOBILE_MONEY",
-                            "label": "Mobile Money",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "AIRTIME_TOPUP",
-                            "label": "Airtime Topup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        }
-                    ]
-                },
-                {
-                    "iso3Code": "ZAF",
-                    "iso2Code": null,
-                    "common_name": "South Africa",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/South Africa.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": [
-                        {
-                            "name": "ACCOUNTPAYMENT",
-                            "label": "Bank Transfer",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "CASHPICKUP",
-                            "label": "Cash Pickup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "MOBILE_MONEY",
-                            "label": "Mobile Money",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "AIRTIME_TOPUP",
-                            "label": "Airtime Topup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "BILL_PAYMENT",
-                            "label": "BILL PAYMENT",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        }
-                    ]
-                },
-                {
-                    "iso3Code": "UGA",
-                    "iso2Code": null,
-                    "common_name": "Uganda",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Uganda.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": [
-                        {
-                            "name": "ACCOUNTPAYMENT",
-                            "label": "Bank Transfer",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "CASHPICKUP",
-                            "label": "Cash Pickup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "MOBILE_MONEY",
-                            "label": "Mobile Money",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "AIRTIME_TOPUP",
-                            "label": "Airtime Topup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        }
-                    ]
-                },
-                {
-                    "iso3Code": "ZMB",
-                    "iso2Code": null,
-                    "common_name": "Zambia",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Zambia.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": [
-                        {
-                            "name": "ACCOUNTPAYMENT",
-                            "label": "Bank Transfer",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "CASHPICKUP",
-                            "label": "Cash Pickup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "MOBILE_MONEY",
-                            "label": "Mobile Money",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        },
-                        {
-                            "name": "AIRTIME_TOPUP",
-                            "label": "Airtime Topup",
-                            "allowNoneMemberToBookDeliveryMethod": false,
-                            "originating_currenies": null
-                        }
-                    ]
-                }
-            ]
+            "common_name": "Congo"
         },
         {
             "iso3Code": "CMR",
-            "iso2Code": null,
-            "common_name": "Cameroon",
-            "flag": "https://mta-assets.themoneytransferapplication.com/flags/CMR.png",
-            "telephoneCode": null,
-            "capital": null,
-            "currencyCode": null,
-            "currencySymbol": null,
-            "delivery_methods": null,
-            "destinationCountries": [
-                {
-                    "iso3Code": "BEN",
-                    "iso2Code": null,
-                    "common_name": "Benin",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Benin.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "CMR",
-                    "iso2Code": null,
-                    "common_name": "Cameroon",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Cameroon.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "CAF",
-                    "iso2Code": null,
-                    "common_name": "Central African Republic",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Central African Republic.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "COG",
-                    "iso2Code": null,
-                    "common_name": "Congo",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Congo.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "GHA",
-                    "iso2Code": null,
-                    "common_name": "Ghana",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Ghana.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "CIV",
-                    "iso2Code": null,
-                    "common_name": "Ivory Coast",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Ivory Coast.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "KEN",
-                    "iso2Code": null,
-                    "common_name": "Kenya",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Kenya.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "MLI",
-                    "iso2Code": null,
-                    "common_name": "Mali",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Mali.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "MAR",
-                    "iso2Code": null,
-                    "common_name": "Morocco",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Morocco.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "NGA",
-                    "iso2Code": null,
-                    "common_name": "Nigeria",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Nigeria.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "RWA",
-                    "iso2Code": null,
-                    "common_name": "Rwanda",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Rwanda.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "SEN",
-                    "iso2Code": null,
-                    "common_name": "Senegal",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Senegal.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "ZAF",
-                    "iso2Code": null,
-                    "common_name": "South Africa",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/South Africa.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "UGA",
-                    "iso2Code": null,
-                    "common_name": "Uganda",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Uganda.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "ZMB",
-                    "iso2Code": null,
-                    "common_name": "Zambia",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Zambia.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                }
-            ]
+            "common_name": "Cameroon"
         },
         {
             "iso3Code": "BEN",
-            "iso2Code": null,
-            "common_name": "Benin",
-            "flag": "https://mta-assets.themoneytransferapplication.com/flags/BEN.png",
-            "telephoneCode": null,
-            "capital": null,
-            "currencyCode": null,
-            "currencySymbol": null,
-            "delivery_methods": null,
-            "destinationCountries": [
-                {
-                    "iso3Code": "BEN",
-                    "iso2Code": null,
-                    "common_name": "Benin",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Benin.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "CMR",
-                    "iso2Code": null,
-                    "common_name": "Cameroon",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Cameroon.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "CAF",
-                    "iso2Code": null,
-                    "common_name": "Central African Republic",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Central African Republic.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "COG",
-                    "iso2Code": null,
-                    "common_name": "Congo",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Congo.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "CUB",
-                    "iso2Code": null,
-                    "common_name": "Cuba",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Cuba.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "COD",
-                    "iso2Code": null,
-                    "common_name": "Democratic Republic of the Congo",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Democratic Republic of the Congo.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "FRA",
-                    "iso2Code": null,
-                    "common_name": "France",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/France.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "GHA",
-                    "iso2Code": null,
-                    "common_name": "Ghana",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Ghana.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "CIV",
-                    "iso2Code": null,
-                    "common_name": "Ivory Coast",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Ivory Coast.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "KEN",
-                    "iso2Code": null,
-                    "common_name": "Kenya",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Kenya.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "MLI",
-                    "iso2Code": null,
-                    "common_name": "Mali",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Mali.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "MAR",
-                    "iso2Code": null,
-                    "common_name": "Morocco",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Morocco.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "NGA",
-                    "iso2Code": null,
-                    "common_name": "Nigeria",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Nigeria.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "RWA",
-                    "iso2Code": null,
-                    "common_name": "Rwanda",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Rwanda.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "SEN",
-                    "iso2Code": null,
-                    "common_name": "Senegal",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Senegal.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "ZAF",
-                    "iso2Code": null,
-                    "common_name": "South Africa",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/South Africa.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "UGA",
-                    "iso2Code": null,
-                    "common_name": "Uganda",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Uganda.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "ZMB",
-                    "iso2Code": null,
-                    "common_name": "Zambia",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Zambia.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                }
-            ]
+            "common_name": "Benin"
         },
         {
             "iso3Code": "CIV",
-            "iso2Code": null,
-            "common_name": "Ivory Coast",
-            "flag": "https://mta-assets.themoneytransferapplication.com/flags/CIV.png",
-            "telephoneCode": null,
-            "capital": null,
-            "currencyCode": null,
-            "currencySymbol": null,
-            "delivery_methods": null,
-            "destinationCountries": [
-                {
-                    "iso3Code": "BEN",
-                    "iso2Code": null,
-                    "common_name": "Benin",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Benin.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "CMR",
-                    "iso2Code": null,
-                    "common_name": "Cameroon",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Cameroon.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "CAF",
-                    "iso2Code": null,
-                    "common_name": "Central African Republic",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Central African Republic.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "COG",
-                    "iso2Code": null,
-                    "common_name": "Congo",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Congo.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "CUB",
-                    "iso2Code": null,
-                    "common_name": "Cuba",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Cuba.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "COD",
-                    "iso2Code": null,
-                    "common_name": "Democratic Republic of the Congo",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Democratic Republic of the Congo.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "FRA",
-                    "iso2Code": null,
-                    "common_name": "France",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/France.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "GHA",
-                    "iso2Code": null,
-                    "common_name": "Ghana",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Ghana.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "CIV",
-                    "iso2Code": null,
-                    "common_name": "Ivory Coast",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Ivory Coast.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "KEN",
-                    "iso2Code": null,
-                    "common_name": "Kenya",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Kenya.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "MLI",
-                    "iso2Code": null,
-                    "common_name": "Mali",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Mali.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "MAR",
-                    "iso2Code": null,
-                    "common_name": "Morocco",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Morocco.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "NGA",
-                    "iso2Code": null,
-                    "common_name": "Nigeria",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Nigeria.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "RWA",
-                    "iso2Code": null,
-                    "common_name": "Rwanda",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Rwanda.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "SEN",
-                    "iso2Code": null,
-                    "common_name": "Senegal",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Senegal.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "ZAF",
-                    "iso2Code": null,
-                    "common_name": "South Africa",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/South Africa.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "UGA",
-                    "iso2Code": null,
-                    "common_name": "Uganda",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Uganda.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "ZMB",
-                    "iso2Code": null,
-                    "common_name": "Zambia",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Zambia.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                }
-            ]
+            "common_name": "Ivory Coast"
         },
         {
             "iso3Code": "SEN",
-            "iso2Code": null,
-            "common_name": "Senegal",
-            "flag": "https://mta-assets.themoneytransferapplication.com/flags/SEN.png",
-            "telephoneCode": null,
-            "capital": null,
-            "currencyCode": null,
-            "currencySymbol": null,
-            "delivery_methods": null,
-            "destinationCountries": [
-                {
-                    "iso3Code": "BEN",
-                    "iso2Code": null,
-                    "common_name": "Benin",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Benin.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "CMR",
-                    "iso2Code": null,
-                    "common_name": "Cameroon",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Cameroon.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "COG",
-                    "iso2Code": null,
-                    "common_name": "Congo",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Congo.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                },
-                {
-                    "iso3Code": "SEN",
-                    "iso2Code": null,
-                    "common_name": "Senegal",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Senegal.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                }
-            ]
+            "common_name": "Senegal"
         },
         {
             "iso3Code": "GHA",
-            "iso2Code": null,
-            "common_name": "Ghana",
-            "flag": "https://mta-assets.themoneytransferapplication.com/flags/GHA.png",
-            "telephoneCode": null,
-            "capital": null,
-            "currencyCode": null,
-            "currencySymbol": null,
-            "delivery_methods": null,
-            "destinationCountries":  [
-                {
-                    "iso3Code": "GHA",
-                    "iso2Code": null,
-                    "common_name": "Ghana",
-                    "flag": "https://mta-assets.themoneytransferapplication.com/flags/Ghana.png",
-                    "telephoneCode": null,
-                    "capital": null,
-                    "currencyCode": null,
-                    "currencySymbol": null,
-                    "delivery_methods": null
-                }
-            ]
+            "common_name": "Ghana"
         }
     ];
 
-
+const initialValues = {
+  originCountry: "",
+  destinationOriginCountry: "",
+  deliveryMethod: "",
+  currency: "",
+  deliveryCurrency: ""
+};
 
 export default ({
-  logoLinkUrl = "/",
-  headingText = "Get a quote now",
-  submitButtonText = "Sign In",
+  headingText = "Send Money",
+  submitButtonText = "GET STARTED",
   SubmitButtonIcon = LoginIcon
-
 }) => {
   const formik = useFormik({
         initialValues,
-        validationSchema,
+        //validationSchema,
         onSubmit: values => {
             console.log(JSON.stringify(values, null, 2));
         }
     });
 
+    const [payload, setPayload] = useState({
+        chargeCategory: "MONEYTRANSFER",
+        conversion: "false",
+        deriveAmount: 1,
+        deriveAmountCurrency: "",
+        destinationCountry: "",
+        inverseCalculation: "false",
+        principalAmount: 1,
+        principalAmountCurrency: "",
+        tradeOriginatingCountry: "",
+        transactionType: ""
+    });
+
+    const [destinationCountries, setdestinationCountries] = useState([]);
+    const [deliveryMethods, setDeliveryMethods] = useState([]);
+    const [currencies, setCurrencies] = useState([]);
+    const [deliveryCurrencies, setDeliveryCurrencies] = useState([]);
     
-    const emailProps = formik.getFieldProps("email");
-    const currentPasswordProps = formik.getFieldProps("currentPassword");
+    const originCountryProps = formik.getFieldProps("originCountry");
+    const destinationCountryProps = formik.getFieldProps("destinationCountry");
+    const deliveryMethodProps = formik.getFieldProps("deliveryMethod");
+    const currencyProps = formik.getFieldProps("currency");
+    const deliveryCurrencyProps = formik.getFieldProps("deliveryCurrency");
+
+    const getDestinationCountry = (data, setFieldValue) => {
+        setFieldValue('originCountry', data);
+        setFieldValue('destinationCountry',''); 
+        setPayload(payload => ({...payload, tradeOriginatingCountry : data}));
+        setdestinationCountries([]);
+        setDeliveryMethods([]);
+        moneyTransfer.supportedDestinationCountry(data)
+            .then(response => {
+                console.log(response);
+                setdestinationCountries(response.data.data.countries);
+                console.log(destinationCountries);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+
+    const getDeliveryMethods = (data, setFieldValue) => {
+        setFieldValue('destinationCountry', data);
+        setPayload(payload => ({...payload, destinationCountry : data}));
+        setDeliveryMethods([]);
+        moneyTransfer.supportedDeliveryMethods(payload.tradeOriginatingCountry,payload.destinationCountry)
+        .then(response => {
+            console.log(response);
+            setDeliveryMethods(response.data.data);
+            console.log(deliveryMethods);
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    };
+
+    const getCurrencies = (data, setFieldValue) => {
+        setFieldValue("deliveryMethod", data);
+        setPayload(payload => ({...payload, transactionType : data}));
+        moneyTransfer.supportedCurrencies(payload.tradeOriginatingCountry,payload.destinationCountry,payload.transactionType)
+            .then(response => {
+                console.log(response);
+                setCurrencies(response.data.data.currencies);
+                getDeliveryCurrencies(response.data.data.currencies[0]);
+                callQuote(payload);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+
+    const callQuote = (data) => {
+        moneyTransfer.callQuote(data)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+
+    const getDeliveryCurrencies = (data, setFieldValue) => {
+        console.log(data);
+        if(setFieldValue) setFieldValue("currency", data);
+        payload.principalAmountCurrency = data;
+        moneyTransfer.supportedDeliveryCurrencies(payload.tradeOriginatingCountry,payload.destinationCountry,payload.transactionType,data)
+            .then(response => {
+                console.log(response);
+                setDeliveryCurrencies(response.data.data.currencies);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
 
     return (
         <AnimationRevealPage>
@@ -1300,15 +182,86 @@ export default ({
                     <Heading>{headingText}</Heading>
                     <FormContainer>
                     <Form onSubmit={formik.handleSubmit}>
-                        <Input type="email" placeholder="Email" name="email" {...emailProps} />
-                        {formik.touched.email && formik.errors.email ? (<div>{formik.errors.email}</div>): null}
+                        <Select name="originCountry" {...originCountryProps} onChange={e => getDestinationCountry(e.target.value, formik.setFieldValue)}>
+                            <option>Origin Country</option>
+                            {originCountries.map(({ iso3Code , common_name}) => <option value={iso3Code} key={common_name}>{common_name}</option>)}
+                        </Select>
 
-                        <Input type="password" placeholder="Password" name="currentPassword" {...currentPasswordProps} />
-                        {formik.touched.currentPassword && formik.errors.currentPassword ? (<div>{formik.errors.currentPassword}</div>): null}
+                        {  
+                            destinationCountries.length > 0 &&
+                            <Select name="destinationCountry" {...destinationCountryProps} onChange={e => getDeliveryMethods(e.target.value, formik.setFieldValue)}>
+                                <option>Destination Country</option>
+                                {destinationCountries.map(({ iso3Code , common_name}) => <option value={iso3Code} key={common_name}>{common_name}</option>)}
+                            </Select>
+                        }
+
+                        {
+                            deliveryMethods.length > 0 &&
+                            <Select name="deliveryMethod" {...deliveryMethodProps} onChange={e => getCurrencies(e.target.value, formik.setFieldValue)}>
+                                <option>Select Delivery Method</option>
+                                {deliveryMethods.map(({ name , label}) => <option value={name} key={label}>{label}</option>)}
+                            </Select>
+                        }   
+
+                        {
+                            (currencies.length > 0 && deliveryCurrencies.length > 0) && <>
+                            <InputsRow>
+                                <InputCurrrency>
+                                    <Input id="principalAmount" name="principalAmount" type="text" placeholder="Amount to send"/>
+                                </InputCurrrency>
+                                
+                                <InputAmount>
+                                    <Select name="currency" {...currencyProps} onChange={e => getDeliveryCurrencies(e.target.value, formik.setFieldValue)}>
+                                        {currencies.map( currency => <option value={currency} key={currency}>{currency}</option>)}
+                                    </Select>
+                                </InputAmount>
+                            </InputsRow>
+                            
+                            <InputsRow>
+                                <InputCurrrency>
+                                    <Input id="principalAmount" name="principalAmount" type="text" placeholder="Amount to receive" />
+                                </InputCurrrency>
+
+                                <InputAmount>
+                                    <Select name="deliveryCurrency" {...deliveryCurrencyProps}>
+                                        {deliveryCurrencies.map(deliveryCurrency => <option value={deliveryCurrency} key={deliveryCurrency}>{deliveryCurrency}</option>)}
+                                    </Select>
+                                </InputAmount>
+                            </InputsRow> </>
+                        }
+
+                        <StatsRow>
+                            <Stats>
+                                <StatTitle>
+                                    Exchange rate
+                                </StatTitle>
+                                <StatInfo>
+                                    707.13 XOF
+                                </StatInfo>
+                            </Stats>
+
+                            <Stats>
+                                <StatTitle>
+                                    Fee
+                                </StatTitle>
+                                <StatInfo>
+                                    0.00 GBP
+                                </StatInfo>
+                            </Stats>
+
+                            <Stats>
+                                <StatTitle>
+                                    Total to pay
+                                </StatTitle>
+                                <StatInfo>
+                                    10000.00 GBP
+                                </StatInfo>
+                            </Stats>
+                        </StatsRow>
 
                         <SubmitButton type="submit">
-                        <SubmitButtonIcon className="icon" />
-                        <span className="text">{submitButtonText}</span>
+                            <SubmitButtonIcon className="icon" />
+                            <span className="text">{submitButtonText}</span>
                         </SubmitButton>
                     </Form>
                     </FormContainer>

@@ -30,7 +30,7 @@ const FAQ = tw.div`cursor-pointer mt-8 select-none border lg:border-0 px-8 py-4 
 const Question = tw.dt`flex justify-between items-center`;
 const QuestionText = tw.span`text-lg lg:text-xl font-semibold`;
 const QuestionToggleIcon = styled.span`
-  ${tw`ml-2 bg-blue-400 text-gray-100 p-1 rounded-full group-hover:bg-blue-700 group-hover:text-gray-200 transition duration-300`}
+  ${tw`ml-2 bg-secondaryBlue-600 text-gray-100 p-1 rounded-full group-hover:bg-secondaryBlue-700 group-hover:text-gray-200 transition duration-300`}
   svg {
     ${tw`w-4 h-4`}
   }
@@ -41,7 +41,7 @@ export default ({
   subheading = "",
   heading = "Questions",
   description = "Here are some frequently asked questions about our hotels from our loving customers. Should you have any other questions, feel free to reach out via the contact form below.",
-  imageSrc = "https://images.unsplash.com/photo-1579427421635-a0015b804b2e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1024&q=80",
+  imageSrc,
   imageContain = false,
   imageShadow = true,
   faqs = null

@@ -11,8 +11,7 @@ import Testimonial from "components/testimonials/TwoColumnWithImageAndProfilePic
 import FAQ from "components/faqs/SimpleWithSideImage.js";
 import ContactUsForm from "components/forms/TwoColContactUsWithIllustration.js";
 import Footer from "components/footers/FiveColumnDark.js";
-import Quote from "components/forms/Quote.js";
-import customerSupportIllustrationSrc from "images/customer-support-illustration.svg";
+import customerSupportIllustrationSrc from "images/faq.svg";
 
 export default () => (
   <AnimationRevealPage>
@@ -24,7 +23,7 @@ export default () => (
       subheading="Testimonials"
       heading={
         <>
-          Our Clients<span tw="text-yellow-400">Love Us.</span>
+          Our Clients<span tw="text-primaryOrange-500">Love Us.</span>
         </>
       }
       description="Here are what some of our amazing customers are saying about our services."
@@ -69,7 +68,7 @@ export default () => (
       subheading="FAQs"
       heading={
         <>
-          Do you have <span tw="text-yellow-400">Questions ?</span>
+          Do you have <span tw="text-primaryOrange-500">Questions ?</span>
         </>
       }
     />

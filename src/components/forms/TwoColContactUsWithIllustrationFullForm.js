@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
-import EmailIllustrationSrc from "images/email-illustration.svg";
+import EmailIllustrationSrc from "images/support.svg";
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
@@ -29,7 +29,7 @@ const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:t
 
 const Form = tw.form`mt-8 md:mt-10 text-sm flex flex-col max-w-sm mx-auto md:mx-0`
 const InputWrapper = tw.div`px-3 mt-6`;
-const Input = tw.input`w-full first:mt-0 border-b-2 py-3 focus:outline-none font-medium transition duration-300 hocus:border-primary-500`
+const Input = tw.input`w-full first:mt-0 border-b-2 py-3 focus:outline-none font-medium transition duration-300 hocus:border-secondaryBlue`
 const Textarea = styled(Input).attrs({as: "textarea"})`
   ${tw`h-24`}
 `
@@ -74,8 +74,8 @@ const onSubmit = (data) => {
 
 export default ({
   subheading = "Contact Us",
-  heading = <>Our team is at your disposal <wbr/> <span tw="text-primary-500">to answer your questions.</span></>,
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  heading = <>Our team is at your disposal <wbr/> <span tw="text-primaryOrange-500">to answer your questions.</span></>,
+  description = "",
   submitButtonText = "Send",
   formAction = "#",
   formMethod = "get",
@@ -105,7 +105,7 @@ export default ({
           <TextContent>
             {subheading && <Subheading>{subheading}</Subheading>}
             <Heading>{heading}</Heading>
-            {description && <Description>{description}</Description>}
+            {description.length ? <Description>{description}</Description> : null }
             <Form onSubmit={formik.handleSubmit}>
               <InputWrapper>
                 <Input type="text" name="name" placeholder="Full Name" {...nameProps}/>

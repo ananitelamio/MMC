@@ -43,7 +43,7 @@ const TextContainer = styled.div(props => [
   props.textOnLeft ? tw`lg:pr-12 lg:order-first` : tw`lg:pl-12 lg:order-last`
 ]);
 
-const Subheading = tw(SubheadingBase)`mb-4 text-yellow-500`;
+const Subheading = tw(SubheadingBase)`mb-4 text-primaryOrange-500`;
 const HeadingTitle = tw(SectionHeading)`lg:text-left leading-tight`;
 const Description = tw.p`max-w-md text-center mx-auto lg:mx-0 lg:text-left lg:max-w-none leading-relaxed text-sm sm:text-base lg:text-lg font-medium mt-4 text-secondary-100`;
 
@@ -52,11 +52,11 @@ const Quote = tw.blockquote`text-center lg:text-left text-sm sm:text-lg lg:text-
 const CustomerInfo = tw.div`mt-6 flex flex-col sm:flex-row items-center justify-center lg:justify-start`;
 const CustomerProfilePicture = tw.img`rounded-full w-20 h-20`;
 const CustomerTextInfo = tw.div`text-center lg:text-left sm:ml-6 mt-2 sm:mt-0`;
-const CustomerName = tw.h5`font-semibold text-xl lg:text-2xl xl:text-3xl text-blue-500`;
+const CustomerName = tw.h5`font-semibold text-xl lg:text-2xl xl:text-3xl text-secondaryBlue-600`;
 const CustomerTitle = tw.p`font-medium text-secondary-100`;
 
-const QuotesLeft = tw(QuotesLeftIcon)`w-6 h-6 opacity-75 text-blue-500 inline-block mr-1 -mt-3`;
-const QuotesRight = tw(QuotesRightIcon)`w-6 h-6 opacity-75 text-blue-500 inline-block ml-1 -mt-3`;
+const QuotesLeft = tw(QuotesLeftIcon)`w-6 h-6 opacity-75 text-secondaryBlue-600 inline-block mr-1 -mt-3`;
+const QuotesRight = tw(QuotesRightIcon)`w-6 h-6 opacity-75 text-secondaryBlue-600 inline-block ml-1 -mt-3`;
 
 const DecoratorBlob1 = tw(
   SvgDecoratorBlob1

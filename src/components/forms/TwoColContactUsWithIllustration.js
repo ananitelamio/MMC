@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
-import EmailIllustrationSrc from "images/subscribe.svg";
+import EmailIllustrationSrc from "images/subscriber.svg";
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
@@ -32,7 +32,7 @@ const SubmitButton = tw(PrimaryButtonBase)`inline-block lg:ml-6 mt-6 lg:mt-0`
 
 export default ({
   subheading = "Stay up to date",
-  heading = <>Feel free to <span tw="text-yellow-400">Subscribe </span>and stay informed!<wbr/></>,
+  heading = <>Feel free to <span tw="text-primaryOrange-500">Subscribe </span>and stay informed!<wbr/></>,
   description = "Stay informed about our latest services and innovations to serve you better.",
   submitButtonText = "I subscribe",
   formAction = "#",

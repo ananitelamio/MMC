@@ -28,9 +28,9 @@ const Column = styled.div`
 `;
 
 const Card = styled.div`
-  ${tw`flex flex-col mx-auto max-w-xs items-center px-6 py-10 border-2 border-dashed border-blue-500 rounded-lg mt-12`}
+  ${tw`flex flex-col mx-auto max-w-xs items-center px-6 py-10 rounded-lg mt-12 hover:shadow-2xl transition-shadow duration-1000 bg-secondaryBlue-100`}
   .imageContainer {
-    ${tw`border-2 border-yellow-500 text-center rounded-full p-6 flex-shrink-0 relative`}
+    ${tw`border-2 border-dashed border-secondaryBlue-600 text-center rounded-full p-6 flex-shrink-0 relative`}
     img {
       ${tw`w-8 h-8`}
     }
@@ -39,7 +39,7 @@ const Card = styled.div`
     ${tw`mt-6 text-center`}
   }
   .title {
-    ${tw`mt-2 font-bold text-xl leading-none text-blue-500`}
+    ${tw`mt-2 font-bold text-xl leading-none text-secondaryBlue-600`}
   }
   .description {
     ${tw`mt-3 font-semibold text-secondary-100 text-sm leading-loose`}
@@ -82,7 +82,7 @@ export default () => {
   return (
     <Container>
       <ThreeColumnContainer>
-        <Heading>Our Professional <span tw="text-yellow-500">Services</span></Heading>
+        <Heading>Our Professional <span tw="text-primaryOrange-500">Services</span></Heading>
         {cards.map((card, i) => (
           <Column key={i}>
             <Card>

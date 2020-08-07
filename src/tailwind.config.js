@@ -16,6 +16,48 @@ module.exports = {
       black: '#000',
       white: '#fff',
 
+      primaryBlue: {
+        "default": "#273473",
+        100: "#eceef9",
+        200: "#c6ccec",
+        300: "#a0abdf",
+        400: "#7a89d2",
+        500: "#5467c5",
+        600: "#3a4dab",
+        700: "#2d3c85",
+        800: "#202b5f",
+        900: "#131a39",
+        "dark": "#060913",
+      },
+
+      secondaryBlue: {
+        "default": "#1A75BC",
+        100: "#e9f3fc",
+        200: "#bcdcf6",
+        300: "#8fc5f0",
+        400: "#62aee9",
+        500: "#3597e3",
+        600: "#1c7dca",
+        700: "#16629d",
+        800: "#0f4670",
+        900: "#092a43",
+        "dark": "#030e16",
+      },
+
+      primaryOrange: {
+        "default": "#FBB400",
+        100: "#fff8e5",
+        200: "#ffe9b3",
+        300: "#ffdb80",
+        400: "#ffcc4d",
+        500: "#ffbd1a",
+        600: "#e6a400",
+        700: "#b37f00",
+        800: "#805b00",
+        900: "#4d3700",
+        "dark": "#1a1200",
+      },
+
       primary: {
         100: '#a273ff',
         200: '#935bff',
@@ -769,3 +811,41 @@ module.exports = {
   corePlugins: {},
   plugins: [],
 }
+
+/*
+<Select name="destinationCountry" {...destinationCountryProps}>
+                            <option>Destination Country</option>
+                            {destinationCountries.map(({ iso3Code , common_name}) => <option value={iso3Code} key={common_name}>{common_name}</option>)}
+                        </Select>
+
+                        <Select name="destinationCountry" {...destinationCountryProps}>
+                            <option>Select Delivery Method</option>
+                            {deliveryMethods.map(({ name , label}) => <option value={name} key={label}>{label}</option>)}
+                        </Select>
+
+                        <InputsRow>
+                            <InputCurrrency>
+                                <Input id="principalAmount" name="principalAmount" type="text" placeholder="Amount to send" />
+                            </InputCurrrency>
+                            
+                            <InputAmount>
+                                <Select name="destinationCountry" {...destinationCountryProps}>
+                                    <option>GBP</option>
+                                    {deliveryMethods.map(({ name , label}) => <option value={name} key={label}>{label}</option>)}
+                                </Select>
+                            </InputAmount>
+                                
+                        </InputsRow>
+                        
+                        <InputsRow>
+                            <InputCurrrency>
+                                <Input id="principalAmount" name="principalAmount" type="text" placeholder="Amount to send" />
+                            </InputCurrrency>
+
+                            <InputAmount>
+                                <Select name="destinationCountry" {...destinationCountryProps}>
+                                    <option>USD</option>
+                                    {deliveryMethods.map(({ name , label}) => <option value={name} key={label}>{label}</option>)}
+                                </Select>
+                            </InputAmount>
+                        </InputsRow>*/
