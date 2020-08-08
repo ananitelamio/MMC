@@ -65,7 +65,22 @@ const initialValues = {
   destinationOriginCountry: "",
   deliveryMethod: "",
   currency: "",
-  deliveryCurrency: ""
+  deliveryCurrency: "",
+  fromAmount: "",
+  toAmount: ""
+};
+
+const payload = {
+    chargeCategory: "MONEYTRANSFER",
+    conversion: false,
+    deriveAmount: 1,
+    deriveAmountCurrency: "",
+    destinationCountry: "",
+    inverseCalculation: false,
+    principalAmount: 1,
+    principalAmountCurrency: "",
+    tradeOriginatingCountry: "",
+    transactionType: ""
 };
 
 export default ({
@@ -81,41 +96,30 @@ export default ({
         }
     });
 
-    const [payload, setPayload] = useState({
-        chargeCategory: "MONEYTRANSFER",
-        conversion: "false",
-        deriveAmount: 1,
-        deriveAmountCurrency: "",
-        destinationCountry: "",
-        inverseCalculation: "false",
-        principalAmount: 1,
-        principalAmountCurrency: "",
-        tradeOriginatingCountry: "",
-        transactionType: ""
-    });
-
     const [destinationCountries, setdestinationCountries] = useState([]);
     const [deliveryMethods, setDeliveryMethods] = useState([]);
     const [currencies, setCurrencies] = useState([]);
     const [deliveryCurrencies, setDeliveryCurrencies] = useState([]);
+    const [fromAmount, setFromAmount] = useState([]);
+    const [toAmount, setToAmount] = useState([]);
     
     const originCountryProps = formik.getFieldProps("originCountry");
     const destinationCountryProps = formik.getFieldProps("destinationCountry");
     const deliveryMethodProps = formik.getFieldProps("deliveryMethod");
     const currencyProps = formik.getFieldProps("currency");
     const deliveryCurrencyProps = formik.getFieldProps("deliveryCurrency");
+    const amountProps = formik.getFieldProps("amount");
+    const receivingAmountProps = formik.getFieldProps("receivingAmount");
 
     const getDestinationCountry = (data, setFieldValue) => {
         setFieldValue('originCountry', data);
         setFieldValue('destinationCountry',''); 
-        setPayload(payload => ({...payload, tradeOriginatingCountry : data}));
-        setdestinationCountries([]);
-        setDeliveryMethods([]);
-        moneyTransfer.supportedDestinationCountry(data)
+        payload.tradeOriginatingCountry = data;
+        payload.destinationCountry = '';
+        payload.transactionType = '';
+        moneyTransfer.supportedDestinationCountry(payload.tradeOriginatingCountry)
             .then(response => {
-                console.log(response);
                 setdestinationCountries(response.data.data.countries);
-                console.log(destinationCountries);
             })
             .catch(e => {
                 console.log(e);
@@ -124,13 +128,11 @@ export default ({
 
     const getDeliveryMethods = (data, setFieldValue) => {
         setFieldValue('destinationCountry', data);
-        setPayload(payload => ({...payload, destinationCountry : data}));
-        setDeliveryMethods([]);
+        payload.destinationCountry = data;
+        setFieldValue('deliveryMethod','');
         moneyTransfer.supportedDeliveryMethods(payload.tradeOriginatingCountry,payload.destinationCountry)
         .then(response => {
-            console.log(response);
             setDeliveryMethods(response.data.data);
-            console.log(deliveryMethods);
         })
         .catch(e => {
             console.log(e);
@@ -139,12 +141,24 @@ export default ({
 
     const getCurrencies = (data, setFieldValue) => {
         setFieldValue("deliveryMethod", data);
-        setPayload(payload => ({...payload, transactionType : data}));
+        payload.transactionType = data
         moneyTransfer.supportedCurrencies(payload.tradeOriginatingCountry,payload.destinationCountry,payload.transactionType)
             .then(response => {
-                console.log(response);
                 setCurrencies(response.data.data.currencies);
                 getDeliveryCurrencies(response.data.data.currencies[0]);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+
+    const getDeliveryCurrencies = (data, setFieldValue) => {
+        if(setFieldValue) setFieldValue("currency", data);
+        payload.principalAmountCurrency = data; 
+        moneyTransfer.supportedDeliveryCurrencies(payload.tradeOriginatingCountry,payload.destinationCountry,payload.transactionType,payload.principalAmountCurrency)
+            .then(response => {
+                setDeliveryCurrencies(response.data.data.currencies);
+                payload.deriveAmountCurrency = response.data.data.currencies[0];
                 callQuote(payload);
             })
             .catch(e => {
@@ -152,7 +166,12 @@ export default ({
             });
     };
 
+    const calculator = (data, setFieldValue) => {
+        
+    };
+
     const callQuote = (data) => {
+        data = JSON. stringify(data);
         moneyTransfer.callQuote(data)
             .then(response => {
                 console.log(response);
@@ -161,20 +180,6 @@ export default ({
                 console.log(e);
             });
     };
-
-    const getDeliveryCurrencies = (data, setFieldValue) => {
-        console.log(data);
-        if(setFieldValue) setFieldValue("currency", data);
-        payload.principalAmountCurrency = data;
-        moneyTransfer.supportedDeliveryCurrencies(payload.tradeOriginatingCountry,payload.destinationCountry,payload.transactionType,data)
-            .then(response => {
-                console.log(response);
-                setDeliveryCurrencies(response.data.data.currencies);
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    }
 
     return (
         <AnimationRevealPage>
