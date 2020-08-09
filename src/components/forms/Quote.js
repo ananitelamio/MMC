@@ -66,22 +66,25 @@ const initialValues = {
   deliveryMethod: "",
   currency: "",
   deliveryCurrency: "",
-  fromAmount: "",
-  toAmount: ""
+  amount: "",
+  receivingAmount: ""
 };
 
-const payload = {
+let payload = {
     chargeCategory: "MONEYTRANSFER",
     conversion: false,
-    deriveAmount: 1,
+    deriveAmount: "1",
     deriveAmountCurrency: "",
     destinationCountry: "",
     inverseCalculation: false,
-    principalAmount: 1,
+    principalAmount: "1",
     principalAmountCurrency: "",
     tradeOriginatingCountry: "",
     transactionType: ""
 };
+
+let payloadJSON;
+
 
 export default ({
   headingText = "Send Money",
@@ -102,6 +105,9 @@ export default ({
     const [deliveryCurrencies, setDeliveryCurrencies] = useState([]);
     const [fromAmount, setFromAmount] = useState([]);
     const [toAmount, setToAmount] = useState([]);
+    const [rate, setRate] = useState("0.00"); 
+    const [fee, setFee] = useState(0); 
+    const [total, setTotal] = useState(0);
     
     const originCountryProps = formik.getFieldProps("originCountry");
     const destinationCountryProps = formik.getFieldProps("destinationCountry");
@@ -159,26 +165,67 @@ export default ({
             .then(response => {
                 setDeliveryCurrencies(response.data.data.currencies);
                 payload.deriveAmountCurrency = response.data.data.currencies[0];
-                callQuote(payload);
+                calculator(JSON.stringify(payload));
             })
             .catch(e => {
                 console.log(e);
             });
     };
 
-    const calculator = (data, setFieldValue) => {
-        
-    };
-
-    const callQuote = (data) => {
-        data = JSON. stringify(data);
-        moneyTransfer.callQuote(data)
-            .then(response => {
-                console.log(response);
-            })
-            .catch(e => {
-                console.log(e);
-            });
+    const calculator = (data, setFieldValue, msg) => {
+        if(msg === "sending amount"){
+            setFieldValue("amount", data);
+            payload.principalAmount = data;
+            moneyTransfer.callQuote(JSON.stringify(payload))
+                .then(reponse => {
+                    formik.setFieldValue("receivingAmount", reponse.data.data.receivingAmount);
+                    setRate(reponse.data.data.fxRate);
+                    setFee(reponse.data.data.tax);
+                    setTotal(reponse.data.data.total_amount);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }else if (msg === "receiving amount"){
+            setFieldValue("receivingAmount", data);
+            payload.deriveAmount = data;
+            moneyTransfer.callQuote(JSON.stringify(payload))
+                .then(reponse => {
+                    formik.setFieldValue("amount", reponse.data.data.sendingAmount);
+                    setRate(reponse.data.data.fxRate);
+                    setFee(reponse.data.data.tax);
+                    setTotal(reponse.data.data.total_amount);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }else if (msg === "receiving currency"){
+            setFieldValue("deliveryCurrency", data);
+            moneyTransfer.callQuote(JSON.stringify(payload))
+                .then(reponse => {
+                    formik.setFieldValue("receivingAmount", reponse.data.data.receivingAmount);
+                    formik.setFieldValue("amount", reponse.data.data.sendingAmount);
+                    setRate(reponse.data.data.fxRate);
+                    setFee(reponse.data.data.tax);
+                    setTotal(reponse.data.data.total_amount);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
+        else {
+            moneyTransfer.callQuote(JSON.stringify(payload))
+                .then(reponse => {
+                    formik.setFieldValue("amount", reponse.data.data.sendingAmount);
+                    formik.setFieldValue("receivingAmount", reponse.data.data.receivingAmount);
+                    setRate(reponse.data.data.fxRate);
+                    setFee(reponse.data.data.tax);
+                    setTotal(reponse.data.data.total_amount);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
     };
 
     return (
@@ -212,7 +259,7 @@ export default ({
                             (currencies.length > 0 && deliveryCurrencies.length > 0) && <>
                             <InputsRow>
                                 <InputCurrrency>
-                                    <Input id="principalAmount" name="principalAmount" type="text" placeholder="Amount to send"/>
+                                    <Input id="amount" name="amount" type="text" placeholder="Amount to send" autoComplete="off" {...amountProps} onChange={e => calculator(e.target.value, formik.setFieldValue,"sending amount")}/>
                                 </InputCurrrency>
                                 
                                 <InputAmount>
@@ -224,45 +271,46 @@ export default ({
                             
                             <InputsRow>
                                 <InputCurrrency>
-                                    <Input id="principalAmount" name="principalAmount" type="text" placeholder="Amount to receive" />
+                                    <Input id="receivingAmount" name="receivingAmount" type="text" placeholder="Amount to receive" autoComplete="off" {...receivingAmountProps} onBlur={e => calculator(e.target.value, formik.setFieldValue, "receiving amount")}/>
                                 </InputCurrrency>
 
                                 <InputAmount>
-                                    <Select name="deliveryCurrency" {...deliveryCurrencyProps}>
+                                    <Select name="deliveryCurrency" {...deliveryCurrencyProps} onChange={e => calculator(e.target.value, formik.setFieldValue,"sending amount")}>
                                         {deliveryCurrencies.map(deliveryCurrency => <option value={deliveryCurrency} key={deliveryCurrency}>{deliveryCurrency}</option>)}
                                     </Select>
                                 </InputAmount>
-                            </InputsRow> </>
+                            </InputsRow> 
+
+                            <StatsRow>
+                                <Stats>
+                                    <StatTitle>
+                                        Exchange rate
+                                    </StatTitle>
+                                    <StatInfo>
+                                        {rate} {payload.deriveAmountCurrency}
+                                    </StatInfo>
+                                </Stats>
+
+                                <Stats>
+                                    <StatTitle>
+                                        Fee
+                                    </StatTitle>
+                                    <StatInfo>
+                                        {fee} {payload.deriveAmountCurrency}
+                                    </StatInfo>
+                                </Stats>
+
+                                <Stats>
+                                    <StatTitle>
+                                        Total to pay
+                                    </StatTitle>
+                                    <StatInfo>
+                                        {total} {payload.principalAmountCurrency}
+                                    </StatInfo>
+                                </Stats>
+                            </StatsRow>
+                            </>
                         }
-
-                        <StatsRow>
-                            <Stats>
-                                <StatTitle>
-                                    Exchange rate
-                                </StatTitle>
-                                <StatInfo>
-                                    707.13 XOF
-                                </StatInfo>
-                            </Stats>
-
-                            <Stats>
-                                <StatTitle>
-                                    Fee
-                                </StatTitle>
-                                <StatInfo>
-                                    0.00 GBP
-                                </StatInfo>
-                            </Stats>
-
-                            <Stats>
-                                <StatTitle>
-                                    Total to pay
-                                </StatTitle>
-                                <StatInfo>
-                                    10000.00 GBP
-                                </StatInfo>
-                            </Stats>
-                        </StatsRow>
 
                         <SubmitButton type="submit">
                             <SubmitButtonIcon className="icon" />
