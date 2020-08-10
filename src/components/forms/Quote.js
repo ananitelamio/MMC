@@ -12,6 +12,9 @@ const MainContent = tw.div`mt-12 flex flex-col items-center`;
 const Heading = tw.h1`text-2xl xl:text-3xl font-extrabold`;
 const FormContainer = tw.div`w-full flex-1 mt-8`;
 
+const AirtimeBrand = tw.div`mx-auto pt-3 flex justify-between items-center`;
+const LogoImage = tw.img`w-16 mr-3 rounded`;
+
 const Form = tw.form`mx-auto max-w-sm flex flex-col`;
 const InputsRow = tw.div`flex justify-between`;
 const InputCurrrency = tw.div`w-3/4`;
@@ -80,7 +83,9 @@ let payload = {
     principalAmount: "1",
     principalAmountCurrency: "",
     tradeOriginatingCountry: "",
-    transactionType: ""
+    transactionType: "",
+    phone: "",
+    topUp: ""
 };
 
 let payloadJSON;
@@ -103,11 +108,14 @@ export default ({
     const [deliveryMethods, setDeliveryMethods] = useState([]);
     const [currencies, setCurrencies] = useState([]);
     const [deliveryCurrencies, setDeliveryCurrencies] = useState([]);
-    const [fromAmount, setFromAmount] = useState([]);
-    const [toAmount, setToAmount] = useState([]);
     const [rate, setRate] = useState("0.00"); 
     const [fee, setFee] = useState(0); 
     const [total, setTotal] = useState(0);
+    const [operator, setOperator] = useState("");
+    const [operatorLogo, setOperatorLogo] = useState("");
+    const [topUpProductList, setTopUpProductList] = useState([]);
+    const [showMomo, setShowMomo] = useState(false);
+    const [showPhone, setShowPhone] = useState(false);
     
     const originCountryProps = formik.getFieldProps("originCountry");
     const destinationCountryProps = formik.getFieldProps("destinationCountry");
@@ -116,6 +124,8 @@ export default ({
     const deliveryCurrencyProps = formik.getFieldProps("deliveryCurrency");
     const amountProps = formik.getFieldProps("amount");
     const receivingAmountProps = formik.getFieldProps("receivingAmount");
+    const phoneProps = formik.getFieldProps("phone");
+    const topUpProps = formik.getFieldProps("topUp");
 
     const getDestinationCountry = (data, setFieldValue) => {
         setFieldValue('originCountry', data);
@@ -147,16 +157,24 @@ export default ({
 
     const getCurrencies = (data, setFieldValue) => {
         setFieldValue("deliveryMethod", data);
-        payload.transactionType = data
-        moneyTransfer.supportedCurrencies(payload.tradeOriginatingCountry,payload.destinationCountry,payload.transactionType)
-            .then(response => {
-                setCurrencies(response.data.data.currencies);
-                getDeliveryCurrencies(response.data.data.currencies[0]);
-            })
-            .catch(e => {
-                console.log(e);
-            });
+        payload.transactionType = data;
+        checkDeliveryMethod(payload.transactionType);
     };
+
+    const checkDeliveryMethod = (deliveryMethod) => {
+        if(deliveryMethod == "AIRTIME_TOPUP"){
+            setShowPhone(true);
+        } else {
+            moneyTransfer.supportedCurrencies(payload.tradeOriginatingCountry,payload.destinationCountry,deliveryMethod)
+                .then(response => {
+                    setCurrencies(response.data.data.currencies);
+                    getDeliveryCurrencies(response.data.data.currencies[0]);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
+    }
 
     const getDeliveryCurrencies = (data, setFieldValue) => {
         if(setFieldValue) setFieldValue("currency", data);
@@ -171,6 +189,20 @@ export default ({
                 console.log(e);
             });
     };
+
+    const topUp = (data, setFieldValue) => {
+        setFieldValue("phone", data);
+        if(data.length >= 9)
+        {   
+            moneyTransfer.preTopUp(JSON.stringify({beneficiaryPhone: data.trim(), destinationCountryIso3: payload.destinationCountry, web_agent_from_iso_country: payload.tradeOriginatingCountry, currencyTo:undefined, topUpAmount:undefined}))
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
+    }
 
     const calculator = (data, setFieldValue, msg) => {
         if(msg === "sending amount"){
@@ -253,7 +285,27 @@ export default ({
                                 <option>Select Delivery Method</option>
                                 {deliveryMethods.map(({ name , label}) => <option value={name} key={label}>{label}</option>)}
                             </Select>
-                        }   
+                        }  
+
+                        {   
+                            showPhone && <>
+                                <Input name="phone" type="text" placeholder="Phone number" {...phoneProps} onChange={e => topUp(e.target.value, formik.setFieldValue)}/>
+                                {/*formik.touched.phone && formik.errors.phone ? (<Error>{formik.errors.phone}</Error>): null*/}
+                            </>
+                        } 
+
+                        {
+                            showMomo && <>
+                                <AirtimeBrand>
+                                    <LogoImage src={operatorLogo} /> `{operator}`
+                                </AirtimeBrand>
+
+                                <Select name="topUp" {...topUpProps}>
+                                    <option>Select Amount</option>
+                                    {topUpProductList.map(topUpProduct => <option value={topUpProduct} key={topUpProduct}>{topUpProduct}</option>)}
+                                </Select>
+                            </>
+                        }
 
                         {
                             (currencies.length > 0 && deliveryCurrencies.length > 0) && <>

@@ -28,6 +28,10 @@ const supportedDeliveryCurrencies = (origin, destination, delivery, currency) =>
     return v6.get("/quote/supported-delivery-currencies/" + `${origin}/${destination}/${delivery}/${currency}`);
 };
 
+const preTopUp = (payload) => {
+    return v6.post("transactionmanagement/pre-topup", payload);
+}
+
 const callQuote = (payload) => {
     return v6.post("/quote/callQuote", payload);
 };
@@ -39,5 +43,6 @@ export default {
   supportedDeliveryMethods,
   supportedCurrencies,
   supportedDeliveryCurrencies,
+  preTopUp,
   callQuote
 };
