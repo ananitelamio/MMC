@@ -97,7 +97,7 @@ export default ({
                 </LeftColumn>
                 <RightColumn>
                     <StyledResponsiveVideoEmbed
-                        url="https://www.youtube.com/embed/BL22vTGteQU"
+                        url="https://www.youtube.com/embed/BK5eQkkHFqo"
                         background="transparent"
                     />
                 </RightColumn>

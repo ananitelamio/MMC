@@ -83,9 +83,7 @@ let payload = {
     principalAmount: "1",
     principalAmountCurrency: "",
     tradeOriginatingCountry: "",
-    transactionType: "",
-    phone: "",
-    topUp: ""
+    transactionType: ""
 };
 
 let payloadJSON;

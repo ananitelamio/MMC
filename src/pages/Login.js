@@ -55,11 +55,70 @@ const initialValues = {
   currentPassword: ""
 };
 
+function redirect(path, params, method) {
+    console.log(params);
+    method = method || 'post';
+
+    var form = document.createElement('form');
+        form.setAttribute('method', method);
+        form.setAttribute('action', path);
+        form.setAttribute('id', 'loginForm');
+        form.setAttribute('name', 'loginForm');
+        form.setAttribute('enctype', 'application/x-www-form-urlencoded');
+
+    var InputFormEmail = document.createElement('input');
+        InputFormEmail.setAttribute('id', 'loginForm:email');
+        InputFormEmail.setAttribute('type', 'hidden');
+        InputFormEmail.setAttribute('name', "loginForm:email");
+        InputFormEmail.setAttribute('value', params.data.email);
+
+    var InputFormPassword = document.createElement('input');
+        InputFormPassword.setAttribute('id', 'loginForm:password');
+        InputFormPassword.setAttribute('type', 'hidden');
+        InputFormPassword.setAttribute('name', "loginForm:password");
+        InputFormPassword.setAttribute('value', params.data.password);
+
+    var InputFormSubmit = document.createElement('input');
+        InputFormSubmit.setAttribute('id', 'loginForm:agentCommandButton');
+        InputFormSubmit.setAttribute('type', 'submit');
+        InputFormSubmit.setAttribute('name', "loginForm:agentCommandButton");
+
+    var JavaViewX = document.createElement('input');
+        JavaViewX.setAttribute('type', 'hidden');
+        JavaViewX.setAttribute('name', 'javax.faces.ViewState');
+        JavaViewX.setAttribute('id', 'j_id1:javax.faces.ViewState:0');
+        JavaViewX.setAttribute('value', "pE5dAg5ydwaMDVoOb9L97BQ9FMoQc8yRAjQ3Oe0cXvfW6sjqi7S3ziyETQG9QxSAIUm4gHm3evZTJrkkwRtwQwE0KenZbDOkCNRrryjvSaWQTrfHflWj6UeRQrGVEO5zfmoD5c+WUXds24nTCz7zAAtcvPv5JwHPLS6Jv/qiitI5LqfINO3FY5IqxusW2gKFFcRfwdLXdsKT1Bavq5SSLFAcqgm2sgGZI63z+VzBweiYyRjXSpFzIeaaGZYqJmJhyjeM/PX9sJ0q5XYmjZ4tQuHCf7FqdKWW2JSoeLApQCoSa0t0/G8CQdeMZwydIoffuq+wDmlAvVX/NuC9MoDQ1VCnV5Tw2GSQ0x3ICEp7jL2B63Eib5msQvWHEbT0QVf7ldMC2cPVRNJ5yqACQS2MyhQRITDhsHO/jHFEg+5Dc6BSZNt6zf7TDGaEUDJM8NgIZpI7KqidSt2X3dlYu2fn6Jj9lbYMNuYnUsv2ZWA8tLKP0ellaX48vRmexlH2a07PAobGnuzphZ2oMPamcH9F74Ix4m1msrN9o8IXjr/7EQf8g3GbVwYRBkX+mfIqXGZKTaXjtDtJO2+8HklwENdwulTOM9lHOXSndPgRVs8jcymCxxnkfVgqoSSCJZsseQuRpBcPjzijVykHerzUK2Nsqv1tpC2EKdcnllHCnVg/DTdN9lTbXNtw5ujgg13Pn/oiRSO4mfHeAfv9J+Kaby8dg/5fa3OnKGvvArwfpU7V9iG1HcaeTSLlO1TWFMKyA7+kazt9mVWITZyhPSTw6LpKcAF5jNIca23h4ECX/PiWfbyRwFnDR77JP9HhGX0/e97GhvHk6EqaxyLsoRt8YlsqrIwMzZtwApffD4PMZhcg/Z/pCzwSxjTSMCfew+mUIkwCLeT68kiW2j5u+32SoOEWqQfdkTcmv6mc+aD01q6taNrnmYUcArx6RbuOod2U7hPBcU7Ka3CFiYfM/9dRINeclNQyJ/A0gSDIGEHSdTL4idIItF3XT/IxpDpG+RE76netZP23LumftHMERGijYJSWk/N8VaPlu+XMyR0sMyna7Vwe7fTvi+riec1IQ8zlBmd0iojQcg1+DwIkvT88VEwDi7fCndAkoKW+vTQhwxEJ3uPIWVRPZ6tmwpd9P+vRptSNv5veH+o+BKYoQ4rfetnMhFlSr3w8+iFSWtK+WkT2Jy9eGu9bRzhm0h65hAqfd/Hb/ArKz12dWDnyrjPdo54coNrPURo7HMedrFtCiYvMc0mpYfGaiGETNNrchgVkvQOo4ZNLuj2fgyh9SwLEJyiPm6jytO/PAczPON6QsRFdL/d95eY7Q95O78u1nvOhN+K+tlAZ7GapHNNwqQcl9dBJ37TPV0FFJZl4bVJGawA8S4gRTc5RspG2MaXL4BOAxpwcv9gCsCD+rv9lPgQQy21FCx1PSeWJRIP985fbc/IGCixXpxkJDeuh3ttTJ9EWuqcnJY/W/UsLcFmyU4Rsd1WZaT9BVvVFIy6UUE0kVtz9Q+GsG32jLe6H0QzJNgpcZKGE8/5YVQEydpQYpodUqTcOLY1hgiQz05pjNlMx7YmvAgbUGILyaU9eWuxEW+M0VpPzrgKSJd4Teg/3HNY3v7JF1A==");
+        JavaViewX.setAttribute('autocomplete',"off");
+
+    form.appendChild(InputFormEmail);
+    form.appendChild(InputFormPassword);
+    form.appendChild(InputFormSubmit);
+    form.appendChild(JavaViewX);
+
+    document.body.appendChild(form);
+
+    form.submit();
+};
+
 const onSubmit = (data) => {
 
-    moneyTransfer.login(data)
+    console.log(data);
+    const payload = {
+        action: "login",
+        data: {
+            password: data.currentPassword,
+            email: data.email,
+            platform: "Windows",
+            uuid: "359698060043864"
+        }
+    };
+    
+    console.log(payload);
+
+    moneyTransfer.login(payload)
       .then(response => {
         console.log(response);
+        redirect('https://mymobilecash.themoneytransferapplication.com/customer-login.xhtml', payload);//?loginForm=loginForm&loginForm%3Aemail=MichaelLKirkley%40dayrep.com&loginForm%3Apassword=Combat2coq%21&loginForm%3AagentCommandButton=Log+In&javax.faces.ViewState=gKZQQu0CBdE0%2FNYZmXfF51sD8IEIV1BuAc6o%2BS7lpai9F1SP3lkjTFwr3GwoKgqY85UT%2Bf0bsWzYVYwuxbVgyX8mztqoDZfzqFqTE46zFab3GWfMC3qNcW2sJ4CDHTXZ8qBBBwFe%2BnU8NZy0rJAtMWGHnqUBYgpfINzUSavUWJYDJByGFxax85CxXsA5g8RaIbimx5d9Lt%2FW%2BZCfwpwViyZTX%2F4irEdJS42JEqD7CR1yWLhJZAAUu8%2FZOz9AH%2B11%2FuyUNnlXrmwRKI0q9ySS7T3UDImK3h8A7MmNlvfmFynbhQ49sFt4ImcoojrtcfN%2FHIRv6rHn6nJlCi%2BqIBmEfJ1dD2g40HHVIjdUvjTPMztG3AUCzSkZ27FqUkfza6EznGsMuKHpYCa%2FyzkS23tBm5KgmzBVsVKG8BpN0LqrL%2BuDLDeEQ3lTV12Xxphkvoaba9E%2BsyWNQhVZdmosuLekNY6bI%2BwFPJNVkaLmxwk%2FAzk%2FU7bK%2BGIIK%2Fn9kpuYtH6trtw%2BRE10FJKQR9LJvwWB85bfGV5ML8ySAVRiWAk0zdUQ2KJeSQRcZVxfa%2FWAISHdn1vssxHcky37FCe4r1YDeTGHYm1zNuBIxoM7B2Qo6CR%2BuNDKM4FNgGkT4UqnljuJBhLciWA7wqh8OlcaU7pbCYitf6srRRPdV6l8e%2BU6WwAlbuSkr6h7wn5CbRs4UlG9SfQoLGmI6UPPd%2FcWoF9p2cXFFBFEMUNxy6yUNHzDUPDHE2N2hXiCUqk99M7DgS87H%2FtZY5QvgyOgfScpUVs27Nv9pk1Dp1aFt4fZna3%2FCgZAZt%2B%2B8G0VCLF%2BaKSMDHPURpHiDymL9xLahOG7prW6IYMQ7U4g8AIWhmiJpUes4ZtFEHlTxqLBF8xxwGqs%2F66dQt%2FwxivBuekiHGTxlwBj5KLnpaU5OCK2OwWi8qEP0WWMBpiH4PQwL5otJ6ENwh6Bbc1ZQMWoCzUI%2Fg%2F%2FcdKZEJNtXJqlk5JzjJkOBEthX3tLYfDrfFDvyI4tWUkhSD359GbsUlwsUrTrXLNhkhCTt2zqOlvV%2FAhVgV7INvQSbRvwzjU8Hqf5KSvUJQ2ycd8UE3jxu%2FQUMcgaTycAAHXNDFT3wxnLQalY%2BBLwYskDOn6Nla%2FasrkMBFGqdikufGmJ1orxexMVLczyMxPnOi3WJhtXkEUc4HnD5EelMcOhgnaUmAbmx35Xz5%2Ffx1D1XhEHhM4UPE3pR2u97OBmkIvADhnd9G%2BdG9K5QZo7rKSk9O24OkfxD%2FaUt%2B2XZyDDVURbHlFvtoAr%2FnV5YwziPfVVxqiIEBLrGu%2FCohhx5VJgX%2BfX3jP7hXL6PGM2BDY%2BWtzi8W7DuO5HENToCXL8D0jcX8rbCByNJIu7X4Th%2B3FbMPLsut9quXJBdi7RSCWbvBYQV%2FYI7oVMu0vqACaNtIGI4QucpjRGaFupNnx6Xsjp3QGV53nscrcDjTJ%2BhhBdcBSP2%2FHBvN3UH7It0XqTO4iGCCN2%2FMsDbTVj2eyYik%2F2pT%2BSiS05xqZFAlth4IXIwMJpiIYmXR8wyVwFaZm5izcYrb6qT70nxzbsqR0BhmOk3m2uNccpV1EsKHG7yEXFrmkZsyAkrVzIxvppxcxz7sIWog%3D%3D";
       })
       .catch(e => {
         console.log(e);
@@ -86,7 +145,7 @@ export default ({
     const emailProps = formik.getFieldProps("email");
     const currentPasswordProps = formik.getFieldProps("currentPassword");
 
-    return (
+return (
   <AnimationRevealPage>
     <Container>
       <Content>

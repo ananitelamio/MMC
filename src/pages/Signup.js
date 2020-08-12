@@ -28,7 +28,7 @@ const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 borde
 const Select = tw.select`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm hocus:shadow-md focus:outline-none focus:border-gray-400 focus:bg-white mt-5`;
 const Error = tw.div`text-red-400 text-sm`;
 const SubmitButton = styled.button`
-  ${tw`mt-5 tracking-wide font-semibold bg-secondaryBlue-600 text-gray-100 w-full py-4 rounded-lg hover:bg-bg-secondaryBlue-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}
+  ${tw`mt-5 tracking-wide font-semibold bg-secondaryBlue-600 text-gray-100 w-full py-4 rounded-lg hover:bg-secondaryBlue-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}
   .icon {
     ${tw`w-6 h-6 -ml-2`}
   }
@@ -45,6 +45,15 @@ const Countries = [
     "Senegal",
     "Ghana"
 ];
+
+const originCountries = {
+    "Congo": "COG",
+    "Cameroon": "CMR",
+    "Benin": "BEN",
+    "Ivory Coast": "CIV",
+    "Senegal": "SEN",
+    "Ghana": "GHA"
+};
 
 const Nationalities = [
 "Afghan",
@@ -294,6 +303,7 @@ const initialValues = {
 };
 
 const onSubmit = (data) => {
+    console.log(data);
     const temp = data.address;
 
     delete data.address;
@@ -301,9 +311,9 @@ const onSubmit = (data) => {
     data.address = {
         "address1": temp,
         "city": data.city,
-        "countryCommonName": "CONGO",
+        "countryCommonName": data.country,
         "postcode": data.postcode,
-        "countryIso3": "COG"
+        "countryIso3": originCountries[data.country]
     };
 
     data.customerType = "INDIVIDUAL";
@@ -327,18 +337,6 @@ const onSubmit = (data) => {
 export default ({
   logoLinkUrl = "/",
   headingText = "Sign Up To My Mobile Cash",
-  socialButtons = [
-    {
-      iconImageSrc: googleIconImageSrc,
-      text: "Sign Up With Google",
-      url: "https://google.com"
-    },
-    {
-      iconImageSrc: twitterIconImageSrc,
-      text: "Sign Up With Twitter",
-      url: "https://twitter.com"
-    }
-  ],
   submitButtonText = "Sign Up",
   SubmitButtonIcon = SignUpIcon,
   tosUrl = "/terms",
