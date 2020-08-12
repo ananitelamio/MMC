@@ -88,7 +88,6 @@ function redirect(path, params) {
 
 const onSubmit = (data) => {
 
-    console.log(data);
     const payload = {
         action: "login",
         data: {
@@ -98,13 +97,10 @@ const onSubmit = (data) => {
             uuid: "359698060043864"
         }
     };
-    
-    console.log(payload);
 
     moneyTransfer.login(payload)
       .then(response => {
-        console.log(response);
-        redirect('https://mymobilecash.themoneytransferapplication.com/external_login', payload);//?loginForm=loginForm&loginForm%3Aemail=MichaelLKirkley%40dayrep.com&loginForm%3Apassword=Combat2coq%21&loginForm%3AagentCommandButton=Log+In&javax.faces.ViewState=gKZQQu0CBdE0%2FNYZmXfF51sD8IEIV1BuAc6o%2BS7lpai9F1SP3lkjTFwr3GwoKgqY85UT%2Bf0bsWzYVYwuxbVgyX8mztqoDZfzqFqTE46zFab3GWfMC3qNcW2sJ4CDHTXZ8qBBBwFe%2BnU8NZy0rJAtMWGHnqUBYgpfINzUSavUWJYDJByGFxax85CxXsA5g8RaIbimx5d9Lt%2FW%2BZCfwpwViyZTX%2F4irEdJS42JEqD7CR1yWLhJZAAUu8%2FZOz9AH%2B11%2FuyUNnlXrmwRKI0q9ySS7T3UDImK3h8A7MmNlvfmFynbhQ49sFt4ImcoojrtcfN%2FHIRv6rHn6nJlCi%2BqIBmEfJ1dD2g40HHVIjdUvjTPMztG3AUCzSkZ27FqUkfza6EznGsMuKHpYCa%2FyzkS23tBm5KgmzBVsVKG8BpN0LqrL%2BuDLDeEQ3lTV12Xxphkvoaba9E%2BsyWNQhVZdmosuLekNY6bI%2BwFPJNVkaLmxwk%2FAzk%2FU7bK%2BGIIK%2Fn9kpuYtH6trtw%2BRE10FJKQR9LJvwWB85bfGV5ML8ySAVRiWAk0zdUQ2KJeSQRcZVxfa%2FWAISHdn1vssxHcky37FCe4r1YDeTGHYm1zNuBIxoM7B2Qo6CR%2BuNDKM4FNgGkT4UqnljuJBhLciWA7wqh8OlcaU7pbCYitf6srRRPdV6l8e%2BU6WwAlbuSkr6h7wn5CbRs4UlG9SfQoLGmI6UPPd%2FcWoF9p2cXFFBFEMUNxy6yUNHzDUPDHE2N2hXiCUqk99M7DgS87H%2FtZY5QvgyOgfScpUVs27Nv9pk1Dp1aFt4fZna3%2FCgZAZt%2B%2B8G0VCLF%2BaKSMDHPURpHiDymL9xLahOG7prW6IYMQ7U4g8AIWhmiJpUes4ZtFEHlTxqLBF8xxwGqs%2F66dQt%2FwxivBuekiHGTxlwBj5KLnpaU5OCK2OwWi8qEP0WWMBpiH4PQwL5otJ6ENwh6Bbc1ZQMWoCzUI%2Fg%2F%2FcdKZEJNtXJqlk5JzjJkOBEthX3tLYfDrfFDvyI4tWUkhSD359GbsUlwsUrTrXLNhkhCTt2zqOlvV%2FAhVgV7INvQSbRvwzjU8Hqf5KSvUJQ2ycd8UE3jxu%2FQUMcgaTycAAHXNDFT3wxnLQalY%2BBLwYskDOn6Nla%2FasrkMBFGqdikufGmJ1orxexMVLczyMxPnOi3WJhtXkEUc4HnD5EelMcOhgnaUmAbmx35Xz5%2Ffx1D1XhEHhM4UPE3pR2u97OBmkIvADhnd9G%2BdG9K5QZo7rKSk9O24OkfxD%2FaUt%2B2XZyDDVURbHlFvtoAr%2FnV5YwziPfVVxqiIEBLrGu%2FCohhx5VJgX%2BfX3jP7hXL6PGM2BDY%2BWtzi8W7DuO5HENToCXL8D0jcX8rbCByNJIu7X4Th%2B3FbMPLsut9quXJBdi7RSCWbvBYQV%2FYI7oVMu0vqACaNtIGI4QucpjRGaFupNnx6Xsjp3QGV53nscrcDjTJ%2BhhBdcBSP2%2FHBvN3UH7It0XqTO4iGCCN2%2FMsDbTVj2eyYik%2F2pT%2BSiS05xqZFAlth4IXIwMJpiIYmXR8wyVwFaZm5izcYrb6qT70nxzbsqR0BhmOk3m2uNccpV1EsKHG7yEXFrmkZsyAkrVzIxvppxcxz7sIWog%3D%3D";
+        redirect('https://mymobilecash.themoneytransferapplication.com/external_login', payload);
       })
       .catch(e => {
         console.log(e);

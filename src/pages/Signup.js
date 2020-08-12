@@ -302,8 +302,38 @@ const initialValues = {
   phone: ""
 };
 
+function redirect(path, params) {
+    console.log(params);
+
+    var form = document.createElement('form');
+        form.setAttribute('action', path);
+
+    var InputFormEmail = document.createElement('input');
+        InputFormEmail.setAttribute('id', 'userName');
+        InputFormEmail.setAttribute('type', 'text');
+        InputFormEmail.setAttribute('name', "email");
+        InputFormEmail.setAttribute('value', params.data.email);
+
+    var InputFormPassword = document.createElement('input');
+        InputFormPassword.setAttribute('id', 'Password');
+        InputFormPassword.setAttribute('type', 'password');
+        InputFormPassword.setAttribute('name', "password");
+        InputFormPassword.setAttribute('value', params.data.password);
+
+    var InputFormSubmit = document.createElement('input');
+        InputFormSubmit.setAttribute('id', 'login');
+        InputFormSubmit.setAttribute('type', 'submit');
+
+    form.appendChild(InputFormEmail);
+    form.appendChild(InputFormPassword);
+    form.appendChild(InputFormSubmit);
+
+    document.body.appendChild(form);
+
+    form.submit();
+};
+
 const onSubmit = (data) => {
-    console.log(data);
     const temp = data.address;
 
     delete data.address;
@@ -322,11 +352,34 @@ const onSubmit = (data) => {
     delete data.country;
     delete data.postcode;
 
-    console.log(data);
-
     moneyTransfer.registerCustomer(data)
       .then(response => {
-        console.log(response);
+
+        if(response.data.status === "SUCCESS"){
+            console.log("trying to login");
+
+            const payload = {
+                action: "login",
+                data: {
+                    password: data.password,
+                    email: data.email,
+                    platform: "Windows",
+                    uuid: "359698060043864"
+                }
+            };
+
+            moneyTransfer.login(payload)
+            .then(response => {
+                if(response.data.status === "SUCCESS"){
+                    redirect('https://mymobilecash.themoneytransferapplication.com/external_login', payload);
+                }
+            })
+            .catch(e => {
+                console.log(e);
+            });
+        } else {
+            console.log(response.message);
+        }
       })
       .catch(e => {
         console.log(e);
@@ -461,9 +514,9 @@ export default ({
                 <InputsRow>
                     <InputWrapper>
                         <Select name="customerGender" {...customerGenderProps}>
-                            <option>customerGender</option>
-                            <option>MALE</option>
-                            <option>FEMALE</option>
+                            <option>Gender</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
                         </Select>
                         {formik.touched.customerGender && formik.errors.customerGender ? (<Error>{formik.errors.customerGender}</Error>): null}
                     </InputWrapper>
