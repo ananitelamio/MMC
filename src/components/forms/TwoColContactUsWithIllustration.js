@@ -30,6 +30,9 @@ const Input = tw.input`border-2 px-5 py-3 rounded focus:outline-none font-medium
 
 const SubmitButton = tw(PrimaryButtonBase)`inline-block lg:ml-6 mt-6 lg:mt-0`
 
+const hubspot = require('@hubspot/api-client');
+const hubspotClient = new hubspot.Client({ apiKey: '16239a52-1612-4736-9d47-735929ad6217', basePath: 'https://cors-anywhere.herokuapp.com/https://api.hubapi.com/'});
+
 export default ({
   subheading = "Stay up to date",
   heading = <>Feel free to <span tw="text-primaryOrange-500">Subscribe </span>and stay informed!<wbr/></>,

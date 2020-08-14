@@ -60,6 +60,9 @@ const validationSchema = Yup.object().shape({
     
 });
 
+const hubspot = require('@hubspot/api-client');
+const hubspotClient = new hubspot.Client({ apiKey: '16239a52-1612-4736-9d47-735929ad6217', basePath: 'https://cors-anywhere.herokuapp.com/https://api.hubapi.com/'});
+
 const initialValues = {
   name: "",
   email: "",
@@ -69,7 +72,16 @@ const initialValues = {
 };
 
 const onSubmit = (data) => {
+
     console.log(data);
+    
+    hubspotClient.crm.contacts.basicApi.create({ properties: { firstname: data.name, email: data.email, phone: data.phone, message: data.message} })
+    .then(response => {
+        console.log(response);
+      })
+      .catch(e => {
+        console.log(e);
+      });
 };
 
 export default ({
