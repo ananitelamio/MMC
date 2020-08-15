@@ -3,6 +3,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 //eslint-disable-next-line
 import { css } from "styled-components/macro";
+import translate from "../../i18n/translate";
 
 import Header from "../headers/light.js";
 
@@ -87,7 +88,7 @@ export default ({
             <Header />
             <TwoColumn>
                 <LeftColumn>
-                    <Notification>A dedicated and dynamic team at your service</Notification>
+                    <Notification>{translate('twoColWithVideo_notification')}</Notification>
                     <Heading>{heading}</Heading>
                     <Paragraph>{description}</Paragraph>
                     <Actions>
