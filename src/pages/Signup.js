@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 import moneyTransfer from "../services/moneyTransfer";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
@@ -15,7 +17,6 @@ import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus
 const Container = tw(ContainerBase)`min-h-screen bg-secondaryBlue-600 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
 const MainContainer = tw.div`lg:w-2/3 xl:w-2/3 p-6 sm:p-12`;
-const LogoLink = tw.a``;
 const LogoImage = tw.img`mx-auto h-40`;
 const MainContent = tw.div`mt-12 flex flex-col items-center`;
 const Heading = tw.h1`text-2xl xl:text-3xl font-extrabold`;
@@ -302,6 +303,8 @@ const initialValues = {
   phone: ""
 };
 
+toast.configure();
+
 function redirect(path, params) {
     console.log(params);
 
@@ -356,7 +359,15 @@ const onSubmit = (data) => {
       .then(response => {
 
         if(response.data.status === "SUCCESS"){
-            console.log("trying to login");
+          toast.success("Your account was created successfully. Attempting Auto Login" ,{
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined
+            });
 
             const payload = {
                 action: "login",
@@ -372,29 +383,60 @@ const onSubmit = (data) => {
             .then(response => {
                 if(response.data.status === "SUCCESS"){
                     redirect('https://mymobilecash.themoneytransferapplication.com/external_login', payload);
+                } else {
+                  toast.error(response.data.message ,{
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined
+                    });
                 }
             })
             .catch(e => {
-                console.log(e);
+              toast.error("Something went wront! Please try again. If the problem persisits, please contact customer service." ,{
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined
+                });
             });
         } else {
-            console.log(response.message);
+          toast.error(response.data.message ,{
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined
+            });
         }
       })
       .catch(e => {
         console.log(e);
+        toast.error("Something went wront! Please try again. If the problem persisits, please contact customer service." ,{
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined
+          });
       });
   };
 
 
 export default ({
-  logoLinkUrl = "/",
   headingText = "Sign Up To My Mobile Cash",
   submitButtonText = "Sign Up",
   SubmitButtonIcon = SignUpIcon,
-  tosUrl = "/terms",
-  privacyPolicyUrl = "/privacy",
-  signInUrl = "/login"
 }) => {
     const formik = useFormik({
         initialValues,
@@ -423,9 +465,9 @@ export default ({
     <Container>
       <Content>
         <MainContainer>
-          <LogoLink href={logoLinkUrl}>
+          <Link to="/">
             <LogoImage src={logo} />
-          </LogoLink>
+          </Link>
           <MainContent>
             <Heading>{headingText}</Heading>
             <FormContainer>
@@ -524,13 +566,13 @@ export default ({
                 
                 <p tw="mt-6 text-xs text-gray-600 text-center">
                   I agree to abide by My Mobile Cash's{" "}
-                  <a href={tosUrl} tw="border-b border-gray-500 border-dotted">
+                  <Link to="/terms" tw="border-b border-gray-500 border-dotted">
                     Terms of Service
-                  </a>{" "}
+                  </Link>{" "}
                   and its{" "}
-                  <a href={privacyPolicyUrl} tw="border-b border-gray-500 border-dotted">
+                  <Link to="/privacy" tw="border-b border-gray-500 border-dotted">
                     Privacy Policy
-                  </a>
+                  </Link>
                 </p>
 
                 <SubmitButton type="submit">
@@ -540,9 +582,9 @@ export default ({
 
                 <p tw="mt-8 text-sm text-gray-600 text-center">
                   Already have an account?{" "}
-                  <a href={signInUrl} tw="border-b border-gray-500 border-dotted">
+                  <Link to="/login" tw="border-b border-gray-500 border-dotted">
                     Sign In
-                  </a>
+                  </Link>
                 </p>
               </Form>
             </FormContainer>

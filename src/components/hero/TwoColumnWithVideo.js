@@ -13,14 +13,15 @@ import ResponsiveVideoEmbed from "../../helpers/ResponsiveVideoEmbed.js";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "../../images/svg-decorator-blob-1.svg";
 import { ReactComponent as SvgDecoratorBlob2 } from "../../images/dot-pattern.svg";
+import herobackground from "../../images/hero-smile.jpg";
 
 
 const Container = styled.div`
     ${tw`relative -mx-8 -mt-8 bg-center bg-cover`}
-    background-image: url("https://images.unsplash.com/photo-1517424788495-0d03ec42e244?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+    background-image: url("${herobackground}");
 `;
 
-const OpacityOverlay = tw.div`z-10 absolute inset-0 bg-blue-100 opacity-5`;
+const OpacityOverlay = tw.div`z-10 absolute inset-0 bg-blue-100 opacity-10`;
 
 const HeroContainer = tw.div`z-20 relative px-4 sm:px-8 max-w-screen-xl mx-auto`;
 
@@ -29,7 +30,7 @@ const LeftColumn = tw.div`relative lg:w-6/12 lg:pr-12 flex-shrink-0 text-center 
 const RightColumn = tw.div`w-full sm:w-5/6 lg:w-1/2 mt-16 lg:mt-0 lg:pl-8`;
 
 const Heading = tw.h1`font-black text-3xl md:text-5xl leading-snug max-w-3xl text-primaryOrange-500`;
-const Paragraph = tw.p`my-5 lg:my-8 text-sm lg:text-base font-medium text-gray-200 max-w-lg mx-auto lg:mx-0`;
+const Paragraph = tw.p`my-5 lg:my-8 text-sm lg:text-base font-medium text-secondaryBlue-600 bg-gray-200 bg-opacity-75 rounded max-w-lg mx-auto lg:mx-0 p-3`;
 
 const Actions = tw.div`flex flex-col items-center sm:flex-row justify-center lg:justify-start mt-8`;
 const PrimaryButton = tw.button`font-bold px-8 lg:px-10 py-3 rounded bg-secondaryBlue-600 text-gray-100 hocus:bg-secondaryBlue-700 focus:shadow-outline focus:outline-none transition duration-300`;
@@ -49,14 +50,14 @@ const StyledModal = styled(ReactModalAdapter)`
     ${tw`fixed inset-0 z-50`}
   }
   &.mainHeroModal__content {
-    ${tw`xl:mx-auto m-4 sm:m-16 max-h-full max-w-screen-sm absolute inset-0 flex justify-center items-center rounded-lg bg-gray-200 outline-none`}
+    ${tw`xl:mx-auto m-4 max-w-screen-sm absolute inset-0 flex justify-center items-center rounded-lg bg-gray-200 outline-none`}
   }
   .content {
     ${tw`w-full lg:p-16`}
   }
 `;
 
-const Notification = tw.span`inline-block my-4 pl-3 py-1 border-l-4 border-secondaryBlue-600 font-medium text-sm text-gray-200`;
+const Notification = tw.span`inline-block my-4 pl-3 py-1 border-l-4 border-secondaryBlue-600 text-secondaryBlue-600 bg-gray-200 bg-opacity-75 p-2 rounded font-medium text-sm`;
 
 const CloseModalButton = tw.button`absolute top-0 right-0 mt-8 mr-8 hocus:text-primary-500`;
 
@@ -72,8 +73,7 @@ const StyledResponsiveVideoEmbed = styled(ResponsiveVideoEmbed)`
 export default ({
   heading = "My Mobile Cash Your closest partner",
   description="We provide fast, cheap and secure national and international transfers. Your money travels in the blink of an eye and automatically the beneficiary is paid.",
-  primaryButtonText="Get Started",
-  primaryButtonUrl="#"
+  primaryButtonText="Get Started"
 }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -83,7 +83,6 @@ export default ({
     <>
       
       <Container>
-        <OpacityOverlay />
         <HeroContainer>
             <Header />
             <TwoColumn>
@@ -92,7 +91,7 @@ export default ({
                     <Heading>{heading}</Heading>
                     <Paragraph>{description}</Paragraph>
                     <Actions>
-                    <PrimaryButton as="a" href={primaryButtonUrl} onClick={toggleModal}>{primaryButtonText}</PrimaryButton>
+                    <PrimaryButton onClick={toggleModal}>{primaryButtonText}</PrimaryButton>
                     </Actions>
                 </LeftColumn>
                 <RightColumn>

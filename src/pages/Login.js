@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 import moneyTransfer from "../services/moneyTransfer";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
@@ -16,7 +18,6 @@ import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg
 const Container = tw(ContainerBase)`min-h-screen bg-secondaryBlue-600 text-white font-medium flex justify-center -m-8`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
 const MainContainer = tw.div`lg:w-1/2 xl:w-1/2 p-6 sm:p-12`;
-const LogoLink = tw.a``;
 const LogoImage = tw.img`h-40 mx-auto`;
 const MainContent = tw.div`flex flex-col items-center`;
 const Heading = tw.h1`text-2xl xl:text-3xl font-extrabold`;
@@ -86,6 +87,8 @@ function redirect(path, params) {
     form.submit();
 };
 
+toast.configure();
+
 const onSubmit = (data) => {
 
     const payload = {
@@ -100,21 +103,50 @@ const onSubmit = (data) => {
 
     moneyTransfer.login(payload)
       .then(response => {
-        redirect('https://mymobilecash.themoneytransferapplication.com/external_login', payload);
+        if(response.data.status == "SUCCESS"){
+          toast.success(response.data.message ,{
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined
+            });
+          redirect('https://mymobilecash.themoneytransferapplication.com/external_login', payload);
+        } else {
+          toast.error(response.data.message ,{
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined
+            });
+        }
+        
       })
       .catch(e => {
         console.log(e);
+        toast.error("Something went wront! Please try again. If the problem persisits, please contact customer service." ,{
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined
+          });
       });
   };
 
 export default ({
-  logoLinkUrl = "#",
   illustrationImageSrc = illustration,
   headingText = "Sign In To My Mobile Cash",
   submitButtonText = "Sign In",
   SubmitButtonIcon = LoginIcon,
-  forgotPasswordUrl = "https://mymobilecash.themoneytransferapplication.com/forgot-password.xhtml",
-  signupUrl = "/sign-up",
+  forgotPasswordUrl = "https://mymobilecash.themoneytransferapplication.com/forgot-password.xhtml"
 
 }) => {
   const formik = useFormik({
@@ -132,9 +164,9 @@ return (
     <Container>
       <Content>
         <MainContainer>
-          <LogoLink href={logoLinkUrl}>
+          <Link to="/">
             <LogoImage src={logo} />
-          </LogoLink>
+          </Link>
           <MainContent>
             <Heading>{headingText}</Heading>
             <FormContainer>
@@ -157,9 +189,9 @@ return (
               </p>
               <p tw="mt-8 text-sm text-gray-600 text-center">
                 Dont have an account?{" "}
-                <a href={signupUrl} tw="border-b border-gray-500 border-dotted">
+                <Link to="/sign-up" tw="border-b border-gray-500 border-dotted">
                   Sign Up
-                </a>
+                </Link>
               </p>
             </FormContainer>
           </MainContent>

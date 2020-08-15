@@ -7,6 +7,9 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import EmailIllustrationSrc from "images/subscriber.svg";
+import { toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
@@ -48,16 +51,35 @@ const initialValues = {
   email: ""
 };
 
+toast.configure();
+
 const onSubmit = (data) => {
 
     console.log(data);
     
-    hubspotClient.crm.contacts.basicApi.create({ properties: { email: data.email , subscribed: "subscribed" } })
+    hubspotClient.crm.contacts.basicApi.create({ properties: { email: data.email } })
     .then(response => {
-        console.log(response);
+        toast.success("Subscribed successfuly, Thank You!",{
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
       })
       .catch(e => {
         console.log(e);
+        toast.error("Something went wrong, try again please!",{
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
       });
 };
 

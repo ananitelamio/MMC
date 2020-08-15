@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
 import moneyTransfer from "../../services/moneyTransfer";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import tw from "twin.macro";
@@ -263,7 +264,7 @@ export default ({
                 <MainContent>
                     <Heading>{headingText}</Heading>
                     <FormContainer>
-                    <Form onSubmit={formik.handleSubmit}>
+                    <Form>
                         <Select name="originCountry" {...originCountryProps} onChange={e => getDestinationCountry(e.target.value, formik.setFieldValue)}>
                             <option>Origin Country</option>
                             {originCountries.map(({ iso3Code , common_name}) => <option value={iso3Code} key={common_name}>{common_name}</option>)}
@@ -362,10 +363,12 @@ export default ({
                             </>
                         }
 
-                        <SubmitButton type="submit">
-                            <SubmitButtonIcon className="icon" />
-                            <span className="text">{submitButtonText}</span>
-                        </SubmitButton>
+                        <Link to="/login">
+                            <SubmitButton>
+                                <SubmitButtonIcon className="icon" />
+                                <span className="text">{submitButtonText}</span>
+                            </SubmitButton>
+                        </Link>
                     </Form>
                     </FormContainer>
                 </MainContent>

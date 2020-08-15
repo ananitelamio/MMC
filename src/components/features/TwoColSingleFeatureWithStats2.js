@@ -2,6 +2,7 @@ import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
+import { Link } from "react-router-dom";
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import TransferMoneySrc from "images/send-money.svg";
@@ -48,7 +49,6 @@ export default ({
   ),
   description = "With My Mobile Cash send and receive money without moving, create your e-wallet to easily pay and receive your payments online. Pay your bills from home. Top up the phone credit of a relative or employee in your country and quickly fund your My Mobile Cash account.",
   primaryButtonText = "Register now",
-  primaryButtonUrl = "https://timerse.com",
   imageSrc = TransferMoneySrc,
   imageCss = null,
   imageContainerCss = null,
@@ -96,9 +96,11 @@ export default ({
                 </Statistic>
               ))}
             </Statistics>
-            <PrimaryButton as="a" href={primaryButtonUrl}>
-              {primaryButtonText}
-            </PrimaryButton>
+            <Link to="/sign-up">
+              <PrimaryButton>
+                {primaryButtonText}
+              </PrimaryButton>
+            </Link>
           </TextContent>
         </TextColumn>
       </TwoColumn>

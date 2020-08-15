@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
+import { Link } from "react-router-dom";
 import { ReactComponent as BriefcaseIcon } from "feather-icons/dist/icons/briefcase.svg";
 import { ReactComponent as MoneyIcon } from "feather-icons/dist/icons/dollar-sign.svg";
 import TeamIllustrationSrc from "images/team.svg";
@@ -53,8 +54,7 @@ export default ({
     </>
   ),
   description = "We are My Mobile Cash, the online money transfer service that allows you to quickly send money and make payments from your mobile phone, computer or tablet. Transfer money to your loved ones at any time.",
-  primaryButtonText = "To know more about it",
-  primaryButtonUrl = "https://timerse.com",
+  primaryButtonText = "Know more about us",
   features = null,
   textOnLeft = true
 }) => {
@@ -98,9 +98,12 @@ export default ({
                 </Feature>
               ))}
             </Features>
-            <PrimaryButton as="a" href={primaryButtonUrl}>
-              {primaryButtonText}
-            </PrimaryButton>
+            <Link to="/about-us">
+              <PrimaryButton>
+                {primaryButtonText}
+              </PrimaryButton>
+            </Link>
+              
           </TextContent>
         </TextColumn>
       </TwoColumn>
