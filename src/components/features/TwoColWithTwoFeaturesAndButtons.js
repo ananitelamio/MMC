@@ -1,6 +1,7 @@
 import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
+import translate from "../../i18n/translate";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
@@ -47,14 +48,14 @@ const FeatureDescription = tw.div`mt-1 text-sm`;
 const PrimaryButton = tw(PrimaryButtonBase)`mt-8 md:mt-10 text-sm inline-block mx-auto md:mx-0`;
 
 export default ({
-  subheading = "Who are we?",
+  subheading = translate('featureButton_subheading'),
   heading = (
     <>
-      About us<span tw="text-primary-500"></span>
+      {translate('featureButton_heading')}
     </>
   ),
-  description = "We are My Mobile Cash, the online money transfer service that allows you to quickly send money and make payments from your mobile phone, computer or tablet. Transfer money to your loved ones at any time.",
-  primaryButtonText = "Know more about us",
+  description = translate('featureButton_description'),
+  primaryButtonText = translate('featureButton_primaryButtonText'),
   features = null,
   textOnLeft = true
 }) => {
@@ -66,12 +67,12 @@ export default ({
    */
   const defaultFeatures = [
     {
-      title: "Secure Service"
+      title: translate('featureButton_title1')
     },
     {
-      title: "Cheaper"
+      title: translate('featureButton_title2')
     },{
-      title: "Reliable and fast service"
+      title: translate('featureButton_title3')
     }
   ];
 

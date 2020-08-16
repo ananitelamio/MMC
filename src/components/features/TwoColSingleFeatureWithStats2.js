@@ -3,6 +3,7 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { Link } from "react-router-dom";
+import translate from "../../i18n/translate";
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 import TransferMoneySrc from "images/send-money.svg";
@@ -41,14 +42,13 @@ const DecoratorBlob = styled(SvgDotPattern)(props => [
 ]);
 
 export default ({
-  subheading = "Our Track Record",
   heading = (
     <>
-      Transfer Money <wbr /> from your <span tw="text-primaryOrange-500">Smartphone.</span>
+      {translate('stats2_heading', { span: text => (<span tw="text-primaryOrange-500"> {text} </span>) })}
     </>
   ),
-  description = "With My Mobile Cash send and receive money without moving, create your e-wallet to easily pay and receive your payments online. Pay your bills from home. Top up the phone credit of a relative or employee in your country and quickly fund your My Mobile Cash account.",
-  primaryButtonText = "Register now",
+  description = translate('stats2_description'),
+  primaryButtonText = translate('stats2_primaryButtonText'),
   imageSrc = TransferMoneySrc,
   imageCss = null,
   imageContainerCss = null,
@@ -62,15 +62,15 @@ export default ({
   //Change the statistics variable as you like, add or delete objects
   const defaultStatistics = [
     {
-      key: "Country",
+      key: translate('stats2_k1'),
       value: "18+"
     },
     {
-      key: "Satisfied Customers",
+      key: translate('stats2_k2'),
       value: "10000+"
     },
     {
-      key: "Partners Around the world",
+      key: translate('stats2_k3'),
       value: "50+"
     }
   ];

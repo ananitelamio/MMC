@@ -3,6 +3,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 //eslint-disable-next-line
 import { css } from "styled-components/macro";
+import translate from "../../i18n/translate";
 import { SectionHeading } from "components/misc/Headings.js";
 
 import defaultCardImage from "../../images/shield-icon.svg";
@@ -12,9 +13,7 @@ import { ReactComponent as SvgDecoratorBlob3 } from "../../images/svg-decorator-
 import CreditRechargeIconImage from "../../images/credit-recharge.svg";
 import MoneydIconImage from "../../images/money-transfer.svg";
 import billsPaymentIconImage from "../../images/bills-payment.svg";
-import FastIconImage from "../../images/fast-icon.svg";
 import ElectronicWalletIconImage from "../../images/electronic-wallet.svg";
-import SimpleIconImage from "../../images/simple-icon.svg";
 
 const Container = tw.div`relative`;
 
@@ -62,27 +61,32 @@ export default () => {
   const cards = [
     {
       imageSrc: MoneydIconImage,
-      title: "Money transfer",
-      description: "Transfer money from your home with one click. Mymobile Cash offers you a quick and cheaper solution to get closer to your family and business. With My Mobile Cash nothing is out of your reach. You can also have money delivered to your home."
+      title: translate('dashedBorderSix_money_title'),
+      description: translate('dashedBorderSix_money_description')
     },
     { imageSrc: CreditRechargeIconImage, 
-      title: "Recharge of credit",
-      description: "Reload your My Mobile Cash account in one minute, top up credit at any time depending on your phone network and send phone credit from one country to another."  
+      title: translate('dashedBorderSix_credit_title'),
+      description: translate('dashedBorderSix_credit_description') 
     },
     { imageSrc: billsPaymentIconImage, 
-      title: "Payment of bills",
-      description: "Pay your bills from home directly on My Mobile Cash and save time at any time. You can also ask a close My Mobile Cash subscriber to pay your bill."
+      title: translate('dashedBorderSix_bill_title'),
+      description: translate('dashedBorderSix_bill_description')
     },
     { imageSrc: ElectronicWalletIconImage, 
-      title: "Electronic wallet",
-      description: "Send and receive payments faster with your My Mobile Cash e-wallet. It's simple, convenient and efficient. Shop safely and reliably."
+      title: translate('dashedBorderSix_electronic_title'),
+      description: translate('dashedBorderSix_electronic_description')
     }
   ];
 
   return (
     <Container>
       <ThreeColumnContainer>
-        <Heading>Our Professional <span tw="text-primaryOrange-500">Services</span></Heading>
+        <Heading>
+          {translate('dashedBorderSix_heading', {
+                span: text => (<span tw="text-primaryOrange-500"> {text} </span>)
+              })
+          }
+        </Heading>
         {cards.map((card, i) => (
           <Column key={i}>
             <Card>

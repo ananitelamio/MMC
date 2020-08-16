@@ -2,6 +2,8 @@ import React from "react";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import tw from "twin.macro";
+import { FormattedMessage } from 'react-intl';
+import translate from "../../i18n/translate";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
@@ -40,8 +42,8 @@ const SubmitButton = tw(PrimaryButtonBase)`inline-block lg:ml-6 mt-6 lg:mt-0`
 const validationSchema = Yup.object().shape({
   email: Yup
     .string()
-    .email()
-    .required("Email is a required field")
+    .email(translate("subscribe_email_valid"))
+    .required(translate("subscribe_email_required"))
 });
 
 const hubspot = require('@hubspot/api-client');
@@ -59,7 +61,7 @@ const onSubmit = (data) => {
     
     hubspotClient.crm.contacts.basicApi.create({ properties: { email: data.email } })
     .then(response => {
-        toast.success("Subscribed successfuly, Thank You!",{
+        toast.success(translate("subscribe_succes"),{
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -71,7 +73,7 @@ const onSubmit = (data) => {
       })
       .catch(e => {
         console.log(e);
-        toast.error("Something went wrong, try again please!",{
+        toast.error(translate("subscribe_error"),{
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -84,10 +86,10 @@ const onSubmit = (data) => {
 };
 
 export default ({
-  subheading = "Stay up to date",
-  heading = <>Feel free to <span tw="text-primaryOrange-500">Subscribe </span>and stay informed!<wbr/></>,
-  description = "Stay informed about our latest services and innovations to serve you better.",
-  submitButtonText = "I subscribe",
+  subheading = translate("subscribe_subheading"),
+  heading = <>{translate("subscribe_subheading",{ span: text => (<span tw="text-primaryOrange-500"> {text} </span>) })}</>,
+  description = translate("subscribe_description"),
+  submitButtonText = translate("subscribe_submitButtonText"),
   textOnLeft = true
 }) => {
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
@@ -112,10 +114,14 @@ export default ({
             <Heading>{heading}</Heading>
             <Description>{description}</Description>
             <Form onSubmit={formik.handleSubmit}>
-              <Input type="email" name="email" placeholder="Your Email Address" {...emailProps}/>
-                {formik.touched.email && formik.errors.email ? (<Error>{formik.errors.email}</Error>): null}
+              <FormattedMessage id="subscribe_input_placeholder">
+                {placeholder=>
+                    <Input type="email" name="email" placeholder={placeholder} {...emailProps}/>
+                }
+              </FormattedMessage>
               <SubmitButton type="submit">{submitButtonText}</SubmitButton>
             </Form>
+            {formik.touched.email && formik.errors.email ? (<Error>{formik.errors.email}</Error>): null}
           </TextContent>
         </TextColumn>
       </TwoColumn>

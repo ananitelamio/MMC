@@ -36,8 +36,6 @@ const Paragraph = tw.p`my-5 lg:my-8 text-sm lg:text-base font-medium text-second
 const Actions = tw.div`flex flex-col items-center sm:flex-row justify-center lg:justify-start mt-8`;
 const PrimaryButton = tw.button`font-bold px-8 lg:px-10 py-3 rounded bg-secondaryBlue-600 text-gray-100 hocus:bg-secondaryBlue-700 focus:shadow-outline focus:outline-none transition duration-300`;
 
-const IllustrationContainer = tw.div`flex justify-center md:justify-end items-center relative max-w-3xl lg:max-w-none`;
-
 // Random Decorator Blobs (shapes that you see in background)
 const DecoratorBlob1 = styled(SvgDecoratorBlob1)`
   ${tw`pointer-events-none opacity-5 absolute left-0 bottom-0 h-64 w-64 transform -translate-x-2/3  -z-10`}
@@ -71,11 +69,7 @@ const StyledResponsiveVideoEmbed = styled(ResponsiveVideoEmbed)`
   }
 `;
 
-export default ({
-  heading = "My Mobile Cash Your closest partner",
-  description="We provide fast, cheap and secure national and international transfers. Your money travels in the blink of an eye and automatically the beneficiary is paid.",
-  primaryButtonText="Get Started"
-}) => {
+export default () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const toggleModal = () => setModalIsOpen(!modalIsOpen);
@@ -89,10 +83,10 @@ export default ({
             <TwoColumn>
                 <LeftColumn>
                     <Notification>{translate('twoColWithVideo_notification')}</Notification>
-                    <Heading>{heading}</Heading>
-                    <Paragraph>{description}</Paragraph>
+                    <Heading>{translate('twoColWithVideo_heading')}</Heading>
+                    <Paragraph>{translate('twoColWithVideo_description')}</Paragraph>
                     <Actions>
-                    <PrimaryButton onClick={toggleModal}>{primaryButtonText}</PrimaryButton>
+                    <PrimaryButton onClick={toggleModal}>{translate('twoColWithVideo_primaryBtnTxt')}</PrimaryButton>
                     </Actions>
                 </LeftColumn>
                 <RightColumn>

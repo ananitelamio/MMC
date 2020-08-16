@@ -1,6 +1,7 @@
 import React from "react";
-import tw from "twin.macro"; //eslint-disable-line
-import { css } from "styled-components/macro"; //eslint-disable-line
+//import tw from "twin.macro"; //eslint-disable-line
+//import { css } from "styled-components/macro"; //eslint-disable-line
+import translate from "../i18n/translate";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 
 import Hero from "components/hero/TwoColumnWithVideo.js";
@@ -8,10 +9,10 @@ import Features from "components/features/DashedBorderSixFeatures";
 import MainFeature from "components/features/TwoColSingleFeatureWithStats2.js";
 import MainFeature2 from "components/features/TwoColWithTwoFeaturesAndButtons.js";
 import Testimonial from "components/testimonials/TwoColumnWithImageAndProfilePictureReview.js";
-import FAQ from "components/faqs/SimpleWithSideImage.js";
+//import FAQ from "components/faqs/SimpleWithSideImage.js";
 import ContactUsForm from "components/forms/TwoColContactUsWithIllustration.js";
 import Footer from "components/footers/FiveColumnDark.js";
-import customerSupportIllustrationSrc from "images/faq.svg";
+//import customerSupportIllustrationSrc from "images/faq.svg";
 
 export default () => (
   <AnimationRevealPage>
@@ -20,13 +21,13 @@ export default () => (
     <Features />
     <MainFeature2 />
     <Testimonial
-      subheading="Testimonials"
+      subheading={translate('testimonial_subheading')}
       heading={
         <>
-          Our Clients<span tw="text-primaryOrange-500">Love Us.</span>
+          {translate('testimonial_heading', {span: text => (<span tw="text-primaryOrange-500"> {text} </span>)})}
         </>
       }
-      description="Here are what some of our amazing customers are saying about our services."
+      description={translate('testimonial_description')}
       testimonials={[
         {
           imageSrc:
@@ -34,7 +35,7 @@ export default () => (
           profileImageSrc:
             "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3.25&w=512&h=512&q=80",
           quote:
-            "Whoo! I got my money in seconds. Thank you, My Mobile Cash, you guys are the best...",
+          translate('testimonial_quote1'),
           customerName: "Charlotte Hale",
           customerTitle: "CEO, Tesla Inc."
         },
@@ -44,7 +45,7 @@ export default () => (
           profileImageSrc:
             "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=512&h=512&q=80",
           quote:
-            "No sooner had I completed my transaction than my son called me to show his joy. I especially appreciate your professional and always available team.",
+          translate('testimonial_quote2'),
           customerName: "Adam Cuppy",
           customerTitle: "Founder, Nestle"
         },
@@ -54,14 +55,14 @@ export default () => (
           profileImageSrc:
             "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=512&h=512&q=80",
           quote:
-            "With My Mobile Cash, I don't have to wait in line at the agency anymore and the transfer fees are much cheaper ...",
+          translate('testimonial_quote3'),
           customerName: "Leslie Okana",
           customerTitle: "Founder, OKADA"
         }
       ]}
       textOnLeft={true}
     />
-    <FAQ
+    {/*<FAQ
       imageSrc={customerSupportIllustrationSrc}
       imageContain={true}
       imageShadow={false}
@@ -71,7 +72,7 @@ export default () => (
           Do you have <span tw="text-primaryOrange-500">Questions ?</span>
         </>
       }
-    />
+    />*/}
     <ContactUsForm />
     <Footer />
   </AnimationRevealPage>
