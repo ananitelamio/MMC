@@ -1,6 +1,8 @@
 import React from "react";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { FormattedMessage } from 'react-intl';
+import translate from "../../i18n/translate";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
@@ -26,7 +28,7 @@ const TextContent = tw.div`lg:py-8 text-center md:text-left`;
 
 const Subheading = tw(SubheadingBase)`text-center md:text-left`;
 const Heading = tw(SectionHeading)`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
-const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`
+//const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`
 
 const Form = tw.form`mt-8 md:mt-10 text-sm flex flex-col max-w-sm mx-auto md:mx-0`
 const InputWrapper = tw.div`px-3 mt-6`;
@@ -41,23 +43,23 @@ const SubmitButton = tw(PrimaryButtonBase)`inline-block mt-8`
 const validationSchema = Yup.object().shape({
   name: Yup
     .string()
-    .required("Your full name is required")
-    .min(2, "Firstame must be at least 2 characters"),
+    .required(translate("contactus_name_required"))
+    .min(2, translate("contactus_name_min")),
   email: Yup
     .string()
-    .email()
-    .required("Email is a required field"),
+    .email(translate("contactus_email_valid"))
+    .required(translate("contactus_email_required")),
   phone: Yup
-    .number()
-    .required("Phone number is required"),
+    .number(translate("contactus_phone_valid"))
+    .required(translate("contactus_phone_required")),
   subject: Yup
     .string()
-    .required("A subject is required")
-    .min(8, "The subject should be at least 8 characters long"),
+    .required(translate("contactus_subject_required"))
+    .min(8, translate("contactus_subject_min")),
   message: Yup
     .string()
-    .required("A message is required")
-    .min(8, "The message should be at least 8 characters long"),
+    .required(translate("contactus_message_required"))
+    .min(8, translate("contactus_message_min")),
     
 });
 
@@ -78,7 +80,7 @@ const onSubmit = (data) => {
     
     hubspotClient.crm.contacts.basicApi.create({ properties: { firstname: data.name, email: data.email, phone: data.phone, message: data.message} })
     .then(response => {
-          toast.success("Our team will contact you, Cheers!",{
+          toast.success(translate("contactus_succes"),{
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -90,7 +92,7 @@ const onSubmit = (data) => {
       })
       .catch(e => {
         console.log(e);
-        toast.error("Contact already exists",{
+        toast.error(translate("contactus_error"),{
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -103,12 +105,9 @@ const onSubmit = (data) => {
 };
 
 export default ({
-  subheading = "Contact Us",
-  heading = <>Our team is at your disposal <wbr/> <span tw="text-primaryOrange-500">to answer your questions.</span></>,
-  description = "",
-  submitButtonText = "Send",
-  formAction = "#",
-  formMethod = "get",
+  subheading = translate("contactus_subheading"),
+  heading = <>{translate("contactus_heading", { span: text => (<span tw="text-primaryOrange-500"> {text} </span>) })}</>,
+  submitButtonText = translate("contactus_send"),
   textOnLeft = true,
 }) => {
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
@@ -135,26 +134,45 @@ export default ({
           <TextContent>
             {subheading && <Subheading>{subheading}</Subheading>}
             <Heading>{heading}</Heading>
-            {description.length ? <Description>{description}</Description> : null }
             <Form onSubmit={formik.handleSubmit}>
               <InputWrapper>
-                <Input type="text" name="name" placeholder="Full Name" {...nameProps}/>
+                <FormattedMessage id="contactus_name">
+                  {placeholder=>
+                      <Input type="text" name="name" placeholder={placeholder} {...nameProps}/>
+                  }
+                </FormattedMessage>
                 {formik.touched.name && formik.errors.name ? (<Error>{formik.errors.name}</Error>): null}
               </InputWrapper>
               <InputWrapper>
-                <Input type="email" name="email" placeholder="Your Email Address" {...emailProps}/>
+                <FormattedMessage id="contactus_email">
+                  {placeholder=>
+                      <Input type="email" name="email" placeholder={placeholder} {...emailProps}/>
+                  }
+                </FormattedMessage>
                 {formik.touched.email && formik.errors.email ? (<Error>{formik.errors.email}</Error>): null}
               </InputWrapper>
               <InputWrapper>
-                <Input type="number" name="numero" placeholder="Phone Number" {...phoneProps}/>
-                {formik.touched.number && formik.errors.number ? (<Error>{formik.errors.number}</Error>): null}
+                <FormattedMessage id="contactus_phone">
+                  {placeholder=>
+                      <Input type="number" name="phone" placeholder={placeholder} {...phoneProps}/>
+                  }
+                </FormattedMessage>
+                {formik.touched.number && formik.errors.number ? (<Error>{formik.errors.phone}</Error>): null}
               </InputWrapper>
               <InputWrapper>
-                <Input type="text" name="subject" placeholder="Subject" {...subjectProps}/>
+                <FormattedMessage id="contactus_subject">
+                  {placeholder=>
+                      <Input type="text" name="subject" placeholder={placeholder} {...subjectProps}/>
+                  }
+                </FormattedMessage>
                 {formik.touched.subject && formik.errors.subject ? (<Error>{formik.errors.subject}</Error>): null}
               </InputWrapper>
               <InputWrapper>
-                <Textarea name="message" placeholder="Your Message Here" {...messageProps}/>
+                <FormattedMessage id="contactus_message">
+                  {placeholder=>
+                      <Textarea name="message" placeholder={placeholder} {...messageProps}/>
+                  }
+                </FormattedMessage>
                 {formik.touched.message && formik.errors.message ? (<Error>{formik.errors.message}</Error>): null}
               </InputWrapper>
               <SubmitButton type="submit">{submitButtonText}</SubmitButton>

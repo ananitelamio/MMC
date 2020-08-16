@@ -61,6 +61,7 @@ const onSubmit = (data) => {
     
     hubspotClient.crm.contacts.basicApi.create({ properties: { email: data.email } })
     .then(response => {
+        console.log(response);
         toast.success(translate("subscribe_succes"),{
           position: "top-right",
           autoClose: 3000,

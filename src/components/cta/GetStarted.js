@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import translate from "../../i18n/translate";
 import styled from "styled-components"; //eslint-disable-line
 import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
@@ -22,8 +23,8 @@ const DecoratorBlobContainer = tw.div`absolute inset-0 overflow-hidden rounded-l
 const DecoratorBlob1 = tw(SvgDecoratorBlob1)`absolute bottom-0 left-0 w-80 h-80 transform -translate-x-20 translate-y-32 text-primary-700 opacity-50`
 const DecoratorBlob2 = tw(SvgDecoratorBlob1)`absolute top-0 right-0 w-80 h-80 transform  translate-x-20 -translate-y-64 text-primary-700 opacity-50`
 export default ({
-  text = "We secure your transactions",
-  primaryLinkText = "Make your first transfer"
+  text = translate("getStarted_text"),
+  primaryLinkText = translate("getStarted_link")
 }) => {
   return (
     <Container css={tw`mb-12 lg:mb-20`}>
