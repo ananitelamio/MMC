@@ -541,7 +541,9 @@ export default ({
 
                     <InputWrapper>
                         <Select name="nationality" {...nationalityProps}>
-                            <option>{translate("signup_nationality_placeholder")}</option>
+                            <FormattedMessage id="signup_nationality_placeholder">
+                              {placeholder => <option>{placeholder}</option>}
+                            </FormattedMessage>
                             {Nationalities.map(nationality => <option key={nationality}>{nationality}</option>)}
                         </Select>
                         {formik.touched.nationality && formik.errors.nationality ? (<Error>{formik.errors.nationality}</Error>): null}
@@ -590,9 +592,15 @@ export default ({
                 <InputsRow>
                     <InputWrapper>
                         <Select name="customerGender" {...customerGenderProps}>
-                            <option>{translate("signup_gender_placeholder")}</option>
-                            <option value="MALE">{translate("signup_gender_male")}</option>
-                            <option value="FEMALE">{translate("signup_gender_male")}</option>
+                          <FormattedMessage id="signup_gender_placeholder">
+                            {placeholder => <option>{placeholder}</option>}
+                          </FormattedMessage>
+                          <FormattedMessage id="signup_gender_male">
+                            {placeholder => <option value="MALE">{placeholder}</option>}
+                          </FormattedMessage>
+                          <FormattedMessage id="signup_gender_female">
+                            {placeholder => <option value="FEMALE">{placeholder}</option>}
+                          </FormattedMessage>
                         </Select>
                         {formik.touched.customerGender && formik.errors.customerGender ? (<Error>{formik.errors.customerGender}</Error>): null}
                     </InputWrapper>
