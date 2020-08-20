@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
+import translate from "../../i18n/translate";
 import moneyTransfer from "../../services/moneyTransfer";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import tw from "twin.macro";
@@ -91,8 +93,8 @@ let payloadJSON;
 
 
 export default ({
-  headingText = "Send Money",
-  submitButtonText = "GET STARTED",
+  headingText = translate("quote_heading"),
+  submitButtonText = translate("quote_button_text"),
   SubmitButtonIcon = LoginIcon
 }) => {
   const formik = useFormik({
@@ -266,14 +268,18 @@ export default ({
                     <FormContainer>
                     <Form>
                         <Select name="originCountry" {...originCountryProps} onChange={e => getDestinationCountry(e.target.value, formik.setFieldValue)}>
-                            <option>Origin Country</option>
+                            <FormattedMessage id="quote_originCountry">
+                                {placeholder => <option>{placeholder}</option>}
+                            </FormattedMessage>
                             {originCountries.map(({ iso3Code , common_name}) => <option value={iso3Code} key={common_name}>{common_name}</option>)}
                         </Select>
 
                         {  
                             destinationCountries.length > 0 &&
                             <Select name="destinationCountry" {...destinationCountryProps} onChange={e => getDeliveryMethods(e.target.value, formik.setFieldValue)}>
-                                <option>Destination Country</option>
+                                <FormattedMessage id="quote_destinationCountry">
+                                    {placeholder => <option>{placeholder}</option>}
+                                </FormattedMessage>
                                 {destinationCountries.map(({ iso3Code , common_name}) => <option value={iso3Code} key={common_name}>{common_name}</option>)}
                             </Select>
                         }
@@ -281,7 +287,9 @@ export default ({
                         {
                             deliveryMethods.length > 0 &&
                             <Select name="deliveryMethod" {...deliveryMethodProps} onChange={e => getCurrencies(e.target.value, formik.setFieldValue)}>
-                                <option>Select Delivery Method</option>
+                                <FormattedMessage id="quote_destinationDeliveryMethod">
+                                    {placeholder => <option>{placeholder}</option>}
+                                </FormattedMessage>
                                 {deliveryMethods.map(({ name , label}) => <option value={name} key={label}>{label}</option>)}
                             </Select>
                         }  
@@ -310,7 +318,9 @@ export default ({
                             (currencies.length > 0 && deliveryCurrencies.length > 0) && <>
                             <InputsRow>
                                 <InputCurrrency>
-                                    <Input id="amount" name="amount" type="text" placeholder="Amount to send" autoComplete="off" {...amountProps} onChange={e => calculator(e.target.value, formik.setFieldValue,"sending amount")}/>
+                                    <FormattedMessage id="quote_amount_to_send">
+                                        {placeholder => <Input id="amount" name="amount" type="text" placeholder={placeholder} autoComplete="off" {...amountProps} onChange={e => calculator(e.target.value, formik.setFieldValue,"sending amount")}/>}
+                                    </FormattedMessage>
                                 </InputCurrrency>
                                 
                                 <InputAmount>
@@ -322,7 +332,9 @@ export default ({
                             
                             <InputsRow>
                                 <InputCurrrency>
-                                    <Input id="receivingAmount" name="receivingAmount" type="text" placeholder="Amount to receive" autoComplete="off" {...receivingAmountProps} onBlur={e => calculator(e.target.value, formik.setFieldValue, "receiving amount")}/>
+                                    <FormattedMessage id="quote_amount_to_receive">
+                                        {placeholder => <Input id="receivingAmount" name="receivingAmount" type="text" placeholder={placeholder} autoComplete="off" {...receivingAmountProps} onBlur={e => calculator(e.target.value, formik.setFieldValue, "receiving amount")}/>}
+                                    </FormattedMessage>
                                 </InputCurrrency>
 
                                 <InputAmount>
@@ -335,7 +347,7 @@ export default ({
                             <StatsRow>
                                 <Stats>
                                     <StatTitle>
-                                        Exchange rate
+                                        {translate('quote_xrate')}
                                     </StatTitle>
                                     <StatInfo>
                                         {rate} {payload.deriveAmountCurrency}
@@ -344,7 +356,7 @@ export default ({
 
                                 <Stats>
                                     <StatTitle>
-                                        Fee
+                                        {translate('quote_fee')}
                                     </StatTitle>
                                     <StatInfo>
                                         {fee} {payload.deriveAmountCurrency}
@@ -353,7 +365,7 @@ export default ({
 
                                 <Stats>
                                     <StatTitle>
-                                        Total to pay
+                                        {translate('quote_to_pay')}
                                     </StatTitle>
                                     <StatInfo>
                                         {total} {payload.principalAmountCurrency}
