@@ -2,6 +2,7 @@ import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
+import translate from "../../i18n/translate";
 
 import LogoImage from "images/logo.svg";
 import { ReactComponent as FacebookIcon } from "images/facebook-icon.svg";
@@ -51,10 +52,7 @@ export default () => {
               <LogoText>My Mobile Cash</LogoText>
             </LogoContainer>
             <CompanyAddress>
-              Immeuble 2MP 2e étage bureau D, 
-              Avenue Marien Ngouabi, 
-              Centre-Ville, Pointe-Noire, 
-              Congo
+              Corniche Square lot #536, Goumel, Ziguinchor, SENEGAL 
             </CompanyAddress>
             <SocialLinksContainer>
               <SocialLink href="https://facebook.com">
@@ -69,18 +67,24 @@ export default () => {
             </SocialLinksContainer>
           </CompanyColumn>
           <Column>
-            <ColumnHeading>Quick Links</ColumnHeading>
+            <ColumnHeading>{translate("footer_quicklinks")}</ColumnHeading>
             <LinkList>
               <LinkListItem>
                 <Link href="#">Blog</Link>
               </LinkListItem>
               <LinkListItem>
-                <Link href="#">About Us</Link>
+                <Link href="/">{translate("footer_home")}</Link>
+              </LinkListItem>
+              <LinkListItem>
+                <Link href="/about-us">{translate("footer_about_us")}</Link>
+              </LinkListItem>
+              <LinkListItem>
+                <Link href="/contact">{translate("footer_contact")}</Link>
               </LinkListItem>
             </LinkList>
           </Column>
           <Column>
-            <ColumnHeading>Legal</ColumnHeading>
+            <ColumnHeading>{translate("footer_legal")}</ColumnHeading>
             <LinkList>
               <LinkListItem>
                 <Link href="/privacy">Privacy Policy</Link>
@@ -94,10 +98,7 @@ export default () => {
             <ColumnHeading>Contact</ColumnHeading>
             <LinkList>
               <LinkListItem>
-                +242 06 571 94 21
-              </LinkListItem>
-              <LinkListItem>
-                +221 77 205 33 57
+                +221 76 426 22 57
               </LinkListItem>
               <LinkListItem>
                 <Link href="mailto:support@mymobilecash.net">support@mymobilecash.net</Link> 

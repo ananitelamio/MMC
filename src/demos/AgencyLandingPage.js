@@ -1,5 +1,5 @@
 import React from "react";
-//import tw from "twin.macro"; //eslint-disable-line
+import tw from "twin.macro"; //eslint-disable-line
 //import { css } from "styled-components/macro"; //eslint-disable-line
 import translate from "../i18n/translate";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
@@ -12,7 +12,7 @@ import Testimonial from "components/testimonials/TwoColumnWithImageAndProfilePic
 import FAQ from "components/faqs/SimpleWithSideImage.js";
 import ContactUsForm from "components/forms/TwoColContactUsWithIllustration.js";
 import Footer from "components/footers/FiveColumnDark.js";
-//import customerSupportIllustrationSrc from "images/faq.svg";
+import customerSupportIllustrationSrc from "images/faq.svg";
 
 export default () => (
   <AnimationRevealPage>

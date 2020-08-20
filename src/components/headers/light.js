@@ -11,6 +11,8 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import useAnimatedNavToggler from "../../helpers/useAnimatedNavToggler.js";
 
 import logo from "../../images/logo.svg";
+import france from "../../images/france.svg";
+import united from "../../images/united.svg";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 
@@ -31,9 +33,9 @@ export const Link = tw(NavLink)`
 `;
 
 export const Tr = tw.a`
-text-lg my-2 lg:text-sm lg:mx-6 lg:my-0
-font-semibold tracking-wide transition duration-300
-pb-1 border-b-2 text-primaryOrange-500 border-transparent hover:border-secondaryBlue-600 hocus:text-secondaryBlue-600
+  text-lg my-2 lg:text-sm lg:mx-6 lg:my-0
+  font-semibold tracking-wide transition duration-300
+  pb-1 border-b-2 text-primaryOrange-500 border-transparent hover:border-secondaryBlue-600 hocus:text-secondaryBlue-600
 `;
 
 export const PrimaryLink = tw(Link)`
@@ -52,7 +54,7 @@ export const LogoLink = styled(Link)`
 
 export const MobileNavLinksContainer = tw.nav`flex flex-1 items-center justify-between`;
 export const NavToggle = tw.button`
-  lg:hidden z-20 focus:outline-none hocus:text-primary-500 transition duration-300
+  lg:hidden z-20 focus:outline-none hocus:text-secondaryBlue-600 transition duration-300
 `;
 export const MobileNavLinks = motion.custom(styled.div`
   ${tw`lg:hidden z-10 fixed top-0 inset-x-0 mx-4 my-6 p-8 border text-center rounded-lg text-gray-900 bg-white`}
@@ -69,7 +71,6 @@ export default ({ logoLink, links, className, collapseBreakpointClass = "lg" }) 
   const {dispatch} = useContext(AppContext);
 
 	const setLanguage = siteLang => {
-    console.log(siteLang);
 		dispatch({type: 'setLang', siteLang});
 		saveToStorage('siteLang', siteLang);
 	};
@@ -91,11 +92,11 @@ export default ({ logoLink, links, className, collapseBreakpointClass = "lg" }) 
       <Link to="/">{translate('header_home')}</Link>
       <Link to="/about-us">{translate('header_about')}</Link>
       <Link to="/contact">{translate('header_contact')}</Link>
-      <Tr onClick={() => setLanguage('en-US')}>En</Tr><Tr onClick={() => setLanguage('fr-FR')}>Fr</Tr>
       <Link to="/login" tw="lg:ml-12!">
         {translate('header_login')}
       </Link>
       <PrimaryLink to="/sign-up">{translate('header_signup')}</PrimaryLink>
+      <span><Tr onClick={() => setLanguage('en-US')} href="#">En</Tr> | <Tr onClick={() => setLanguage('fr-FR')} href="#">Fr</Tr></span>
     </NavLinks>
   ];
 
@@ -103,9 +104,11 @@ export default ({ logoLink, links, className, collapseBreakpointClass = "lg" }) 
   const collapseBreakpointCss = collapseBreakPointCssMap[collapseBreakpointClass];
 
   const defaultLogoLink = (
-    <LogoLink to="/">
-      <img src={logo} alt="logo" />
-    </LogoLink>
+    <>
+      <LogoLink to="/">
+        <img src={logo} alt="logo" />
+      </LogoLink>
+    </>
   );
 
   logoLink = logoLink || defaultLogoLink;
@@ -123,6 +126,7 @@ export default ({ logoLink, links, className, collapseBreakpointClass = "lg" }) 
         <MobileNavLinks initial={{ x: "150%", display: "none" }} animate={animation} css={collapseBreakpointCss.mobileNavLinks}>
           {links}
         </MobileNavLinks>
+        <span><Tr onClick={() => setLanguage('en-US')}>En</Tr> | <Tr onClick={() => setLanguage('fr-FR')}>Fr</Tr></span>
         <NavToggle onClick={toggleNavbar} className={showNavLinks ? "open" : "closed"}>
           {showNavLinks ? <CloseIcon tw="w-6 h-6" /> : <MenuIcon tw="w-6 h-6" />}
         </NavToggle>

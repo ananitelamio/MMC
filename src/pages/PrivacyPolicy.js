@@ -173,7 +173,9 @@ export default ({ headingText = translate("privacy_heading") }) => {
               {translate("privacy_p14")}
             </p>
             <p>
-              {translate("privacy_p15")}
+              {translate("privacy_p15", {
+                a: chunks => <a href="https://www.termsfeed.com/blog/cookies/">{chunks}</a>
+                })}
             </p>
             <p>{translate("privacy_p16")}</p>
             <ul>

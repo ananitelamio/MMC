@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import translate from "../i18n/translate";
+import translate from "../../i18n/translate";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
@@ -55,18 +55,27 @@ export default ({
     {
       question: translate('faq_question1'),
       answer: translate('faq_answer1'),
+    },
+    {
       question: translate('faq_question2'),
       answer: translate('faq_answer2'),
+    },
+    {
       question: translate('faq_question3'),
       answer: translate('faq_answer3'),
+    },
+    {
       question: translate('faq_question4'),
       answer: translate('faq_answer4'),
+    },
+    {
       question: translate('faq_question5'),
       answer: translate('faq_answer5'),
+    },
+    {
       question: translate('faq_question6'),
       answer: translate('faq_answer6'),
-    },
-    
+    }
   ];
 
   if (!faqs || faqs.length === 0) faqs = defaultFaqs;

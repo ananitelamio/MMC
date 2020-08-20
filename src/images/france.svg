@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="512" height="512" id="svg4408" version="1.1" inkscape:version="0.91 r13725" sodipodi:docname="france_french_national_country_flag.svg" inkscape:export-filename="/home/vignesh/நிகழ்படங்கள்/iconfinder/flags/finished/png/chad.png" inkscape:export-xdpi="90" inkscape:export-ydpi="90">
+  <defs id="defs4410">
+    <clipPath clipPathUnits="userSpaceOnUse" id="clipPath3146">
+      <path sodipodi:type="arc" style="fill:#579bd3;fill-opacity:1;stroke:none" id="path3148" sodipodi:cx="-323.20001" sodipodi:cy="21.81818" sodipodi:rx="156.8" sodipodi:ry="156.8" d="m -479.99183,20.215956 a 156.8,156.8 0 1 1 -0.008,1.602218" transform="matrix(1.4993745,0,0,1.4993745,740.13299,-223.27206)" sodipodi:start="3.1518111" sodipodi:end="9.424778" sodipodi:open="true"/>
+    </clipPath>
+  </defs>
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="2.5" inkscape:cx="267.85201" inkscape:cy="428.28385" inkscape:current-layer="layer1" showgrid="true" inkscape:document-units="px" inkscape:grid-bbox="true" showguides="false" inkscape:guide-bbox="true" inkscape:window-width="1366" inkscape:window-height="716" inkscape:window-x="-8" inkscape:window-y="-8" inkscape:window-maximized="1">
+    <sodipodi:guide orientation="1,0" position="10.181818,618.18182" id="guide4932"/>
+    <sodipodi:guide orientation="1,0" position="490.18182,616.72727" id="guide4934"/>
+    <sodipodi:guide orientation="0,1" position="-2.5454545,490.18182" id="guide4936"/>
+    <sodipodi:guide orientation="0,1" position="-167.27273,10.181818" id="guide4938"/>
+    <sodipodi:guide orientation="1,0" position="62.6,497" id="guide5031"/>
+    <sodipodi:guide orientation="1,0" position="52.6,496.2" id="guide5033"/>
+    <sodipodi:guide orientation="0,1" position="-5,419.8" id="guide5035"/>
+    <sodipodi:guide orientation="0,1" position="-5.2,427.4" id="guide5037"/>
+    <sodipodi:guide orientation="1,0" position="427.4,40.8" id="guide5039"/>
+    <sodipodi:guide orientation="1,0" position="437.4,32" id="guide5041"/>
+    <sodipodi:guide orientation="0,1" position="413.4,74.8" id="guide5043"/>
+    <sodipodi:guide orientation="0,1" position="-683.2,74.8" id="guide5045"/>
+    <sodipodi:guide orientation="1,0" position="249.6,427.4" id="guide5598"/>
+    <sodipodi:guide orientation="0,1" position="62.6,251.2" id="guide5600"/>
+    <sodipodi:guide orientation="0,1" position="339.41126,333.7544" id="guide6356"/>
+    <sodipodi:guide orientation="0,1" position="-39.59798,174.23111" id="guide6358"/>
+  </sodipodi:namedview>
+  
+  <g id="layer1" inkscape:label="Layer 1" inkscape:groupmode="layer" transform="translate(0,448)">
+    <path style="fill:#e32d3c;fill-opacity:1;stroke:none" d="M 336 30.03125 L 336 482.00391 A 240 240 0 0 0 496 256 A 240 240 0 0 0 336 30.03125 z " transform="translate(0,-448)" id="rect3220"/>
+    <path style="fill:#ffffff;fill-opacity:1;stroke:none" d="M 256 16 A 240 240 0 0 0 176 29.996094 L 176 481.96875 A 240 240 0 0 0 256 496 A 240 240 0 0 0 336 482.00391 L 336 30.03125 A 240 240 0 0 0 256 16 z " transform="translate(0,-448)" id="rect3990"/>
+    <path style="fill:#2b4896;fill-opacity:1;stroke:none" d="M 176 29.996094 A 240 240 0 0 0 16 256 A 240 240 0 0 0 176 481.96875 L 176 29.996094 z " transform="translate(0,-448)" id="rect3992"/>
+  </g>
+
+	<metadata>
+		<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+			<rdf:Description about="https://iconscout.com/legal#licenses" dc:title="france_french_national_country_flag" dc:description="france_french_national_country_flag" dc:publisher="Iconscout" dc:date="2017-05-26" dc:format="image/svg+xml" dc:language="en">
+				<dc:creator>
+					<rdf:Bag>
+						<rdf:li>Vignesh Oviyan</rdf:li>
+					</rdf:Bag>
+				</dc:creator>
+			</rdf:Description>
+		</rdf:RDF>
+    </metadata></svg>
