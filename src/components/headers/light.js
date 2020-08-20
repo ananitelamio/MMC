@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import {AppContext} from "../../providers/context";
 import {saveToStorage} from "../../helpers/sessionStorage";
+import translate from "../../i18n/translate";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
@@ -87,14 +88,14 @@ export default ({ logoLink, links, className, collapseBreakpointClass = "lg" }) 
    */
   const defaultLinks = [
     <NavLinks key={1}>
-      <Link to="/">Home</Link>
-      <Link to="/about-us">About Us</Link>
-      <Link to="/contact">Contact Us</Link>
+      <Link to="/">{translate('header_home')}</Link>
+      <Link to="/about-us">{translate('header_about')}</Link>
+      <Link to="/contact">{translate('header_contact')}</Link>
       <Tr onClick={() => setLanguage('en-US')}>En</Tr><Tr onClick={() => setLanguage('fr-FR')}>Fr</Tr>
       <Link to="/login" tw="lg:ml-12!">
-        Login
+        {translate('header_login')}
       </Link>
-      <PrimaryLink to="/sign-up">Sign Up</PrimaryLink>
+      <PrimaryLink to="/sign-up">{translate('header_signup')}</PrimaryLink>
     </NavLinks>
   ];
 

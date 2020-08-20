@@ -9,7 +9,7 @@ import Features from "components/features/DashedBorderSixFeatures";
 import MainFeature from "components/features/TwoColSingleFeatureWithStats2.js";
 import MainFeature2 from "components/features/TwoColWithTwoFeaturesAndButtons.js";
 import Testimonial from "components/testimonials/TwoColumnWithImageAndProfilePictureReview.js";
-//import FAQ from "components/faqs/SimpleWithSideImage.js";
+import FAQ from "components/faqs/SimpleWithSideImage.js";
 import ContactUsForm from "components/forms/TwoColContactUsWithIllustration.js";
 import Footer from "components/footers/FiveColumnDark.js";
 //import customerSupportIllustrationSrc from "images/faq.svg";
@@ -62,17 +62,19 @@ export default () => (
       ]}
       textOnLeft={true}
     />
-    {/*<FAQ
+    <FAQ
       imageSrc={customerSupportIllustrationSrc}
       imageContain={true}
       imageShadow={false}
       subheading="FAQs"
       heading={
         <>
-          Do you have <span tw="text-primaryOrange-500">Questions ?</span>
+          {translate('faq_heading', {
+                  span: chunks => <span tw="text-primaryOrange-500">{chunks}</span>
+                })}
         </>
       }
-    />*/}
+    />
     <ContactUsForm />
     <Footer />
   </AnimationRevealPage>
