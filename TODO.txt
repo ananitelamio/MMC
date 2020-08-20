@@ -1,0 +1,6 @@
+// configure select box in signup form
+// add translation to quote form select
+// add global state to change language
+// update address
+// insert faq text
+// update info in terms of service and privacy policy

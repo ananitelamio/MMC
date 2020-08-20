@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { FormattedMessage } from 'react-intl';
+import translate from "../i18n/translate";
 import moneyTransfer from "../services/moneyTransfer";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
@@ -11,8 +13,6 @@ import styled from "styled-components";
 import {css} from "styled-components/macro"; //eslint-disable-line
 import illustration from "images/undraw_access_account_99n5.svg";
 import logo from "images/logo.svg";
-import googleIconImageSrc from "images/google-icon.png";
-import twitterIconImageSrc from "images/twitter-icon.png";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg";
 
 const Container = tw(ContainerBase)`min-h-screen bg-secondaryBlue-600 text-white font-medium flex justify-center -m-8`;
@@ -44,11 +44,11 @@ const IllustrationImage = styled.div`
 const validationSchema = Yup.object().shape({
   email: Yup
     .string()
-    .email()
-    .required("Email is a required field"),
+    .email(translate("login_email_valid"))
+    .required(translate("login_email_required")),
   currentPassword: Yup
     .string()
-    .required("Please enter your password")
+    .required(translate("login_password_required"))
 });
 
 const initialValues = {
@@ -129,7 +129,7 @@ const onSubmit = (data) => {
       })
       .catch(e => {
         console.log(e);
-        toast.error("Something went wront! Please try again. If the problem persisits, please contact customer service." ,{
+        toast.error(translate("login_failed") ,{
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -143,8 +143,8 @@ const onSubmit = (data) => {
 
 export default ({
   illustrationImageSrc = illustration,
-  headingText = "Sign In To My Mobile Cash",
-  submitButtonText = "Sign In",
+  headingText = translate('login_heading'),
+  submitButtonText = translate("login_submit"),
   SubmitButtonIcon = LoginIcon,
   forgotPasswordUrl = "https://mymobilecash.themoneytransferapplication.com/forgot-password.xhtml"
 
@@ -171,10 +171,19 @@ return (
             <Heading>{headingText}</Heading>
             <FormContainer>
               <Form onSubmit={formik.handleSubmit}>
-                <Input type="email" placeholder="Email" name="email" {...emailProps} />
+                <FormattedMessage id="login_email_placeholder">
+                  {placeholder=>
+                      <Input type="email" name="email" placeholder={placeholder} {...emailProps}/>
+                  }
+                </FormattedMessage>
                 {formik.touched.email && formik.errors.email ? (<Error>{formik.errors.email}</Error>): null}
-
-                <Input type="password" placeholder="Password" name="currentPassword" {...currentPasswordProps} />
+                
+                <FormattedMessage id="login_password_placeholder">
+                  {placeholder=>
+                      <Input type="password" placeholder={placeholder} name="currentPassword" {...currentPasswordProps} />
+                  }
+                </FormattedMessage>
+                
                 {formik.touched.currentPassword && formik.errors.currentPassword ? (<Error>{formik.errors.currentPassword}</Error>): null}
 
                 <SubmitButton type="submit">
@@ -184,13 +193,13 @@ return (
               </Form>
               <p tw="mt-6 text-xs text-gray-600 text-center">
                 <a href={forgotPasswordUrl} tw="border-b border-gray-500 border-dotted">
-                  Forgot Password ?
+                  {translate("login_reset_password")}
                 </a>
               </p>
               <p tw="mt-8 text-sm text-gray-600 text-center">
-                Dont have an account?{" "}
+                {translate("login_no_account")}{" "}
                 <Link to="/sign-up" tw="border-b border-gray-500 border-dotted">
-                  Sign Up
+                  {translate("login_signup")}
                 </Link>
               </p>
             </FormContainer>

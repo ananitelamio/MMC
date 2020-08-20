@@ -3,6 +3,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { FormattedMessage } from 'react-intl';
+import translate from "../i18n/translate";
 import moneyTransfer from "../services/moneyTransfer";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
@@ -255,34 +257,43 @@ const Nationalities = [
 const validationSchema = Yup.object().shape({
   firstName: Yup
     .string()
-    .required("A firstname is required")
-    .min(2, "Firstame must be at least 2 characters"),
+    .required(translate("signup_firstname_required"))
+    .min(2, translate("signup_firstname_min")),
   address: Yup
     .string()
-    .required("Your address is required"),
+    .required(translate("signup_address_required"))
+    .min(12, translate("signup_address_min")),
   dialingCode: Yup
     .number()
-    .required("Please supply a valid country code"),
+    .required(translate("signup_dialingCode_required")),
+  city: Yup
+    .string(translate("signup_city_valid")),
   phone: Yup
     .number()
-    .required("Phone number is required"),
+    .required(translate("signup_phone_required")),
   email: Yup
     .string()
-    .email()
-    .required("Email is a required field"),
+    .email(translate("signup_email_valid"))
+    .required(translate("signup_email_required")),
   password: Yup
     .string()
-    .required("Please enter your password")
+    .required(translate("signup_password_required"))
     .matches(
       /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-      "Password must contain at least 8 characters, one uppercase, one number and one special case character"
+      translate("signup_password_matches")
     ),
   confirmPassword: Yup
     .string()
-    .required("Please confirm your password")
+    .required(translate("signup_confirm_password_required"))
     .when("password", {
       is: password => (password && password.length > 0 ? true : false),
-      then: Yup.string().oneOf([Yup.ref("password")], "Password doesn't match")
+      then: Yup.string().oneOf([Yup.ref("password")], translate("signup_confirm_password_matches"))
+    }),
+    dob: Yup.date()
+    .test("age", translate("signup_dob_min"), function(birthdate) {
+      const cutoff = new Date();
+      cutoff.setFullYear(cutoff.getFullYear() - 18);      
+      return birthdate <= cutoff;
     })
 });
 
@@ -359,7 +370,7 @@ const onSubmit = (data) => {
       .then(response => {
 
         if(response.data.status === "SUCCESS"){
-          toast.success("Your account was created successfully. Attempting Auto Login" ,{
+          toast.success(translate("signup_success_msg") ,{
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -396,7 +407,7 @@ const onSubmit = (data) => {
                 }
             })
             .catch(e => {
-              toast.error("Something went wront! Please try again. If the problem persisits, please contact customer service." ,{
+              toast.error(translate("login_failed") ,{
                 position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -420,7 +431,7 @@ const onSubmit = (data) => {
       })
       .catch(e => {
         console.log(e);
-        toast.error("Something went wront! Please try again. If the problem persisits, please contact customer service." ,{
+        toast.error(translate("login_failed") ,{
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -434,8 +445,8 @@ const onSubmit = (data) => {
 
 
 export default ({
-  headingText = "Sign Up To My Mobile Cash",
-  submitButtonText = "Sign Up",
+  headingText = translate('signup_heading'),
+  submitButtonText = translate("signup_submitText"),
   SubmitButtonIcon = SignUpIcon,
 }) => {
     const formik = useFormik({
@@ -474,48 +485,63 @@ export default ({
               <Form onSubmit={formik.handleSubmit}>
                 <InputsRow>
                     <InputWrapper>
-                        <Input name="email" type="email" placeholder="Email" {...emailProps} />
-                        {formik.touched.email && formik.errors.email ? (<Error>{formik.errors.email}</Error>): null}
+                      <FormattedMessage id="signup_email_placeholder">
+                        {placeholder => <Input name="email" type="email" placeholder={placeholder} {...emailProps} />}
+                      </FormattedMessage>
+                      {formik.touched.email && formik.errors.email ? (<Error>{formik.errors.email}</Error>): null}
                     </InputWrapper>
 
                     <InputWrapper>
-                        <Input name="address" type="address" placeholder="Address" {...addressProps}/>
-                        {formik.touched.address && formik.errors.address ? (<Error>{formik.errors.address}</Error>): null}
+                      <FormattedMessage id="signup_address_placeholder">
+                        {placeholder => <Input name="address" type="address" placeholder={placeholder} {...addressProps}/>}
+                      </FormattedMessage>
+                      {formik.touched.address && formik.errors.address ? (<Error>{formik.errors.address}</Error>): null}
                     </InputWrapper>
                 </InputsRow>
                 
                 <InputsRow>
                     <InputWrapper>
-                        <Input name="password" type="password" placeholder="Password" {...passwordProps} />
-                        {formik.touched.password && formik.errors.password ? (<Error>{formik.errors.password}</Error>): null}
+                      <FormattedMessage id="signup_password_placeholder">
+                        {placeholder => <Input name="password" type="password" placeholder={placeholder} {...passwordProps} />}
+                      </FormattedMessage>
+                      {formik.touched.password && formik.errors.password ? (<Error>{formik.errors.password}</Error>): null}
                     </InputWrapper>
 
                     <InputWrapper>
-                        <Input name="city" type="city" placeholder="City" {...cityProps}/>
-                        {formik.touched.city && formik.errors.city ? (<Error>{formik.errors.city}</Error>): null}
-                    </InputWrapper>
-                </InputsRow>
-
-                <InputsRow>
-                    <InputWrapper>
-                        <Input name="confirmPassword" type="password" placeholder="Confirm Password" {...confirmPasswordProps}/>
-                        {formik.touched.confirmPassword && formik.errors.confirmPassword ? (<Error>{formik.errors.confirmPassword}</Error>): null}
-                    </InputWrapper>
-
-                    <InputWrapper>
-                        <Input name="postcode" type="postcode" placeholder="Post Code" {...postcodeProps}/>
-                        {formik.touched.postcode && formik.errors.postcode ? (<Error>{formik.errors.postcode}</Error>): null}
+                      <FormattedMessage id="signup_city_placeholder">
+                        {placeholder => <Input name="city" type="city" placeholder={placeholder} {...cityProps}/>}
+                      </FormattedMessage>
+                      {formik.touched.city && formik.errors.city ? (<Error>{formik.errors.city}</Error>): null}
                     </InputWrapper>
                 </InputsRow>
 
                 <InputsRow>
                     <InputWrapper>
-                        <Input name="firstName" type="firstname" placeholder="First name" {...firstNameProps}/>
-                        {formik.touched.firstName && formik.errors.firstName ? (<Error>{formik.errors.firstName}</Error>): null}
+                      <FormattedMessage id="signup_confirm_password_placeholder">
+                        {placeholder => <Input name="confirmPassword" type="password" placeholder={placeholder} {...confirmPasswordProps}/>}
+                      </FormattedMessage>
+                      {formik.touched.confirmPassword && formik.errors.confirmPassword ? (<Error>{formik.errors.confirmPassword}</Error>): null}
+                    </InputWrapper>
+
+                    <InputWrapper>
+                      <FormattedMessage id="signup_postcode_placeholder">
+                        {placeholder => <Input name="postcode" type="postcode" placeholder={placeholder} {...postcodeProps}/>}
+                      </FormattedMessage>
+                      {formik.touched.postcode && formik.errors.postcode ? (<Error>{formik.errors.postcode}</Error>): null}
+                    </InputWrapper>
+                </InputsRow>
+
+                <InputsRow>
+                    <InputWrapper>
+                      <FormattedMessage id="signup_firstname_placeholder">
+                        {placeholder => <Input name="firstName" type="firstname" placeholder={placeholder} {...firstNameProps}/>}
+                      </FormattedMessage>
+                      {formik.touched.firstName && formik.errors.firstName ? (<Error>{formik.errors.firstName}</Error>): null}
                     </InputWrapper>
 
                     <InputWrapper>
                         <Select name="nationality" {...nationalityProps}>
+                            <option>{translate("signup_nationality_placeholder")}</option>
                             {Nationalities.map(nationality => <option key={nationality}>{nationality}</option>)}
                         </Select>
                         {formik.touched.nationality && formik.errors.nationality ? (<Error>{formik.errors.nationality}</Error>): null}
@@ -524,8 +550,10 @@ export default ({
 
                 <InputsRow>
                     <InputWrapper>
-                        <Input name="lastName" type="lastname" placeholder="Last name" {...lastNameProps}/>
-                        {formik.touched.lastName && formik.errors.lastName ? (<Error>{formik.errors.lastName}</Error>): null}
+                      <FormattedMessage id="signup_lastname_placeholder">
+                        {placeholder => <Input name="lastName" type="lastname" placeholder={placeholder} {...lastNameProps}/>}
+                      </FormattedMessage>
+                      {formik.touched.lastName && formik.errors.lastName ? (<Error>{formik.errors.lastName}</Error>): null}
                     </InputWrapper>
 
                     <InputWrapper>
@@ -538,40 +566,46 @@ export default ({
 
                 <InputsRow>
                     <InputWrapper>
-                        <Input name="dob" type="date" placeholder="Birthdate" {...dobProps}/>
-                        {formik.touched.dob && formik.errors.dob ? (<Error>{formik.errors.dob}</Error>): null}
+                      <FormattedMessage id="signup_dob_placeholder">
+                        {placeholder => <Input name="dob" type="date" placeholder={placeholder} {...dobProps}/>}
+                      </FormattedMessage>
+                      {formik.touched.dob && formik.errors.dob ? (<Error>{formik.errors.dob}</Error>): null}
                     </InputWrapper>
 
                     <InputWrapper>
-                        <Input name="dialingCode" type="number" placeholder="Country Code" {...dialingCodeProps}/>
-                        {formik.touched.dialingCode && formik.errors.dialingCode ? (<Error>{formik.errors.dialingCode}</Error>): null}
+                      <FormattedMessage id="signup_dialingCode_placeholder">
+                        {placeholder => <Input name="dialingCode" type="number" placeholder={placeholder} {...dialingCodeProps}/>}
+                      </FormattedMessage>
+                      {formik.touched.dialingCode && formik.errors.dialingCode ? (<Error>{formik.errors.dialingCode}</Error>): null}
                     </InputWrapper>
                     
                     <InputWrapper>
-                        <Input name="phone" type="number" placeholder="Phone number" {...phoneProps}/>
-                        {formik.touched.phone && formik.errors.phone ? (<Error>{formik.errors.phone}</Error>): null}
+                      <FormattedMessage id="signup_phone_placeholder">
+                        {placeholder => <Input name="phone" type="number" placeholder={placeholder} {...phoneProps}/>}
+                      </FormattedMessage>
+                      {formik.touched.phone && formik.errors.phone ? (<Error>{formik.errors.phone}</Error>): null}
                     </InputWrapper>
                 </InputsRow>
 
                 <InputsRow>
                     <InputWrapper>
                         <Select name="customerGender" {...customerGenderProps}>
-                            <option>Gender</option>
-                            <option value="MALE">Male</option>
-                            <option value="FEMALE">Female</option>
+                            <option>{translate("signup_gender_placeholder")}</option>
+                            <option value="MALE">{translate("signup_gender_male")}</option>
+                            <option value="FEMALE">{translate("signup_gender_male")}</option>
                         </Select>
                         {formik.touched.customerGender && formik.errors.customerGender ? (<Error>{formik.errors.customerGender}</Error>): null}
                     </InputWrapper>
                 </InputsRow>
                 
                 <p tw="mt-6 text-xs text-gray-600 text-center">
-                  I agree to abide by My Mobile Cash's{" "}
+                  {translate("signup_agree")}{" "}
                   <Link to="/terms" tw="border-b border-gray-500 border-dotted">
-                    Terms of Service
+                    {translate("signup_term")}
                   </Link>{" "}
-                  and its{" "}
+                  {translate("signup_its")}{" "}
                   <Link to="/privacy" tw="border-b border-gray-500 border-dotted">
-                    Privacy Policy
+                    {translate("signup_privacy")}
                   </Link>
                 </p>
 
@@ -581,9 +615,9 @@ export default ({
                 </SubmitButton>
 
                 <p tw="mt-8 text-sm text-gray-600 text-center">
-                  Already have an account?{" "}
+                  {translate("signup_account?")}{" "}
                   <Link to="/login" tw="border-b border-gray-500 border-dotted">
-                    Sign In
+                    {translate("signup_login")}
                   </Link>
                 </p>
               </Form>
