@@ -1,9 +1,11 @@
 import "tailwindcss/dist/base.css";
 import "styles/globalStyles.css";
-import React from "react";
+import React, { useContext } from "react";
+import {AppContext} from "./providers/context";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Header from "components/headers/light";
 
 import { I18nProvider, LOCALES } from "./i18n";
 
@@ -46,8 +48,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 export default function App() {
   // return <AnimationRevealPage disabled></AnimationRevealPage>;
+  const { state } = useContext(AppContext);
+  console.log(state.siteLang);
+
   return (
-    <I18nProvider locale={LOCALES.FRENCH}>
+    <I18nProvider locale={state.siteLang}>
       <Router>
         <Switch>
           <Route path="/login">

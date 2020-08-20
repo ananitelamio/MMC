@@ -1,4 +1,4 @@
-import {getFromStorage} from "../../utils/sessionStorage";
+import {getFromStorage} from "../../helpers/sessionStorage";
 import {LOCALES} from '../../i18n/locales';
 
 export default {

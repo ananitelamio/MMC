@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
+import {AppContext} from "../../providers/context";
 //eslint-disable-next-line
 import { css } from "styled-components/macro";
 import translate from "../../i18n/translate";
@@ -70,6 +71,7 @@ const StyledResponsiveVideoEmbed = styled(ResponsiveVideoEmbed)`
 `;
 
 export default () => {
+  const {state} = useContext(AppContext);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const toggleModal = () => setModalIsOpen(!modalIsOpen);
@@ -91,7 +93,7 @@ export default () => {
                 </LeftColumn>
                 <RightColumn>
                     <StyledResponsiveVideoEmbed
-                        url="https://www.youtube.com/embed/BK5eQkkHFqo"
+                        url={(state.siteLang === "en-US") ? "https://www.youtube.com/embed/BK5eQkkHFqo" : "https://www.youtube.com//embed/FPKmbYpgPvo"}
                         background="transparent"
                     />
                 </RightColumn>

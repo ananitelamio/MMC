@@ -1,6 +1,8 @@
-import React from "react";
+import React, {useContext} from "react";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
+import {AppContext} from "../../providers/context";
+import {saveToStorage} from "../../helpers/sessionStorage";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
@@ -25,6 +27,12 @@ export const Link = tw(NavLink)`
   text-lg my-2 lg:text-sm lg:mx-6 lg:my-0
   font-semibold tracking-wide transition duration-300
   pb-1 border-b-2 text-primaryOrange-500 border-transparent hover:border-secondaryBlue-600 hocus:text-secondaryBlue-600
+`;
+
+export const Tr = tw.a`
+text-lg my-2 lg:text-sm lg:mx-6 lg:my-0
+font-semibold tracking-wide transition duration-300
+pb-1 border-b-2 text-primaryOrange-500 border-transparent hover:border-secondaryBlue-600 hocus:text-secondaryBlue-600
 `;
 
 export const PrimaryLink = tw(Link)`
@@ -57,6 +65,13 @@ export const DesktopNavLinks = tw.nav`
 `;
 
 export default ({ logoLink, links, className, collapseBreakpointClass = "lg" }) => {
+  const {dispatch} = useContext(AppContext);
+
+	const setLanguage = siteLang => {
+    console.log(siteLang);
+		dispatch({type: 'setLang', siteLang});
+		saveToStorage('siteLang', siteLang);
+	};
   /*
    * This header component accepts an optionals "links" prop that specifies the links to render in the navbar.
    * This links props should be an array of "NavLinks" components which is exported from this file.
@@ -75,6 +90,7 @@ export default ({ logoLink, links, className, collapseBreakpointClass = "lg" }) 
       <Link to="/">Home</Link>
       <Link to="/about-us">About Us</Link>
       <Link to="/contact">Contact Us</Link>
+      <Tr onClick={() => setLanguage('en-US')}>En</Tr><Tr onClick={() => setLanguage('fr-FR')}>Fr</Tr>
       <Link to="/login" tw="lg:ml-12!">
         Login
       </Link>
