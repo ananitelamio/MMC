@@ -1,14 +1,13 @@
-import React, {useContext} from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
-import {AppContext} from "../../providers/context";
-import {saveToStorage} from "../../helpers/sessionStorage";
 import translate from "../../i18n/translate";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 
 import useAnimatedNavToggler from "../../helpers/useAnimatedNavToggler.js";
+import Lang from "../cta/LangSwitch.js";
 
 import logo from "../../images/logo.svg";
 import france from "../../images/france.svg";
@@ -68,12 +67,6 @@ export const DesktopNavLinks = tw.nav`
 `;
 
 export default ({ logoLink, links, className, collapseBreakpointClass = "lg" }) => {
-  const {dispatch} = useContext(AppContext);
-
-	const setLanguage = siteLang => {
-		dispatch({type: 'setLang', siteLang});
-		saveToStorage('siteLang', siteLang);
-	};
   /*
    * This header component accepts an optionals "links" prop that specifies the links to render in the navbar.
    * This links props should be an array of "NavLinks" components which is exported from this file.
@@ -96,7 +89,6 @@ export default ({ logoLink, links, className, collapseBreakpointClass = "lg" }) 
         {translate('header_login')}
       </Link>
       <PrimaryLink to="/sign-up">{translate('header_signup')}</PrimaryLink>
-      <span><Tr onClick={() => setLanguage('en-US')} href="#">En</Tr> | <Tr onClick={() => setLanguage('fr-FR')} href="#">Fr</Tr></span>
     </NavLinks>
   ];
 
@@ -118,15 +110,16 @@ export default ({ logoLink, links, className, collapseBreakpointClass = "lg" }) 
     <Header className={className || "header-light"}>
       <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
         {logoLink}
+        <Lang />
         {links}
       </DesktopNavLinks>
 
       <MobileNavLinksContainer css={collapseBreakpointCss.mobileNavLinksContainer}>
         {logoLink}
+        <Lang />
         <MobileNavLinks initial={{ x: "150%", display: "none" }} animate={animation} css={collapseBreakpointCss.mobileNavLinks}>
           {links}
         </MobileNavLinks>
-        <span><Tr onClick={() => setLanguage('en-US')}>En</Tr> | <Tr onClick={() => setLanguage('fr-FR')}>Fr</Tr></span>
         <NavToggle onClick={toggleNavbar} className={showNavLinks ? "open" : "closed"}>
           {showNavLinks ? <CloseIcon tw="w-6 h-6" /> : <MenuIcon tw="w-6 h-6" />}
         </NavToggle>

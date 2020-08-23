@@ -49,7 +49,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 export default function App() {
   // return <AnimationRevealPage disabled></AnimationRevealPage>;
   const { state } = useContext(AppContext);
-  console.log(state.siteLang);
 
   return (
     <I18nProvider locale={state.siteLang}>
