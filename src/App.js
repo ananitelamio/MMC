@@ -75,7 +75,7 @@ export default function App() {
     <I18nProvider locale={state.siteLang}>
       <Router>
         <Switch>
-  <Route path="/">{Site en construction}</Route>
+  <Route path="/">Site en construction</Route>
           {/*<Route path="/login">
             <LoginPage />
           </Route>
