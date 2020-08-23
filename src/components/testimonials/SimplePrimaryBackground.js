@@ -11,11 +11,11 @@ import { ReactComponent as ArrowRightIcon } from "images/arrow-right-3-icon.svg"
 
 import "slick-carousel/slick/slick.css";
 
-const PrimaryBackgroundContainer = tw(Container)`-mx-8 px-8 bg-primary-900 text-gray-100`;
+const PrimaryBackgroundContainer = tw(Container)`-mx-8 px-8 bg-primaryBlue-600 text-gray-100`;
 
 const HeadingContainer = tw.div``;
 const Subheading = tw(SubheadingBase)`text-center text-gray-100 mb-4`;
-const Heading = tw(SectionHeading)``;
+const Heading = tw(SectionHeading)`text-primaryOrange-500`;
 const Description = tw(SectionDescription)`mx-auto text-center text-gray-300`;
 
 const TestimonialsSlider = styled(Slider)`
@@ -38,10 +38,9 @@ const CustomerInfoAndControlsContainer = tw.div`mt-8 flex items-center flex-col 
 const CustomerImage = tw.img`w-16 h-16 rounded-full`
 const CustomerNameAndProfileContainer = tw.div`mt-4 sm:mt-0 sm:ml-4 flex flex-col`
 const CustomerName = tw.span`text-lg font-semibold`
-const CustomerProfile = tw.span`text-sm font-normal text-gray-700`
 const ControlsContainer = tw.div`sm:ml-auto flex`
 const ControlButton = styled.button`
-  ${tw`text-gray-600 hover:text-primary-700 focus:outline-none transition-colors duration-300 ml-4 first:ml-0 sm:first:ml-4 mt-4 sm:mt-0`}
+  ${tw`text-gray-600 hover:text-secondaryBlue-700 focus:outline-none transition-colors duration-300 ml-4 first:ml-0 sm:first:ml-4 mt-4 sm:mt-0`}
   .icon {
     ${tw`fill-current w-6`}
   }
@@ -103,9 +102,6 @@ export default ({
                   <CustomerName>
                     {testimonial.customerName}
                   </CustomerName>
-                  <CustomerProfile>
-                    {testimonial.customerProfile}
-                  </CustomerProfile>
                 </CustomerNameAndProfileContainer>
                 <ControlsContainer>
                   <ControlButton onClick={sliderRef?.slickPrev}>

@@ -45,9 +45,9 @@ export const PrimaryLink = tw(Link)`
 `;
 
 export const LogoLink = styled(Link)`
-  ${tw`flex items-center font-black border-b-0 text-2xl! ml-0!`};
+  ${tw`flex items-center border-b-0 ml-0!`};
   img {
-    ${tw`h-32 mr-3`}
+    ${tw`h-12 sm:h-32 mr-3`}
   }
 `;
 
@@ -98,7 +98,8 @@ export default ({ logoLink, links, className, collapseBreakpointClass = "lg" }) 
   const defaultLogoLink = (
     <>
       <LogoLink to="/">
-        <img src={logo} alt="logo" />
+        <img src={logo} alt="My Mobile Cash" />
+        <Lang />
       </LogoLink>
     </>
   );
@@ -110,13 +111,11 @@ export default ({ logoLink, links, className, collapseBreakpointClass = "lg" }) 
     <Header className={className || "header-light"}>
       <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
         {logoLink}
-        <Lang />
         {links}
       </DesktopNavLinks>
 
       <MobileNavLinksContainer css={collapseBreakpointCss.mobileNavLinksContainer}>
         {logoLink}
-        <Lang />
         <MobileNavLinks initial={{ x: "150%", display: "none" }} animate={animation} css={collapseBreakpointCss.mobileNavLinks}>
           {links}
         </MobileNavLinks>

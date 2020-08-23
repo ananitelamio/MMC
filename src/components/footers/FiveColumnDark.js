@@ -55,13 +55,13 @@ export default () => {
               Corniche Square lot #536, Goumel, Ziguinchor, SENEGAL 
             </CompanyAddress>
             <SocialLinksContainer>
-              <SocialLink href="https://facebook.com">
+              <SocialLink href="https://www.facebook.com/Mymobilecash/">
                 <FacebookIcon />
               </SocialLink>
-              <SocialLink href="https://twitter.com">
+              <SocialLink href="https://twitter.com/Mymobilecash">
                 <TwitterIcon />
               </SocialLink>
-              <SocialLink href="https://youtube.com">
+              <SocialLink href="https://www.youtube.com/channel/UC-ZBj_VuG8qwXc6EWmgfLMQ">
                 <YoutubeIcon />
               </SocialLink>
             </SocialLinksContainer>

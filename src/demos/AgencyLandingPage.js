@@ -8,7 +8,7 @@ import Hero from "components/hero/TwoColumnWithVideo.js";
 import Features from "components/features/DashedBorderSixFeatures";
 import MainFeature from "components/features/TwoColSingleFeatureWithStats2.js";
 import MainFeature2 from "components/features/TwoColWithTwoFeaturesAndButtons.js";
-import Testimonial from "components/testimonials/TwoColumnWithImageAndProfilePictureReview.js";
+import Testimonial from "components/testimonials/SimplePrimaryBackground.js";
 import FAQ from "components/faqs/SimpleWithSideImage.js";
 import ContactUsForm from "components/forms/TwoColContactUsWithIllustration.js";
 import Footer from "components/footers/FiveColumnDark.js";
@@ -20,13 +20,7 @@ export default () => (
     <MainFeature />
     <Features />
     <MainFeature2 />
-    <Testimonial
-      subheading={translate('testimonial_subheading')}
-      heading={
-        <>
-          {translate('testimonial_heading', {span: text => (<span tw="text-primaryOrange-500"> {text} </span>)})}
-        </>
-      }
+    <Testimonial 
       description={translate('testimonial_description')}
       testimonials={[
         {
@@ -36,8 +30,7 @@ export default () => (
             "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3.25&w=512&h=512&q=80",
           quote:
           translate('testimonial_quote1'),
-          customerName: "Charlotte Hale",
-          customerTitle: "CEO, Tesla Inc."
+          customerName: "Nathalie Massamba"
         },
         {
           imageSrc:
@@ -46,8 +39,7 @@ export default () => (
             "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=512&h=512&q=80",
           quote:
           translate('testimonial_quote2'),
-          customerName: "Adam Cuppy",
-          customerTitle: "Founder, Nestle"
+          customerName: "Ghislain Kone"
         },
         {
           imageSrc:
@@ -56,11 +48,9 @@ export default () => (
             "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=512&h=512&q=80",
           quote:
           translate('testimonial_quote3'),
-          customerName: "Leslie Okana",
-          customerTitle: "Founder, OKADA"
+          customerName: "Amadou Gueye"
         }
       ]}
-      textOnLeft={true}
     />
     <FAQ
       imageSrc={customerSupportIllustrationSrc}

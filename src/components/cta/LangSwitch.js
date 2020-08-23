@@ -1,18 +1,16 @@
 import React, {useContext, useState} from "react";
 import {AppContext} from "../../providers/context";
 import {saveToStorage} from "../../helpers/sessionStorage";
-import styled from "styled-components"; //eslint-disable-line
 import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 
-const PrimaryBackgroundContainer = tw.div`py-20 lg:py-24 bg-primary-500 rounded-lg relative`
-const Content = tw.div`p-10`
+const Content = tw.div`p-2 items-center`
 const Dropdown = tw.div`inline-block relative`
 const Header = tw.div`px-4 rounded inline-flex items-center text-lg my-2 lg:text-sm lg:mx-6 lg:my-0
 font-semibold tracking-wide transition duration-300
 pb-1 border-b-2 text-primaryOrange-500 border-transparent hocus:text-secondaryBlue-600 cursor-pointer`
 const Title = tw.span`mr-1`
-const DropdownMenu = tw.ul`absolute text-gray-700 pt-1`
+const DropdownMenu = tw.ul`absolute text-gray-700 pt-1 cursor-pointer`
 
 export default () => {
     const {dispatch} = useContext(AppContext);
