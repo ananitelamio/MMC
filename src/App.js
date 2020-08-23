@@ -1,13 +1,12 @@
 import "tailwindcss/dist/base.css";
 import "styles/globalStyles.css";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {AppContext} from "./providers/context";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Header from "components/headers/light";
 
-import { I18nProvider, LOCALES } from "./i18n";
+import { I18nProvider } from "./i18n";
 
 /*
  * This is the entry point component of this project. You can change the below exported default App component to any of
@@ -48,13 +47,36 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 export default function App() {
   // return <AnimationRevealPage disabled></AnimationRevealPage>;
+  const {dispatch} = useContext(AppContext);
   const { state } = useContext(AppContext);
+
+  const catchE = (e) => {
+    console.log('👍', 'beforeinstallprompt', e);
+
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    // Stash the event so it can be triggered later.
+    const deferredPrompt = e;
+    dispatch({type: 'setDeferredPrompt', deferredPrompt});
+  }
+
+  React.useEffect(() => {
+    window.addEventListener('beforeinstallprompt', catchE)
+    // cleanup this component
+    return () => {
+      window.removeEventListener('beforeinstallprompt', catchE);
+    };
+
+  }, []);
+
+  console.log(state.deferredPrompt);
 
   return (
     <I18nProvider locale={state.siteLang}>
       <Router>
         <Switch>
-          <Route path="/login">
+  <Route path="/">{Site en construction}</Route>
+          {/*<Route path="/login">
             <LoginPage />
           </Route>
           <Route path="/sign-up">
@@ -74,7 +96,7 @@ export default function App() {
           </Route>
           <Route exact path="/">
             <AgencyLandingPage />
-          </Route>
+  </Route>*/}
         </Switch>
       </Router>
       <ToastContainer />

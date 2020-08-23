@@ -7,8 +7,8 @@ let reducer = (state, action) => {
   switch (action.type) {
     case "reset":
       return defaultContext;
-		case "setTheme":
-			return { ...state, themeName: action.themeName };
+		case "setDeferredPrompt":
+			return { ...state, deferredPrompt: action.deferredPrompt };
     case "setLang":
       return {...state, siteLang: action.siteLang};
   }
