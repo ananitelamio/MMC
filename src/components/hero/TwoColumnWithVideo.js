@@ -14,7 +14,6 @@ import ResponsiveVideoEmbed from "../../helpers/ResponsiveVideoEmbed.js";
 
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "../../images/svg-decorator-blob-1.svg";
-import { ReactComponent as SvgDecoratorBlob2 } from "../../images/dot-pattern.svg";
 import herobackground from "../../images/hero-smile.jpg";
 
 
@@ -41,9 +40,6 @@ const PrimaryButton = tw.button`font-bold px-8 lg:px-10 py-3 rounded bg-secondar
 const DecoratorBlob1 = styled(SvgDecoratorBlob1)`
   ${tw`pointer-events-none opacity-5 absolute left-0 bottom-0 h-64 w-64 transform -translate-x-2/3  -z-10`}
 `;
-const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
-  ${tw`pointer-events-none fill-current text-primary-500 opacity-25 absolute w-32 h-32 right-0 bottom-0 transform translate-x-10 translate-y-10 -z-10`}
-`;
 
 const StyledModal = styled(ReactModalAdapter)`
   &.mainHeroModal__overlay {
@@ -59,7 +55,7 @@ const StyledModal = styled(ReactModalAdapter)`
 
 const Notification = tw.span`inline-block my-4 pl-3 py-1 border-l-4 border-secondaryBlue-600 text-secondaryBlue-600 bg-gray-200 bg-opacity-75 p-2 rounded font-medium text-sm`;
 
-const CloseModalButton = tw.button`absolute top-0 right-0 mt-8 mr-8 hocus:text-primary-500`;
+const CloseModalButton = tw.button`absolute top-0 right-0 mt-8 mr-8 hocus:text-secondaryBlue-600`;
 
 const StyledResponsiveVideoEmbed = styled(ResponsiveVideoEmbed)`
   padding-bottom: 56.25% !important;

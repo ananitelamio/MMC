@@ -6,6 +6,7 @@ import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 
 import Hero from "components/hero/TwoColumnWithVideo.js";
 import Features from "components/features/DashedBorderSixFeatures";
+import GetStarted from "components/cta/GetStarted.js";
 import MainFeature from "components/features/TwoColSingleFeatureWithStats2.js";
 import MainFeature2 from "components/features/TwoColWithTwoFeaturesAndButtons.js";
 import Testimonial from "components/testimonials/SimplePrimaryBackground.js";
@@ -13,11 +14,15 @@ import FAQ from "components/faqs/SimpleWithSideImage.js";
 import ContactUsForm from "components/forms/TwoColContactUsWithIllustration.js";
 import Footer from "components/footers/FiveColumnDark.js";
 import customerSupportIllustrationSrc from "images/faq.svg";
+import Nathalie from "images/nathalie.png"
+import Amadou from "images/david.png"
+import Ghislain from "images/timothy.png"
 
 export default () => (
   <AnimationRevealPage>
     <Hero />
     <MainFeature />
+    <GetStarted/>
     <Features />
     <MainFeature2 />
     <Testimonial 
@@ -25,27 +30,21 @@ export default () => (
       testimonials={[
         {
           imageSrc:
-            "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1024&q=80",
-          profileImageSrc:
-            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3.25&w=512&h=512&q=80",
+            Nathalie,
           quote:
           translate('testimonial_quote1'),
           customerName: "Nathalie Massamba"
         },
         {
           imageSrc:
-            "https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1024&q=80",
-          profileImageSrc:
-            "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=512&h=512&q=80",
+            Ghislain,
           quote:
           translate('testimonial_quote2'),
           customerName: "Ghislain Kone"
         },
         {
           imageSrc:
-            "https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1024&q=80",
-          profileImageSrc:
-            "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=512&h=512&q=80",
+            Amadou,
           quote:
           translate('testimonial_quote3'),
           customerName: "Amadou Gueye"

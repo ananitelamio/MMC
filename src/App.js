@@ -60,8 +60,9 @@ export default function App() {
     dispatch({type: 'setDeferredPrompt', deferredPrompt});
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('beforeinstallprompt', catchE)
+    console.log(state.deferredPrompt);
     // cleanup this component
     return () => {
       window.removeEventListener('beforeinstallprompt', catchE);
@@ -75,8 +76,7 @@ export default function App() {
     <I18nProvider locale={state.siteLang}>
       <Router>
         <Switch>
-  <Route path="/">Site en construction</Route>
-          {/*<Route path="/login">
+          <Route path="/login">
             <LoginPage />
           </Route>
           <Route path="/sign-up">
@@ -96,7 +96,7 @@ export default function App() {
           </Route>
           <Route exact path="/">
             <AgencyLandingPage />
-  </Route>*/}
+          </Route>
         </Switch>
       </Router>
       <ToastContainer />

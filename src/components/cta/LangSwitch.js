@@ -6,11 +6,11 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 
 const Content = tw.div`p-2 items-center`
 const Dropdown = tw.div`inline-block relative`
-const Header = tw.div`px-4 rounded inline-flex items-center text-lg my-2 lg:text-sm lg:mx-6 lg:my-0
+const Header = tw.div`px-4 rounded inline-flex items-center text-base my-2 md:text-sm lg:text-sm lg:my-0
 font-semibold tracking-wide transition duration-300
 pb-1 border-b-2 text-primaryOrange-500 border-transparent hocus:text-secondaryBlue-600 cursor-pointer`
 const Title = tw.span`mr-1`
-const DropdownMenu = tw.ul`absolute text-gray-700 pt-1 cursor-pointer`
+const DropdownMenu = tw.ul`absolute text-base text-primaryOrange-500 hocus:text-secondaryBlue-600 pt-1 cursor-pointer`
 
 export default () => {
     const {dispatch} = useContext(AppContext);

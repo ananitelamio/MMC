@@ -10,8 +10,6 @@ import useAnimatedNavToggler from "../../helpers/useAnimatedNavToggler.js";
 import Lang from "../cta/LangSwitch.js";
 
 import logo from "../../images/logo.svg";
-import france from "../../images/france.svg";
-import united from "../../images/united.svg";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 
@@ -47,7 +45,7 @@ export const PrimaryLink = tw(Link)`
 export const LogoLink = styled(Link)`
   ${tw`flex items-center border-b-0 ml-0!`};
   img {
-    ${tw`h-12 sm:h-32 mr-3`}
+    ${tw`h-20 sm:h-32 mr-3`}
   }
 `;
 

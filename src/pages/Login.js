@@ -57,7 +57,6 @@ const initialValues = {
 };
 
 function redirect(path, params) {
-    console.log(params);
 
     var form = document.createElement('form');
         form.setAttribute('action', path);
@@ -103,7 +102,7 @@ const onSubmit = (data) => {
 
     moneyTransfer.login(payload)
       .then(response => {
-        if(response.data.status == "SUCCESS"){
+        if(response.data.status === "SUCCESS"){
           toast.success(response.data.message ,{
             position: "top-right",
             autoClose: 3000,

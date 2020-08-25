@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from "react-router-dom";
@@ -12,8 +12,6 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import logo from "images/logo.svg";
-import googleIconImageSrc from "images/google-icon.png";
-import twitterIconImageSrc from "images/twitter-icon.png";
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
 
 const Container = tw(ContainerBase)`min-h-screen bg-secondaryBlue-600 text-white font-medium flex justify-center -m-8`;
@@ -348,25 +346,32 @@ function redirect(path, params) {
 };
 
 const onSubmit = (data) => {
-    const temp = data.address;
 
-    delete data.address;
+    const payload = {
+      confirmPassword: data.confirmPassword,
+      customerGender: data.customerGender,
+      customerType: data.customerType,
+      dialingCode: data.dialingCode,
+      dob: data.dob,
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      nationality: data.nationality,
+      password: data.password,
+      phone: data.phone
+    };
 
-    data.address = {
-        "address1": temp,
+    payload.address = {
+        "address1": data.address,
         "city": data.city,
         "countryCommonName": data.country,
         "postcode": data.postcode,
         "countryIso3": originCountries[data.country]
     };
 
-    data.customerType = "INDIVIDUAL";
+    payload.customerType = "INDIVIDUAL";
 
-    delete data.city;
-    delete data.country;
-    delete data.postcode;
-
-    moneyTransfer.registerCustomer(data)
+    moneyTransfer.registerCustomer(payload)
       .then(response => {
 
         if(response.data.status === "SUCCESS"){
@@ -493,7 +498,7 @@ export default ({
 
                     <InputWrapper>
                       <FormattedMessage id="signup_address_placeholder">
-                        {placeholder => <Input name="address" type="address" placeholder={placeholder} {...addressProps}/>}
+                        {placeholder => <Input name="address" type="text" placeholder={placeholder} {...addressProps}/>}
                       </FormattedMessage>
                       {formik.touched.address && formik.errors.address ? (<Error>{formik.errors.address}</Error>): null}
                     </InputWrapper>
@@ -509,7 +514,7 @@ export default ({
 
                     <InputWrapper>
                       <FormattedMessage id="signup_city_placeholder">
-                        {placeholder => <Input name="city" type="city" placeholder={placeholder} {...cityProps}/>}
+                        {placeholder => <Input name="city" type="text" placeholder={placeholder} {...cityProps}/>}
                       </FormattedMessage>
                       {formik.touched.city && formik.errors.city ? (<Error>{formik.errors.city}</Error>): null}
                     </InputWrapper>

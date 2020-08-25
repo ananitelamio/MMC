@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
@@ -20,7 +21,7 @@ const ColumnHeading = tw.h5`font-bold uppercase`;
 
 const LinkList = tw.ul`mt-4 text-sm font-medium`;
 const LinkListItem = tw.li`mt-3`;
-const Link = tw.a`border-b-2 border-transparent hocus:text-gray-300 hocus:border-gray-100 pb-1 transition duration-300`;
+const FooterLink = tw(Link)`border-b-2 border-transparent hocus:text-gray-300 hocus:border-gray-100 pb-1 transition duration-300`;
 
 const LogoContainer = tw.div`flex items-center justify-center lg:justify-start`;
 const LogoImg = tw.img`h-16`;
@@ -70,16 +71,16 @@ export default () => {
             <ColumnHeading>{translate("footer_quicklinks")}</ColumnHeading>
             <LinkList>
               <LinkListItem>
-                <Link href="#">Blog</Link>
+                <FooterLink to="#">Blog</FooterLink>
               </LinkListItem>
               <LinkListItem>
-                <Link href="/">{translate("footer_home")}</Link>
+                <FooterLink to="/">{translate("footer_home")}</FooterLink>
               </LinkListItem>
               <LinkListItem>
-                <Link href="/about-us">{translate("footer_about_us")}</Link>
+                <FooterLink to="/about-us">{translate("footer_about_us")}</FooterLink>
               </LinkListItem>
               <LinkListItem>
-                <Link href="/contact">{translate("footer_contact")}</Link>
+                <FooterLink to="/contact">{translate("footer_contact")}</FooterLink>
               </LinkListItem>
             </LinkList>
           </Column>
@@ -87,10 +88,10 @@ export default () => {
             <ColumnHeading>{translate("footer_legal")}</ColumnHeading>
             <LinkList>
               <LinkListItem>
-                <Link href="/privacy">Privacy Policy</Link>
+                <FooterLink to="/privacy">Privacy Policy</FooterLink>
               </LinkListItem>
               <LinkListItem>
-                <Link href="/terms">Terms of Service</Link>
+                <FooterLink to="/terms">Terms of Service</FooterLink>
               </LinkListItem>
             </LinkList>
           </Column>
@@ -101,10 +102,10 @@ export default () => {
                 +221 76 426 22 57
               </LinkListItem>
               <LinkListItem>
-                <Link href="mailto:support@mymobilecash.net">support@mymobilecash.net</Link> 
+                <Link to="mailto:support@mymobilecash.net">support@mymobilecash.net</Link> 
               </LinkListItem>
               <LinkListItem>
-                <Link href="mailto:infos@mymobilecash.net">infos@mymobilecash.net</Link>
+                <Link to="mailto:infos@mymobilecash.net">infos@mymobilecash.net</Link>
               </LinkListItem>
             </LinkList>
           </Column>

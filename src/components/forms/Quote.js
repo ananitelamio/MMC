@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import translate from "../../i18n/translate";
@@ -89,8 +88,6 @@ let payload = {
     transactionType: ""
 };
 
-let payloadJSON;
-
 
 export default ({
   headingText = translate("quote_heading"),
@@ -131,6 +128,9 @@ export default ({
     const getDestinationCountry = (data, setFieldValue) => {
         setFieldValue('originCountry', data);
         setFieldValue('destinationCountry',''); 
+        setdestinationCountries([]);
+        setDeliveryMethods([]);
+        setCurrencies([]);
         payload.tradeOriginatingCountry = data;
         payload.destinationCountry = '';
         payload.transactionType = '';
@@ -147,6 +147,8 @@ export default ({
         setFieldValue('destinationCountry', data);
         payload.destinationCountry = data;
         setFieldValue('deliveryMethod','');
+        setDeliveryMethods([]);
+        setCurrencies([]);
         moneyTransfer.supportedDeliveryMethods(payload.tradeOriginatingCountry,payload.destinationCountry)
         .then(response => {
             setDeliveryMethods(response.data.data);
@@ -163,7 +165,7 @@ export default ({
     };
 
     const checkDeliveryMethod = (deliveryMethod) => {
-        if(deliveryMethod == "AIRTIME_TOPUP"){
+        if(deliveryMethod === "AIRTIME_TOPUP"){
             setShowPhone(true);
         } else {
             moneyTransfer.supportedCurrencies(payload.tradeOriginatingCountry,payload.destinationCountry,deliveryMethod)
